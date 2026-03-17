@@ -1,0 +1,9 @@
+[    5290ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3004/_next/static/webpack/2192de623d7fe541.webpack.hot-update.json:0
+[    8007ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3004/_next/static/webpack/2192de623d7fe541.webpack.hot-update.json:0
+[   10120ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3004/_next/static/webpack/2192de623d7fe541.webpack.hot-update.json:0
+[  143437ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3004/students/new:0
+[  143482ms] TypeError: Failed to fetch
+    at fetchServerAction (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/router-reducer/reducers/server-action-reducer.js:48:23)
+[  143533ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3004/__nextjs_font/geist-latin.woff2:0
+[  143547ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3004/__nextjs_original-stack-frames:0
+[  143586ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3004/__nextjs_font/geist-mono-latin.woff2:0

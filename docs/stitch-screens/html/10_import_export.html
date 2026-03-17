@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Import Export Center - School CRM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .step-active { color: #207fdf; border-color: #207fdf; }
+        .step-complete { color: #207fdf; background-color: rgba(32, 127, 223, 0.1); }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<div class="flex h-screen overflow-hidden">
+<!-- Slim Sidebar -->
+<aside class="w-20 lg:w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col transition-all duration-300">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary size-10 rounded flex items-center justify-center text-white shrink-0">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div class="hidden lg:block overflow-hidden">
+<h1 class="font-bold text-slate-900 dark:text-white truncate">School CRM</h1>
+<p class="text-xs text-slate-500 truncate">Admin Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="hidden lg:block text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="hidden lg:block text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="hidden lg:block text-sm font-medium">Faculty</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="hidden lg:block text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Admin user profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqvnJt0325cy9lXa4IGH49WcE-EiD4puBZHqOtQf1_2P0enJudqSz_mK4dQBHJi-7d_pA4XT00LF-vi3ud6ewrLu7MgNHmXpWVW7IEeOF6oFWjRIeQXchQFPwN36z57nXEU9NEtVjKz-kRN4K2BhlctU38qSrC6S4Anl4tnkxDQa34zSgclgzun1kRI8zT0_BsCqv00lLE3Y4xd6-hMQKw7y7unzoDHbIKKsLfJx9DP49lNRBVQHgr1aryjS8eS9YT01xfCPt4Dd8"/>
+</div>
+<div class="hidden lg:block">
+<p class="text-xs font-semibold">Alex Rivera</p>
+<p class="text-[10px] text-slate-500">Super Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-y-auto">
+<!-- Header & Breadcrumbs -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 py-4 flex items-center justify-between sticky top-0 z-10">
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span>Settings</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span>Data Management</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-100 font-medium">Import</span>
+</div>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Import Center</h2>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-sm">help</span>
+                    Support
+                </button>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto w-full space-y-8">
+<!-- Progress Bar -->
+<div class="grid grid-cols-4 gap-4 relative">
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-700 -translate-y-1/2 z-0"></div>
+<div class="relative z-1 flex flex-col items-center gap-2">
+<div class="size-10 rounded-full bg-primary text-white flex items-center justify-center font-bold ring-4 ring-white dark:ring-slate-900">
+<span class="material-symbols-outlined">check</span>
+</div>
+<span class="text-xs font-bold text-primary">Upload File</span>
+</div>
+<div class="relative z-1 flex flex-col items-center gap-2">
+<div class="size-10 rounded-full bg-primary text-white flex items-center justify-center font-bold ring-4 ring-white dark:ring-slate-900">2</div>
+<span class="text-xs font-bold text-slate-900 dark:text-white">Map Columns</span>
+</div>
+<div class="relative z-1 flex flex-col items-center gap-2 opacity-50">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 flex items-center justify-center font-bold ring-4 ring-white dark:ring-slate-900">3</div>
+<span class="text-xs font-medium">Validation</span>
+</div>
+<div class="relative z-1 flex flex-col items-center gap-2 opacity-50">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 flex items-center justify-center font-bold ring-4 ring-white dark:ring-slate-900">4</div>
+<span class="text-xs font-medium">Finalize</span>
+</div>
+</div>
+<!-- Upload Zone -->
+<section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-8">
+<div class="border-2 border-dashed border-primary/30 rounded-lg p-12 flex flex-col items-center text-center bg-primary/5">
+<div class="size-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl">upload_file</span>
+</div>
+<h3 class="text-lg font-bold mb-2">Upload your student data</h3>
+<p class="text-slate-500 text-sm max-w-md mb-6 leading-relaxed">
+                        Drag and drop your XLSX or CSV file here, or click browse to select from your computer. 
+                    </p>
+<div class="flex items-center gap-4">
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg font-bold text-sm transition-all shadow-lg shadow-primary/20">
+                            Select File
+                        </button>
+<a class="text-primary hover:underline text-sm font-semibold flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-lg">download</span>
+                            Download Template (XLSX)
+                        </a>
+</div>
+</div>
+</section>
+<!-- Mapping & Validation Section (Simulated State) -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Column Mapping -->
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h3 class="font-bold">Column Mapping</h3>
+<span class="text-xs font-medium px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded">Auto-matched 85%</span>
+</div>
+<div class="p-0">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase">File Column</th>
+<th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase">System Field</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr>
+<td class="px-6 py-4">
+<div class="text-sm font-medium">First_Name</div>
+<div class="text-[10px] text-slate-400">Example: "John"</div>
+</td>
+<td class="px-6 py-4">
+<select class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-sm focus:ring-primary">
+<option>First Name</option>
+<option>Last Name</option>
+<option>Email</option>
+</select>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4">
+<div class="text-sm font-medium">Email_Addr</div>
+<div class="text-[10px] text-slate-400">Example: "john@edu.com"</div>
+</td>
+<td class="px-6 py-4">
+<select class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-sm focus:ring-primary">
+<option>Email</option>
+<option>Guardian Email</option>
+</select>
+</td>
+</tr>
+<tr class="bg-red-50/50 dark:bg-red-900/10">
+<td class="px-6 py-4">
+<div class="text-sm font-medium text-red-600 dark:text-red-400 flex items-center gap-1">
+                                                BirthD
+                                                <span class="material-symbols-outlined text-sm">warning</span>
+</div>
+<div class="text-[10px] text-slate-400">Example: "12-05-2010"</div>
+</td>
+<td class="px-6 py-4">
+<select class="w-full rounded-lg border-red-300 dark:border-red-800 dark:bg-slate-800 text-sm focus:ring-primary">
+<option disabled="" selected="" value="">Select a field...</option>
+<option>Date of Birth</option>
+<option>Enrollment Date</option>
+</select>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Data Grid Preview -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<h3 class="font-bold">Preview &amp; Validation</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
+<tr>
+<th class="px-6 py-3 font-semibold">Row</th>
+<th class="px-6 py-3 font-semibold">First Name</th>
+<th class="px-6 py-3 font-semibold">Email</th>
+<th class="px-6 py-3 font-semibold">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr>
+<td class="px-6 py-4 text-slate-500">1</td>
+<td class="px-6 py-4">Sarah Johnson</td>
+<td class="px-6 py-4 text-slate-500">sarah.j@school.com</td>
+<td class="px-6 py-4 text-green-600 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-base">check_circle</span> Valid
+                                        </td>
+</tr>
+<tr class="bg-red-50/30 dark:bg-red-900/5 ring-1 ring-inset ring-red-200 dark:ring-red-900">
+<td class="px-6 py-4 text-slate-500">2</td>
+<td class="px-6 py-4">Michael Smith</td>
+<td class="px-6 py-4 text-red-500 underline decoration-dotted">m.smith@edu</td>
+<td class="px-6 py-4 text-red-600 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-base">error</span> Invalid Email
+                                        </td>
+</tr>
+<tr>
+<td class="px-6 py-4 text-slate-500">3</td>
+<td class="px-6 py-4">Emma Wilson</td>
+<td class="px-6 py-4 text-slate-500">e.wilson@school.com</td>
+<td class="px-6 py-4 text-green-600 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-base">check_circle</span> Valid
+                                        </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Validation Summary Sidebar -->
+<div class="space-y-6">
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+<h3 class="font-bold mb-4">Validation Summary</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">data_array</span>
+<span class="text-sm font-medium">Total Rows</span>
+</div>
+<span class="font-bold">150</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-green-600">check_circle</span>
+<span class="text-sm font-medium text-green-700 dark:text-green-400">Valid Rows</span>
+</div>
+<span class="font-bold text-green-700 dark:text-green-400">148</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-red-600">cancel</span>
+<span class="text-sm font-medium text-red-700 dark:text-red-400">Invalid Rows</span>
+</div>
+<span class="font-bold text-red-700 dark:text-red-400">2</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-3">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-lg transition-all disabled:opacity-50">
+                                Import Valid Rows
+                            </button>
+<button class="w-full border border-slate-200 dark:border-slate-700 text-sm font-semibold py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                Export Error Log
+                            </button>
+</div>
+</div>
+<div class="bg-primary/10 dark:bg-primary/5 rounded-xl border border-primary/20 p-6">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<div class="space-y-1">
+<p class="text-sm font-bold text-primary">Pro Tip</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                                    Make sure your date formats match <code class="bg-white/50 px-1 rounded font-mono">DD-MM-YYYY</code> to avoid validation errors.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-8 py-4 flex justify-between items-center mt-auto">
+<p class="text-xs text-slate-500">© 2024 School CRM v2.4.0 Production</p>
+<div class="flex gap-4">
+<a class="text-xs text-slate-500 hover:text-primary underline" href="#">Privacy Policy</a>
+<a class="text-xs text-slate-500 hover:text-primary underline" href="#">User Manual</a>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

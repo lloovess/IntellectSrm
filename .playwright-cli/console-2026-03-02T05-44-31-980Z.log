@@ -1,0 +1,460 @@
+[    2779ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3004/_next/static/webpack/c1badf5a39fbeff9.webpack.hot-update.json:0
+[    3411ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3004/_next/static/webpack/c1badf5a39fbeff9.webpack.hot-update.json:0
+[    4012ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3004/_next/static/webpack/c1badf5a39fbeff9.webpack.hot-update.json:0
+[ 1166732ms] [ERROR] ./app/(dashboard)/students/new/page.tsx
+Error:   x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:50:1]
+ 47 | 
+ 48 |     setSaving(true);
+ 49 | 
+ 50 |     const studentResponse = await fetch('/api/students', {
+    :                             ^^^^^
+ 51 |       method: 'POST',
+ 52 |       headers: { 'Content-Type': 'application/json' },
+ 53 |       body: JSON.stringify({ fullName, phone })
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:56:1]
+ 53 |       body: JSON.stringify({ fullName, phone })
+ 54 |     });
+ 55 | 
+ 56 |     const studentPayload = (await studentResponse.json().catch(() => ({}))) as {
+    :                             ^^^^^
+ 57 |       error?: string;
+ 58 |       data?: { id: string };
+ 59 |     };
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:67:1]
+ 64 |       return;
+ 65 |     }
+ 66 | 
+ 67 |     const enrollmentResponse = await fetch('/api/enrollments', {
+    :                                ^^^^^
+ 68 |       method: 'POST',
+ 69 |       headers: { 'Content-Type': 'application/json' },
+ 70 |       body: JSON.stringify({
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:79:1]
+ 76 |       })
+ 77 |     });
+ 78 | 
+ 79 |     const enrollmentPayload = (await enrollmentResponse.json().catch(() => ({}))) as {
+    :                                ^^^^^
+ 80 |       error?: string;
+ 81 |     };
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/students/new/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/userspace/app/errors/intercept-console-error.js:56
+[ 1167256ms] [ERROR] ./app/(dashboard)/students/new/page.tsx
+Error:   x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:50:1]
+ 47 | 
+ 48 |     setSaving(true);
+ 49 | 
+ 50 |     const studentResponse = await fetch('/api/students', {
+    :                             ^^^^^
+ 51 |       method: 'POST',
+ 52 |       headers: { 'Content-Type': 'application/json' },
+ 53 |       body: JSON.stringify({ fullName, phone })
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:56:1]
+ 53 |       body: JSON.stringify({ fullName, phone })
+ 54 |     });
+ 55 | 
+ 56 |     const studentPayload = (await studentResponse.json().catch(() => ({}))) as {
+    :                             ^^^^^
+ 57 |       error?: string;
+ 58 |       data?: { id: string };
+ 59 |     };
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:67:1]
+ 64 |       return;
+ 65 |     }
+ 66 | 
+ 67 |     const enrollmentResponse = await fetch('/api/enrollments', {
+    :                                ^^^^^
+ 68 |       method: 'POST',
+ 69 |       headers: { 'Content-Type': 'application/json' },
+ 70 |       body: JSON.stringify({
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:79:1]
+ 76 |       })
+ 77 |     });
+ 78 | 
+ 79 |     const enrollmentPayload = (await enrollmentResponse.json().catch(() => ({}))) as {
+    :                                ^^^^^
+ 80 |       error?: string;
+ 81 |     };
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/students/new/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/userspace/app/errors/intercept-console-error.js:56
+[ 1172547ms] [ERROR] ./app/(dashboard)/students/new/page.tsx
+Error:   x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:50:1]
+ 47 | 
+ 48 |     setSaving(true);
+ 49 | 
+ 50 |     const studentResponse = await fetch('/api/students', {
+    :                             ^^^^^
+ 51 |       method: 'POST',
+ 52 |       headers: { 'Content-Type': 'application/json' },
+ 53 |       body: JSON.stringify({ fullName, phone })
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:56:1]
+ 53 |       body: JSON.stringify({ fullName, phone })
+ 54 |     });
+ 55 | 
+ 56 |     const studentPayload = (await studentResponse.json().catch(() => ({}))) as {
+    :                             ^^^^^
+ 57 |       error?: string;
+ 58 |       data?: { id: string };
+ 59 |     };
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:67:1]
+ 64 |       return;
+ 65 |     }
+ 66 | 
+ 67 |     const enrollmentResponse = await fetch('/api/enrollments', {
+    :                                ^^^^^
+ 68 |       method: 'POST',
+ 69 |       headers: { 'Content-Type': 'application/json' },
+ 70 |       body: JSON.stringify({
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:79:1]
+ 76 |       })
+ 77 |     });
+ 78 | 
+ 79 |     const enrollmentPayload = (await enrollmentResponse.json().catch(() => ({}))) as {
+    :                                ^^^^^
+ 80 |       error?: string;
+ 81 |     };
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/students/new/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/userspace/app/errors/intercept-console-error.js:56
+[ 1173651ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:3004/lock:0
+[ 1179750ms] [ERROR] ./app/(dashboard)/students/new/page.tsx
+Error:   x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:50:1]
+ 47 | 
+ 48 |     setSaving(true);
+ 49 | 
+ 50 |     const studentResponse = await fetch('/api/students', {
+    :                             ^^^^^
+ 51 |       method: 'POST',
+ 52 |       headers: { 'Content-Type': 'application/json' },
+ 53 |       body: JSON.stringify({ fullName, phone })
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:56:1]
+ 53 |       body: JSON.stringify({ fullName, phone })
+ 54 |     });
+ 55 | 
+ 56 |     const studentPayload = (await studentResponse.json().catch(() => ({}))) as {
+    :                             ^^^^^
+ 57 |       error?: string;
+ 58 |       data?: { id: string };
+ 59 |     };
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:67:1]
+ 64 |       return;
+ 65 |     }
+ 66 | 
+ 67 |     const enrollmentResponse = await fetch('/api/enrollments', {
+    :                                ^^^^^
+ 68 |       method: 'POST',
+ 69 |       headers: { 'Content-Type': 'application/json' },
+ 70 |       body: JSON.stringify({
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:79:1]
+ 76 |       })
+ 77 |     });
+ 78 | 
+ 79 |     const enrollmentPayload = (await enrollmentResponse.json().catch(() => ({}))) as {
+    :                                ^^^^^
+ 80 |       error?: string;
+ 81 |     };
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/students/new/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/userspace/app/errors/intercept-console-error.js:56
+[ 1180737ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:3004/lock?_rsc=1tcnr:0
+[ 1184024ms] [ERROR] ./app/(dashboard)/students/new/page.tsx
+Error:   x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:50:1]
+ 47 | 
+ 48 |     setSaving(true);
+ 49 | 
+ 50 |     const studentResponse = await fetch('/api/students', {
+    :                             ^^^^^
+ 51 |       method: 'POST',
+ 52 |       headers: { 'Content-Type': 'application/json' },
+ 53 |       body: JSON.stringify({ fullName, phone })
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:56:1]
+ 53 |       body: JSON.stringify({ fullName, phone })
+ 54 |     });
+ 55 | 
+ 56 |     const studentPayload = (await studentResponse.json().catch(() => ({}))) as {
+    :                             ^^^^^
+ 57 |       error?: string;
+ 58 |       data?: { id: string };
+ 59 |     };
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:67:1]
+ 64 |       return;
+ 65 |     }
+ 66 | 
+ 67 |     const enrollmentResponse = await fetch('/api/enrollments', {
+    :                                ^^^^^
+ 68 |       method: 'POST',
+ 69 |       headers: { 'Content-Type': 'application/json' },
+ 70 |       body: JSON.stringify({
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:79:1]
+ 76 |       })
+ 77 |     });
+ 78 | 
+ 79 |     const enrollmentPayload = (await enrollmentResponse.json().catch(() => ({}))) as {
+    :                                ^^^^^
+ 80 |       error?: string;
+ 81 |     };
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/students/new/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/userspace/app/errors/intercept-console-error.js:56
+[ 1185269ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:3004/lock?_rsc=1tcnr:0
+[ 1188001ms] [ERROR] ./app/(dashboard)/students/new/page.tsx
+Error:   x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:50:1]
+ 47 | 
+ 48 |     setSaving(true);
+ 49 | 
+ 50 |     const studentResponse = await fetch('/api/students', {
+    :                             ^^^^^
+ 51 |       method: 'POST',
+ 52 |       headers: { 'Content-Type': 'application/json' },
+ 53 |       body: JSON.stringify({ fullName, phone })
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:56:1]
+ 53 |       body: JSON.stringify({ fullName, phone })
+ 54 |     });
+ 55 | 
+ 56 |     const studentPayload = (await studentResponse.json().catch(() => ({}))) as {
+    :                             ^^^^^
+ 57 |       error?: string;
+ 58 |       data?: { id: string };
+ 59 |     };
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:67:1]
+ 64 |       return;
+ 65 |     }
+ 66 | 
+ 67 |     const enrollmentResponse = await fetch('/api/enrollments', {
+    :                                ^^^^^
+ 68 |       method: 'POST',
+ 69 |       headers: { 'Content-Type': 'application/json' },
+ 70 |       body: JSON.stringify({
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:79:1]
+ 76 |       })
+ 77 |     });
+ 78 | 
+ 79 |     const enrollmentPayload = (await enrollmentResponse.json().catch(() => ({}))) as {
+    :                                ^^^^^
+ 80 |       error?: string;
+ 81 |     };
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/students/new/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/userspace/app/errors/intercept-console-error.js:56
+[ 1190780ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:3004/lock?_rsc=1tcnr:0
+[ 1193696ms] [ERROR] ./app/(dashboard)/students/new/page.tsx
+Error:   x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:50:1]
+ 47 | 
+ 48 |     setSaving(true);
+ 49 | 
+ 50 |     const studentResponse = await fetch('/api/students', {
+    :                             ^^^^^
+ 51 |       method: 'POST',
+ 52 |       headers: { 'Content-Type': 'application/json' },
+ 53 |       body: JSON.stringify({ fullName, phone })
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:56:1]
+ 53 |       body: JSON.stringify({ fullName, phone })
+ 54 |     });
+ 55 | 
+ 56 |     const studentPayload = (await studentResponse.json().catch(() => ({}))) as {
+    :                             ^^^^^
+ 57 |       error?: string;
+ 58 |       data?: { id: string };
+ 59 |     };
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:67:1]
+ 64 |       return;
+ 65 |     }
+ 66 | 
+ 67 |     const enrollmentResponse = await fetch('/api/enrollments', {
+    :                                ^^^^^
+ 68 |       method: 'POST',
+ 69 |       headers: { 'Content-Type': 'application/json' },
+ 70 |       body: JSON.stringify({
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:79:1]
+ 76 |       })
+ 77 |     });
+ 78 | 
+ 79 |     const enrollmentPayload = (await enrollmentResponse.json().catch(() => ({}))) as {
+    :                                ^^^^^
+ 80 |       error?: string;
+ 81 |     };
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/students/new/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/userspace/app/errors/intercept-console-error.js:56
+[ 1195298ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:3004/lock?_rsc=1tcnr:0
+[ 1197072ms] [ERROR] ./app/(dashboard)/students/new/page.tsx
+Error:   x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:50:1]
+ 47 | 
+ 48 |     setSaving(true);
+ 49 | 
+ 50 |     const studentResponse = await fetch('/api/students', {
+    :                             ^^^^^
+ 51 |       method: 'POST',
+ 52 |       headers: { 'Content-Type': 'application/json' },
+ 53 |       body: JSON.stringify({ fullName, phone })
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:56:1]
+ 53 |       body: JSON.stringify({ fullName, phone })
+ 54 |     });
+ 55 | 
+ 56 |     const studentPayload = (await studentResponse.json().catch(() => ({}))) as {
+    :                             ^^^^^
+ 57 |       error?: string;
+ 58 |       data?: { id: string };
+ 59 |     };
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:67:1]
+ 64 |       return;
+ 65 |     }
+ 66 | 
+ 67 |     const enrollmentResponse = await fetch('/api/enrollments', {
+    :                                ^^^^^
+ 68 |       method: 'POST',
+ 69 |       headers: { 'Content-Type': 'application/json' },
+ 70 |       body: JSON.stringify({
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:79:1]
+ 76 |       })
+ 77 |     });
+ 78 | 
+ 79 |     const enrollmentPayload = (await enrollmentResponse.json().catch(() => ({}))) as {
+    :                                ^^^^^
+ 80 |       error?: string;
+ 81 |     };
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/students/new/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/userspace/app/errors/intercept-console-error.js:56
+[ 1198211ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:3004/lock?_rsc=1tcnr:0
+[ 1201310ms] [ERROR] ./app/(dashboard)/students/new/page.tsx
+Error:   x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:50:1]
+ 47 | 
+ 48 |     setSaving(true);
+ 49 | 
+ 50 |     const studentResponse = await fetch('/api/students', {
+    :                             ^^^^^
+ 51 |       method: 'POST',
+ 52 |       headers: { 'Content-Type': 'application/json' },
+ 53 |       body: JSON.stringify({ fullName, phone })
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:56:1]
+ 53 |       body: JSON.stringify({ fullName, phone })
+ 54 |     });
+ 55 | 
+ 56 |     const studentPayload = (await studentResponse.json().catch(() => ({}))) as {
+    :                             ^^^^^
+ 57 |       error?: string;
+ 58 |       data?: { id: string };
+ 59 |     };
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:67:1]
+ 64 |       return;
+ 65 |     }
+ 66 | 
+ 67 |     const enrollmentResponse = await fetch('/api/enrollments', {
+    :                                ^^^^^
+ 68 |       method: 'POST',
+ 69 |       headers: { 'Content-Type': 'application/json' },
+ 70 |       body: JSON.stringify({
+    `----
+  x await isn't allowed in non-async function
+    ,-[/Users/intellectmac/Personal/srmIntellect/app/(dashboard)/students/new/page.tsx:79:1]
+ 76 |       })
+ 77 |     });
+ 78 | 
+ 79 |     const enrollmentPayload = (await enrollmentResponse.json().catch(() => ({}))) as {
+    :                                ^^^^^
+ 80 |       error?: string;
+ 81 |     };
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/(dashboard)/students/new/page.tsx @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/userspace/app/errors/intercept-console-error.js:56
+[ 1211298ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:3004/lock?_rsc=1tcnr:0

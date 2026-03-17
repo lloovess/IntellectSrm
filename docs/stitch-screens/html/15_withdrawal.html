@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Withdrawal Operations Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Slim Sidebar -->
+<aside class="w-20 lg:w-64 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary rounded-lg p-2 text-white">
+<span class="material-symbols-outlined block">logout</span>
+</div>
+<h1 class="font-bold text-xl hidden lg:block tracking-tight">EduAdmin</h1>
+</div>
+<nav class="flex-1 px-4 space-y-2 py-4">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium hidden lg:block">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-medium hidden lg:block">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="font-medium hidden lg:block">Academic</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-medium hidden lg:block">Finance</span>
+</a>
+<div class="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/10 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">door_open</span>
+<span class="font-medium hidden lg:block">Withdrawals</span>
+</a>
+</div>
+</nav>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 px-2">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden" data-alt="User profile avatar with professional look" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD-3opaI3LL7w4iw7aT6RTmC3S-5NhGhhHVfuZFbcZME-sbTFjiXN-JoSpPGeNwe6-406HXqxcX8uQyDw4s0-MBs0Mdu1sBq_9qgTte3qrh-DY07KQusj3Ss9h0I4iGCzuuSidq-Pk5nDxAV0_oeq3ApwK3EOGqiQSSV9AvcgeKELDy2eM_aZmh9ZsI0avSiQoEBfRTn7g4jiF4BCV_6NH3KVMn05nn8W7cMdl54B-hKDui_1r-VEo7XHQSLCACu9fR4spj089d2eU')"></div>
+<div class="hidden lg:block overflow-hidden">
+<p class="text-sm font-semibold truncate">Sarah Jenkins</p>
+<p class="text-xs text-slate-500 truncate">Ops Manager</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Header -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-between px-8 shrink-0">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-bold">Withdrawal Pipeline</h2>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-800 mx-2"></div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span>Main Campus</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span>Reason: All</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary/50" placeholder="Search student ID..." type="text"/>
+</div>
+<button class="size-10 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<div class="flex-1 flex overflow-hidden">
+<div class="flex-1 overflow-y-auto p-8 space-y-8 no-scrollbar">
+<!-- Stepper Progress Area -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<div>
+<h3 class="text-2xl font-bold">Operations Center</h3>
+<p class="text-slate-500 dark:text-slate-400">Manage student departures and financial settlements</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800">Export Report</button>
+<button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold shadow-sm hover:opacity-90">New Request</button>
+</div>
+</div>
+<!-- Stepper -->
+<div class="relative flex justify-between items-start">
+<div class="absolute top-5 left-0 w-full h-0.5 bg-slate-200 dark:bg-slate-800 -z-10"></div>
+<div class="flex flex-col items-center gap-3 bg-background-light dark:bg-background-dark px-4">
+<div class="size-10 rounded-full bg-primary text-white flex items-center justify-center ring-4 ring-background-light dark:ring-background-dark shadow-md">
+<span class="material-symbols-outlined">task</span>
+</div>
+<div class="text-center">
+<p class="font-bold text-sm">Request Received</p>
+<p class="text-xs text-slate-500">Initial Submission</p>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 bg-background-light dark:bg-background-dark px-4">
+<div class="size-10 rounded-full bg-primary text-white flex items-center justify-center ring-4 ring-background-light dark:ring-background-dark shadow-md">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div class="text-center">
+<p class="font-bold text-sm">Academic Clearance</p>
+<p class="text-xs text-slate-500">Books &amp; Tech Return</p>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 bg-background-light dark:bg-background-dark px-4">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center ring-4 ring-background-light dark:ring-background-dark border-2 border-primary">
+<span class="material-symbols-outlined text-primary">payments</span>
+</div>
+<div class="text-center">
+<p class="font-bold text-sm text-primary">Financial Settlement</p>
+<p class="text-xs text-slate-500">Refund Calculation</p>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 bg-background-light dark:bg-background-dark px-4">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center ring-4 ring-background-light dark:ring-background-dark">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div class="text-center">
+<p class="font-bold text-sm">Finalized</p>
+<p class="text-xs text-slate-500">Exit Complete</p>
+</div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-12 gap-8">
+<!-- Financial Refund Calculator Card -->
+<div class="col-span-12 lg:col-span-7 bg-white dark:bg-slate-900 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">calculate</span>
+<h4 class="font-bold text-lg">Financial Refund Calculator</h4>
+</div>
+<span class="px-3 py-1 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 text-xs font-bold rounded-full uppercase">Processing</span>
+</div>
+<div class="flex items-center gap-4 mb-8 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<div class="size-12 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden" data-alt="Profile of the student being processed" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAT8p4OkK9G10mo8r9ExacFUgvYq_Py8y6qDZ4V0F6oWd9pOedVWMtxVnBW1gNuL4oIKV6K9blSmmRrcsIR5lRJY-HTKlCjY08783fZJUJn2AQzlFE8eSapUYgx2QNzOEzd_2-QIpBLmzWyR5WrWRQrSJmfTcu2pMBEVjYty0m4H0edFghek6lRCl6uG9GloN20ac3M3ZKMwKHvUfm23Uh547rKRIcfJTPzrNmJt62sBwTTWU7BzkLfyxP5_Xkpt3iv68yzg0tf8uY')"></div>
+<div>
+<p class="font-bold">Benjamin Aris</p>
+<p class="text-sm text-slate-500">ID: #ST-99201 • B.A. Computer Science</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+<span class="text-slate-600 dark:text-slate-400">Total Paid to Date</span>
+<span class="font-mono font-semibold">$12,450.00</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
+<div class="flex flex-col">
+<span class="text-slate-600 dark:text-slate-400">Unused Days Calculation</span>
+<span class="text-xs text-slate-500">45 days remaining of 120 (37.5%)</span>
+</div>
+<span class="font-mono font-semibold text-primary">+$4,668.75</span>
+</div>
+<div class="flex flex-col gap-2 py-2 border-b border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-center">
+<span class="text-slate-600 dark:text-slate-400">Deductions</span>
+<span class="font-mono font-semibold text-red-500">-$650.00</span>
+</div>
+<div class="pl-4 space-y-1">
+<div class="flex justify-between text-xs text-slate-500 italic">
+<span>Non-refundable Deposit</span>
+<span>-$500.00</span>
+</div>
+<div class="flex justify-between text-xs text-slate-500 italic">
+<span>Material Fees Adjustment</span>
+<span>-$150.00</span>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-center pt-4 mt-2">
+<span class="text-lg font-bold">Final Refund Amount</span>
+<div class="text-right">
+<span class="text-2xl font-black text-primary">$4,018.75</span>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Balance to Student</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-3 bg-primary text-white font-bold rounded-lg shadow-lg shadow-primary/20 hover:opacity-95">
+                                Approve Settlement &amp; Continue
+                            </button>
+</div>
+<!-- Checklist & Clearance Panel -->
+<div class="col-span-12 lg:col-span-5 bg-white dark:bg-slate-900 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">fact_check</span>
+<h4 class="font-bold text-lg">Clearance Checklist</h4>
+</div>
+<span class="text-xs text-primary font-bold">2/4 Done</span>
+</div>
+<div class="space-y-5">
+<div class="flex gap-4 p-3 rounded-lg border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<div class="flex-1">
+<p class="font-semibold text-sm">Library Books Returned</p>
+<p class="text-xs text-slate-500">Validated by Librarian J. Doe</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 rounded-lg border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<div class="flex-1">
+<p class="font-semibold text-sm">Hardware / Laptop Return</p>
+<p class="text-xs text-slate-500">Device ID: MAC-8829 returned in good condition</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 rounded-lg border-2 border-primary/20 bg-primary/5">
+<span class="material-symbols-outlined text-primary">radio_button_unchecked</span>
+<div class="flex-1">
+<p class="font-semibold text-sm">Academic Advisor Sign-off</p>
+<p class="text-xs text-slate-500">Exit interview pending schedule</p>
+</div>
+<button class="text-xs font-bold text-primary underline">Schedule</button>
+</div>
+<div class="flex gap-4 p-3 rounded-lg border border-slate-100 dark:border-slate-800">
+<span class="material-symbols-outlined text-slate-300">radio_button_unchecked</span>
+<div class="flex-1">
+<p class="font-semibold text-sm text-slate-500">Dormitory Key Clearance</p>
+<p class="text-xs text-slate-400">Waiting for residential staff update</p>
+</div>
+</div>
+</div>
+<div class="mt-8 p-4 rounded-lg bg-background-light dark:bg-background-dark border border-dashed border-slate-300 dark:border-slate-700 text-center">
+<span class="material-symbols-outlined text-slate-400 mb-2">upload_file</span>
+<p class="text-xs font-medium text-slate-600 dark:text-slate-400">Drag and drop supporting clearance documents here</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Insights -->
+<aside class="w-80 border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 hidden xl:flex flex-col gap-8 overflow-y-auto no-scrollbar">
+<h4 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">insights</span>
+                        Withdrawal Insights
+                    </h4>
+<!-- Retention Chart Placeholder -->
+<div>
+<div class="flex justify-between items-end mb-4">
+<p class="text-sm font-semibold">Retention Rate</p>
+<p class="text-2xl font-black text-green-500">92%</p>
+</div>
+<div class="flex items-end gap-1.5 h-32 w-full">
+<div class="bg-primary/20 w-full h-[60%] rounded-t-sm" title="Month 1"></div>
+<div class="bg-primary/20 w-full h-[70%] rounded-t-sm" title="Month 2"></div>
+<div class="bg-primary/40 w-full h-[65%] rounded-t-sm" title="Month 3"></div>
+<div class="bg-primary/60 w-full h-[80%] rounded-t-sm" title="Month 4"></div>
+<div class="bg-primary/80 w-full h-[85%] rounded-t-sm" title="Month 5"></div>
+<div class="bg-primary w-full h-[95%] rounded-t-sm" title="Month 6"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] text-slate-400 font-bold uppercase">Jan</span>
+<span class="text-[10px] text-slate-400 font-bold uppercase">Jun</span>
+</div>
+</div>
+<!-- Top Reasons -->
+<div class="space-y-4">
+<p class="text-sm font-semibold">Top Reasons for Withdrawal</p>
+<div class="space-y-3">
+<div class="space-y-1">
+<div class="flex justify-between text-xs">
+<span>Financial Issues</span>
+<span class="font-bold">42%</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 42%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs">
+<span>Relocation</span>
+<span class="font-bold">28%</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="bg-primary/70 h-full rounded-full" style="width: 28%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs">
+<span>Personal / Health</span>
+<span class="font-bold">15%</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="bg-primary/50 h-full rounded-full" style="width: 15%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs">
+<span>Academic Struggle</span>
+<span class="font-bold">15%</span>
+</div>
+<div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="bg-primary/30 h-full rounded-full" style="width: 15%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Actions -->
+<div class="mt-auto space-y-4 pt-6 border-t border-slate-100 dark:border-slate-800">
+<p class="text-sm font-semibold">Recent Timeline</p>
+<div class="space-y-4">
+<div class="flex gap-3">
+<div class="size-2 mt-1.5 rounded-full bg-primary shrink-0"></div>
+<div>
+<p class="text-xs font-bold italic">Settlement Approved</p>
+<p class="text-[10px] text-slate-500">Student: Marcus V. • 10m ago</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="size-2 mt-1.5 rounded-full bg-slate-300 shrink-0"></div>
+<div>
+<p class="text-xs font-bold italic">New Request Started</p>
+<p class="text-[10px] text-slate-500">Student: Elena G. • 2h ago</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Profile - School CRM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5048e5",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121121",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "0.75rem", "full": "9999px"}, // Adjusted xl to 12px as requested (0.75rem)
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-[#1a1a2e] border-r border-slate-200 dark:border-slate-800 flex flex-col h-screen fixed left-0 top-0 z-10 hidden lg:flex">
+<div class="p-6 flex items-center gap-3">
+<div class="h-10 w-10 rounded-xl bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h1 class="text-slate-900 dark:text-white text-lg font-bold">School CRM</h1>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-primary hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-400" href="#">
+<span class="material-symbols-outlined fill-1">group</span>
+<span class="font-medium text-sm">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-primary hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-medium text-sm">Teachers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-primary hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-medium text-sm">Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-primary hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-medium text-sm">Schedule</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-primary hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium text-sm">Settings</span>
+</a>
+<div class="mt-4 flex items-center gap-3 px-3">
+<img alt="Admin User" class="h-9 w-9 rounded-full object-cover" data-alt="Admin profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0cQ_kuRn8Ye9EAXu8PzKlPAfCm4cuwOv72P2lR6UCU0PRCvGFufZqEtFtcK_wKEu9GC6IOBITYXiL16SY7B0riVIeokNjf23i5t4XCB86DaRlYn7yQ7v_hTry1xLRPOFaFiCgns-9qdwSPz1cfPLLCIVLLnMYLcaANvotAf2wlaZ6zlpy3dBhScftOf3kdDIo7IQYNTEplOC0Tld-TNzd0nVZf7u8QorfBP5b4qAZMRJNuLZDLAIJHKVsYeH0zYveGYGTyA4B9XU"/>
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-slate-900 dark:text-white">Admin User</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">View Profile</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 lg:ml-64 p-6 lg:p-10 overflow-y-auto h-screen bg-background-light dark:bg-background-dark">
+<!-- Breadcrumbs & Header -->
+<div class="flex flex-col gap-1 mb-8">
+<div class="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Students</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white">Alexander Ivanov</span>
+</div>
+<div class="flex justify-between items-end mt-2">
+<div>
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Alexander Ivanov</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Student Profile #ST-2023-0042</p>
+</div>
+<div class="hidden sm:flex gap-3">
+<button class="bg-white dark:bg-[#1a1a2e] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[20px]">print</span>
+                        Print
+                    </button>
+<button class="bg-primary text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+                        Edit Profile
+                    </button>
+</div>
+</div>
+</div>
+<!-- Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column (2/3) -->
+<div class="lg:col-span-2 space-y-6">
+<!-- General Info Card -->
+<div class="bg-white dark:bg-[#1a1a2e] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex flex-col md:flex-row gap-6 items-start">
+<div class="relative group">
+<div class="h-32 w-32 rounded-full overflow-hidden border-4 border-slate-50 dark:border-slate-700 shadow-inner">
+<img alt="Student Portrait" class="w-full h-full object-cover" data-alt="Portrait of a young male student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9WaoijRjYrjHQd16EyAXwCqrJd8_ocqWkBBgMy5odCI_TcXOm1CxEyONg1mm581brN9t_-7a_hz1vVjVA7-jc9FvMiBXlb_dQv8rlRZsAvH6QcE0Oc-9_-zDHYzMQm3BHlXMOKcAa3lggqK_H9jybvBi-r5r9FR8gtnboI9ZhXq3FAF5PmIdT4YbN_VHVpDNBg5SNL0u_xJ8xOV7XYQ75l9p1HWfirdoOJJLHo7aRFa-EtBMOqjP3FyTBofQAUR835YJIJNMKYcE"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-white dark:bg-slate-700 p-2 rounded-full shadow-md border border-slate-200 dark:border-slate-600 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">photo_camera</span>
+</button>
+</div>
+<div class="flex-1 w-full">
+<div class="flex justify-between items-start">
+<div>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Alexander Ivanov</h2>
+<p class="text-slate-500 text-sm">Male • Born 12 May 2008 (15 Years)</p>
+</div>
+<span class="px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold uppercase tracking-wider border border-green-200 dark:border-green-800">
+                                    Active
+                                </span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
+<div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<p class="text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1">Grade</p>
+<p class="text-slate-900 dark:text-white font-medium">Grade 10</p>
+</div>
+<div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<p class="text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1">Branch</p>
+<p class="text-slate-900 dark:text-white font-medium">Science</p>
+</div>
+<div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<p class="text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1">Enrolled</p>
+<p class="text-slate-900 dark:text-white font-medium">Sep 01, 2021</p>
+</div>
+<div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+<p class="text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1">Roll No.</p>
+<p class="text-slate-900 dark:text-white font-medium">24</p>
+</div>
+<div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg sm:col-span-2">
+<p class="text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1">Advisor</p>
+<div class="flex items-center gap-2">
+<div class="h-5 w-5 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold">JD</div>
+<p class="text-primary font-medium cursor-pointer hover:underline">John Doe</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Contacts Card -->
+<div class="bg-white dark:bg-[#1a1a2e] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Contacts &amp; Guardians</h3>
+<button class="text-sm text-primary font-medium hover:underline">Manage</button>
+</div>
+<div class="space-y-4">
+<!-- Contact 1 -->
+<div class="flex items-start gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/30">
+<div class="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+<span class="material-symbols-outlined">face_3</span>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Elena Ivanova <span class="ml-2 text-xs font-normal text-slate-500 bg-white dark:bg-slate-700 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-600">Mother</span></p>
+<p class="text-xs text-slate-500 mt-1">Primary Contact</p>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[16px] text-slate-400">call</span>
+                                        +1 (555) 123-4567
+                                    </div>
+<div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[16px] text-slate-400">mail</span>
+                                        elena.iv@example.com
+                                    </div>
+</div>
+</div>
+</div>
+<!-- Address -->
+<div class="flex items-start gap-4 p-4 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/30">
+<div class="h-10 w-10 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 flex items-center justify-center">
+<span class="material-symbols-outlined">home_pin</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Home Address</p>
+<p class="text-sm text-slate-600 dark:text-slate-300 mt-1">123 Maple Avenue, Apt 4B, Springfield, ST 12345</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Education History -->
+<div class="bg-white dark:bg-[#1a1a2e] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Education History</h3>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-500 uppercase bg-slate-50 dark:bg-slate-800/50 border-y border-slate-200 dark:border-slate-700">
+<tr>
+<th class="px-4 py-3 font-semibold">Academic Year</th>
+<th class="px-4 py-3 font-semibold">Grade</th>
+<th class="px-4 py-3 font-semibold">Attendance</th>
+<th class="px-4 py-3 font-semibold">Performance (GPA)</th>
+<th class="px-4 py-3 font-semibold text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-4 py-3 text-slate-900 dark:text-white font-medium">2023 - 2024</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-300">Grade 10</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-2">
+<div class="w-16 h-2 bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-green-500 w-[98%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400">98%</span>
+</div>
+</td>
+<td class="px-4 py-3 text-slate-900 dark:text-white font-bold">3.8</td>
+<td class="px-4 py-3 text-right">
+<button class="text-primary hover:text-primary/80 font-medium text-xs">View Report</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-4 py-3 text-slate-900 dark:text-white font-medium">2022 - 2023</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-300">Grade 9</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-2">
+<div class="w-16 h-2 bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-green-500 w-[95%]"></div>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400">95%</span>
+</div>
+</td>
+<td class="px-4 py-3 text-slate-900 dark:text-white font-bold">3.6</td>
+<td class="px-4 py-3 text-right">
+<button class="text-primary hover:text-primary/80 font-medium text-xs">View Report</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column (1/3) -->
+<div class="lg:col-span-1 space-y-6">
+<!-- Financial Overview Card -->
+<div class="bg-white dark:bg-[#1a1a2e] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-10 -mt-10 pointer-events-none"></div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6 relative z-10">Financial Overview</h3>
+<div class="mb-6 relative z-10">
+<p class="text-sm text-slate-500 mb-1">Current Balance</p>
+<div class="flex items-baseline gap-2">
+<p class="text-4xl font-black text-slate-900 dark:text-white tracking-tight">$0.00</p>
+<span class="text-xs font-bold text-green-600 bg-green-100 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded-full">Paid</span>
+</div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 mb-4 relative z-10">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs text-slate-500 uppercase font-semibold">Next Payment</span>
+<span class="text-xs text-primary font-medium">Due in 15 days</span>
+</div>
+<p class="text-slate-900 dark:text-white font-bold">$1,200.00</p>
+<p class="text-xs text-slate-500">Oct 1, 2023 • Tuition Fee - Term 2</p>
+</div>
+<a class="flex items-center justify-between text-sm text-primary font-medium hover:underline relative z-10" href="#">
+                        View Contract Details
+                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Quick Actions Card -->
+<div class="bg-white dark:bg-[#1a1a2e] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Quick Actions</h3>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex flex-col items-center justify-center p-4 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-slate-600 shadow-sm flex items-center justify-center mb-2 text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<span class="text-xs font-semibold text-slate-700 dark:text-slate-300">Invoice</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-slate-600 shadow-sm flex items-center justify-center mb-2 text-green-600 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-xs font-semibold text-slate-700 dark:text-slate-300">Pay</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-slate-600 shadow-sm flex items-center justify-center mb-2 text-amber-600 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">task_alt</span>
+</div>
+<span class="text-xs font-semibold text-slate-700 dark:text-slate-300">Task</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group">
+<div class="w-10 h-10 rounded-full bg-white dark:bg-slate-600 shadow-sm flex items-center justify-center mb-2 text-purple-600 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">note_add</span>
+</div>
+<span class="text-xs font-semibold text-slate-700 dark:text-slate-300">Note</span>
+</button>
+</div>
+</div>
+<!-- Recent Activity Timeline -->
+<div class="bg-white dark:bg-[#1a1a2e] rounded-xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Recent Activity</h3>
+<button class="text-xs text-slate-400 hover:text-primary">View All</button>
+</div>
+<div class="relative pl-4 border-l border-slate-200 dark:border-slate-700 space-y-6">
+<!-- Timeline Item 1 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-blue-500 border-2 border-white dark:border-[#1a1a2e]"></div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Tuition payment received</p>
+<p class="text-xs text-slate-500 mt-0.5">Today, 10:23 AM</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 mt-1 bg-slate-50 dark:bg-slate-800 p-2 rounded border border-slate-100 dark:border-slate-700">Receipt #RC-9921 for $1,200.00</p>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-600 border-2 border-white dark:border-[#1a1a2e]"></div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Note added by Mrs. Smith</p>
+<p class="text-xs text-slate-500 mt-0.5">Yesterday, 2:45 PM</p>
+<p class="text-xs italic text-slate-500 mt-1">"Alexander showed great improvement in Biology lab today..."</p>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-green-500 border-2 border-white dark:border-[#1a1a2e]"></div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Status updated to <span class="text-green-600 font-bold">Active</span></p>
+<p class="text-xs text-slate-500 mt-0.5">Sep 01, 2023</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,107 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: И
+        - generic [ref=e7]:
+          - generic [ref=e8]: Интеллект
+          - generic [ref=e9]: School CRM
+      - navigation [ref=e10]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Дашборд" [ref=e14] [cursor=pointer]:
+              - /url: /
+              - img [ref=e15]
+              - generic [ref=e20]: Дашборд
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Модули
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "Рабочее место" [ref=e25] [cursor=pointer]:
+                - /url: /assistant
+                - img [ref=e26]
+                - generic [ref=e29]: Рабочее место
+            - listitem [ref=e30]:
+              - link "Ученики" [ref=e31] [cursor=pointer]:
+                - /url: /students
+                - img [ref=e32]
+                - generic [ref=e35]: Ученики
+            - listitem [ref=e36]:
+              - link "Отчисления" [ref=e37] [cursor=pointer]:
+                - /url: /withdrawals
+                - img [ref=e38]
+                - generic [ref=e41]: Отчисления
+        - generic [ref=e42]:
+          - paragraph [ref=e43]: Настройки
+          - list [ref=e44]:
+            - listitem [ref=e45]:
+              - link "Филиалы" [ref=e46] [cursor=pointer]:
+                - /url: /settings/branches
+                - img [ref=e47]
+                - generic [ref=e50]: Филиалы
+            - listitem [ref=e51]:
+              - link "Импорт / Экспорт" [ref=e52] [cursor=pointer]:
+                - /url: /settings/import-export
+                - img [ref=e53]
+                - generic [ref=e56]: Импорт / Экспорт
+      - button "Свернуть" [ref=e58]:
+        - img
+        - generic [ref=e59]: Свернуть
+    - generic [ref=e60]:
+      - banner [ref=e61]:
+        - navigation [ref=e62]:
+          - link "Главная" [ref=e63] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e64]:
+            - img [ref=e65]
+            - link "Ученики" [ref=e67] [cursor=pointer]:
+              - /url: /students
+          - generic [ref=e68]:
+            - img [ref=e69]
+            - link "Создание" [ref=e71] [cursor=pointer]:
+              - /url: /students/new
+        - generic [ref=e72]:
+          - button [ref=e73]:
+            - img
+          - button "3" [ref=e74]:
+            - img
+            - generic [ref=e75]: "3"
+          - button "AS assist@intellect.edu.kg Ассистент" [ref=e76]:
+            - generic [ref=e78]: AS
+            - generic [ref=e79]:
+              - generic [ref=e80]: assist@intellect.edu.kg
+              - generic [ref=e81]: Ассистент
+      - main [ref=e82]:
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - heading "Новый ученик" [level=1] [ref=e86]
+            - paragraph [ref=e87]: Создание профиля сразу с зачислением для последующего оформления договора
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - generic [ref=e90]:
+                - text: ФИО
+                - textbox "ФИО" [ref=e91]: Ассистент E2E 114202
+              - generic [ref=e92]:
+                - text: Телефон
+                - textbox "Телефон" [ref=e93]: "+996700000111"
+              - generic [ref=e94]:
+                - text: Филиал
+                - combobox "Филиал" [ref=e95]:
+                  - option "Интеллект Про" [selected]
+                  - option "Интеллект Центр"
+                  - option "Интеллект Юг"
+              - generic [ref=e96]:
+                - text: Класс
+                - textbox "Класс" [ref=e97]:
+                  - /placeholder: "Например: 1, 5А, 10Б"
+                  - text: 7А
+              - generic [ref=e98]:
+                - text: Учебный год
+                - textbox "Учебный год" [ref=e99]:
+                  - /placeholder: 2026-2027
+                  - text: 2025-2026
+            - button "Сохранение..." [disabled] [ref=e113]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e108] [cursor=pointer]:
+    - img [ref=e109]
+  - alert [ref=e102]

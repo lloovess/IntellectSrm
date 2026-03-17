@@ -1,0 +1,172 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: И
+        - generic [ref=e7]:
+          - generic [ref=e8]: Интеллект
+          - generic [ref=e9]: School CRM
+      - navigation [ref=e10]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Дашборд" [ref=e14] [cursor=pointer]:
+              - /url: /
+              - img [ref=e15]
+              - generic [ref=e20]: Дашборд
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Модули
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "Рабочее место" [ref=e25] [cursor=pointer]:
+                - /url: /assistant
+                - img [ref=e26]
+                - generic [ref=e29]: Рабочее место
+            - listitem [ref=e30]:
+              - link "Ученики" [ref=e31] [cursor=pointer]:
+                - /url: /students
+                - img [ref=e32]
+                - generic [ref=e35]: Ученики
+            - listitem [ref=e36]:
+              - link "Отчисления" [ref=e37] [cursor=pointer]:
+                - /url: /withdrawals
+                - img [ref=e38]
+                - generic [ref=e41]: Отчисления
+      - button "Свернуть" [ref=e43]:
+        - img
+        - generic [ref=e44]: Свернуть
+    - generic [ref=e45]:
+      - banner [ref=e46]:
+        - navigation [ref=e47]:
+          - link "Главная" [ref=e48] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e49]:
+            - img [ref=e50]
+            - link "Ученики" [ref=e52] [cursor=pointer]:
+              - /url: /students
+          - generic [ref=e53]:
+            - img [ref=e54]
+            - link "b0000000-0000-0000-0000-000000000002" [ref=e56] [cursor=pointer]:
+              - /url: /students/b0000000-0000-0000-0000-000000000002
+        - generic [ref=e57]:
+          - button [ref=e58]:
+            - img
+          - button "3" [ref=e59]:
+            - img
+            - generic [ref=e60]: "3"
+          - button "AS assist@intellect.edu.kg Ассистент" [ref=e61]:
+            - generic [ref=e63]: AS
+            - generic [ref=e64]:
+              - generic [ref=e65]: assist@intellect.edu.kg
+              - generic [ref=e66]: Ассистент
+      - main [ref=e67]:
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - link "Ученики" [ref=e72] [cursor=pointer]:
+                - /url: /students
+              - img [ref=e73]
+              - generic [ref=e75]: Бекова Айжан Маратовна
+            - generic [ref=e76]:
+              - generic [ref=e77]:
+                - heading "Бекова Айжан Маратовна" [level=1] [ref=e78]
+                - paragraph [ref=e79]: "#B0000000 · 5Б класс · Интеллект Про"
+              - generic [ref=e80]:
+                - button "Печать" [ref=e81]:
+                  - img [ref=e82]
+                  - text: Печать
+                - link "Редактировать" [ref=e86] [cursor=pointer]:
+                  - /url: /students/b0000000-0000-0000-0000-000000000002/edit
+                  - img [ref=e87]
+                  - text: Редактировать
+            - generic [ref=e91]:
+              - generic [ref=e93]: БА
+              - generic [ref=e94]:
+                - generic [ref=e95]:
+                  - generic [ref=e96]:
+                    - heading "Бекова Айжан Маратовна" [level=2] [ref=e97]
+                    - paragraph [ref=e98]: +7 777 100 02 02
+                  - generic [ref=e99]: Активен
+                - generic [ref=e100]:
+                  - generic [ref=e101]:
+                    - paragraph [ref=e102]: Класс
+                    - paragraph [ref=e103]: 5Б
+                  - generic [ref=e104]:
+                    - paragraph [ref=e105]: Филиал
+                    - paragraph [ref=e106]: Интеллект Про
+                  - generic [ref=e107]:
+                    - paragraph [ref=e108]: Учебный год
+                    - paragraph [ref=e109]: 2025-2026
+                  - generic [ref=e110]:
+                    - paragraph [ref=e111]: Email
+                    - paragraph [ref=e112]: bekova.a@mail.kz
+                  - generic [ref=e113]:
+                    - paragraph [ref=e114]: С нами с
+                    - paragraph [ref=e115]: 28 февр. 2026 г.
+          - generic [ref=e116]:
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - heading "Контакты и родители" [level=3] [ref=e120]
+                - generic [ref=e122]:
+                  - img [ref=e124]
+                  - generic [ref=e126]:
+                    - paragraph [ref=e127]: Бекова Айжан МаратовнаУченик
+                    - generic [ref=e128]:
+                      - generic [ref=e129]:
+                        - img [ref=e130]
+                        - text: +7 777 100 02 02
+                      - generic [ref=e132]:
+                        - img [ref=e133]
+                        - text: bekova.a@mail.kz
+              - generic [ref=e135]:
+                - heading "История зачислений" [level=3] [ref=e136]
+                - table [ref=e138]:
+                  - rowgroup [ref=e139]:
+                    - row "Учебный год Класс Филиал Статус" [ref=e140]:
+                      - columnheader "Учебный год" [ref=e141]
+                      - columnheader "Класс" [ref=e142]
+                      - columnheader "Филиал" [ref=e143]
+                      - columnheader "Статус" [ref=e144]
+                  - rowgroup [ref=e145]:
+                    - row "2025-2026 5Б Интеллект Про Активен" [ref=e146]:
+                      - cell "2025-2026" [ref=e147]
+                      - cell "5Б" [ref=e148]
+                      - cell "Интеллект Про" [ref=e149]
+                      - cell "Активен" [ref=e150]
+            - generic [ref=e151]:
+              - generic [ref=e152]:
+                - heading "Быстрые действия" [level=3] [ref=e153]
+                - generic [ref=e154]:
+                  - link "Договор" [ref=e155] [cursor=pointer]:
+                    - /url: /students/b0000000-0000-0000-0000-000000000002/contract
+                    - img [ref=e157]
+                    - generic [ref=e159]: Договор
+                  - button "Задача" [ref=e160]:
+                    - img [ref=e162]
+                    - generic [ref=e164]: Задача
+                  - button "Заметка" [ref=e165]:
+                    - img [ref=e167]
+                    - generic [ref=e169]: Заметка
+              - generic [ref=e170]:
+                - heading "Последние события" [level=3] [ref=e172]
+                - generic [ref=e173]:
+                  - generic [ref=e176]:
+                    - paragraph [ref=e177]: Оплата получена
+                    - paragraph [ref=e178]: 26 дней назад
+                    - paragraph [ref=e179]: 69 166,67 ₸ · Февраль
+                  - generic [ref=e182]:
+                    - paragraph [ref=e183]: Оплата получена
+                    - paragraph [ref=e184]: около 2 месяцев назад
+                    - paragraph [ref=e185]: 69 166,67 ₸ · Январь
+                  - generic [ref=e188]:
+                    - paragraph [ref=e189]: Оплата получена
+                    - paragraph [ref=e190]: 3 месяца назад
+                    - paragraph [ref=e191]: 69 166,67 ₸ · Декабрь
+                  - generic [ref=e194]:
+                    - paragraph [ref=e195]: Оплата получена
+                    - paragraph [ref=e196]: 4 месяца назад
+                    - paragraph [ref=e197]: 69 166,67 ₸ · Ноябрь
+                  - generic [ref=e200]:
+                    - paragraph [ref=e201]: Оплата получена
+                    - paragraph [ref=e202]: 5 месяцев назад
+                    - paragraph [ref=e203]: 69 166,67 ₸ · Октябрь
+  - region "Notifications alt+T"

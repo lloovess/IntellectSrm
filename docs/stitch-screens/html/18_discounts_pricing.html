@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Discounts &amp; Pricing Rules Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#207fdf",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111921",
+            },
+            fontFamily: {
+              "display": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-item-active { background-color: rgba(32, 127, 223, 0.1); color: #207fdf; border-radius: 0.5rem; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">school</span>
+</div>
+<div>
+<h1 class="text-sm font-bold tracking-tight">School CRM</h1>
+<p class="text-xs text-slate-500">Admin Portal</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">group</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">payments</span>
+<span class="text-sm font-medium">Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">badge</span>
+<span class="text-sm font-medium">Staff</span>
+</a>
+<div class="pt-4 pb-2 px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">System</div>
+<a class="flex items-center gap-3 px-3 py-2 sidebar-item-active" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-xs font-semibold truncate">Alex Johnson</p>
+<p class="text-[10px] text-slate-500 truncate">Super Admin</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-sm">more_vert</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-hidden relative">
+<!-- Header & Breadcrumbs -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 py-4">
+<div class="flex items-center justify-between">
+<div>
+<div class="flex items-center gap-2 text-xs text-slate-500 mb-1">
+<span>Settings</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span>Finance</span>
+<span class="material-symbols-outlined text-xs text-primary font-bold">chevron_right</span>
+<span class="text-primary font-medium">Pricing Rules</span>
+</div>
+<h2 class="text-2xl font-black tracking-tight">Discounts &amp; Pricing Rules</h2>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-sm transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+                        Add Discount
+                    </button>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<div class="max-w-7xl mx-auto space-y-8">
+<!-- Pricing Strategies Grid -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">account_balance</span>
+                                Pricing Strategies by Branch
+                            </h3>
+<button class="text-xs font-semibold text-primary hover:underline">View All Branches</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Branch Card 1 -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center overflow-hidden">
+<div class="w-full h-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">apartment</span>
+</div>
+</div>
+<span class="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded uppercase">Main Campus</span>
+</div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100 mb-1">Base Tuition Fees</h4>
+<div class="space-y-2 mt-4">
+<div class="flex justify-between text-sm py-2 border-b border-slate-50 dark:border-slate-800">
+<span class="text-slate-500">Grade 1</span>
+<span class="font-bold">$15,000 /yr</span>
+</div>
+<div class="flex justify-between text-sm py-2 border-b border-slate-50 dark:border-slate-800">
+<span class="text-slate-500">Grade 2</span>
+<span class="font-bold">$16,000 /yr</span>
+</div>
+<div class="flex justify-between text-sm py-2">
+<span class="text-slate-500">Grade 3</span>
+<span class="font-bold">$17,500 /yr</span>
+</div>
+</div>
+</div>
+<!-- Branch Card 2 -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center overflow-hidden">
+<div class="w-full h-full bg-amber-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-amber-600">domain</span>
+</div>
+</div>
+<span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded uppercase text-nowrap">West Wing</span>
+</div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100 mb-1">Base Tuition Fees</h4>
+<div class="space-y-2 mt-4">
+<div class="flex justify-between text-sm py-2 border-b border-slate-50 dark:border-slate-800">
+<span class="text-slate-500">Grade 1</span>
+<span class="font-bold">$14,500 /yr</span>
+</div>
+<div class="flex justify-between text-sm py-2 border-b border-slate-50 dark:border-slate-800">
+<span class="text-slate-500">Grade 2</span>
+<span class="font-bold">$15,500 /yr</span>
+</div>
+<div class="flex justify-between text-sm py-2">
+<span class="text-slate-500">Grade 3</span>
+<span class="font-bold">$16,800 /yr</span>
+</div>
+</div>
+</div>
+<!-- Branch Card 3 -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center overflow-hidden">
+<div class="w-full h-full bg-purple-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-purple-600">holiday_village</span>
+</div>
+</div>
+<span class="px-2 py-1 bg-slate-100 text-slate-600 text-[10px] font-bold rounded uppercase text-nowrap">East Prep</span>
+</div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100 mb-1">Early Years Tuition</h4>
+<div class="space-y-2 mt-4">
+<div class="flex justify-between text-sm py-2 border-b border-slate-50 dark:border-slate-800">
+<span class="text-slate-500">Pre-K</span>
+<span class="font-bold">$12,000 /yr</span>
+</div>
+<div class="flex justify-between text-sm py-2 border-b border-slate-50 dark:border-slate-800">
+<span class="text-slate-500">Kindergarten</span>
+<span class="font-bold">$13,500 /yr</span>
+</div>
+<div class="flex justify-between text-sm py-2">
+<span class="text-slate-500">Grade 1</span>
+<span class="font-bold">$14,200 /yr</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Discount Directory Table -->
+<section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<h3 class="text-lg font-bold">Discount Directory</h3>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="pl-9 pr-4 py-1.5 bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-1 focus:ring-primary w-64" placeholder="Search rules..." type="text"/>
+</div>
+<button class="p-2 bg-slate-50 dark:bg-slate-800 rounded-lg hover:bg-slate-100">
+<span class="material-symbols-outlined text-slate-600 text-sm">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 uppercase text-[11px] font-bold">
+<tr>
+<th class="px-6 py-4">Discount Name</th>
+<th class="px-6 py-4">Type</th>
+<th class="px-6 py-4">Value</th>
+<th class="px-6 py-4">Applicable To</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-bold text-slate-900 dark:text-slate-100">Sibling Discount</div>
+<div class="text-[11px] text-slate-400">Family Multi-enrollment</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold rounded">Percentage</span>
+</td>
+<td class="px-6 py-4 font-semibold text-slate-700">10% Off</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1 text-slate-600">
+<span class="material-symbols-outlined text-sm text-slate-400">public</span> All Branches
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="relative inline-flex items-center cursor-pointer">
+<div class="w-9 h-5 bg-green-500 rounded-full"></div>
+<div class="absolute left-1 w-3 h-3 bg-white rounded-full translate-x-4 transition-transform"></div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-bold text-slate-900 dark:text-slate-100">Academic Merit</div>
+<div class="text-[11px] text-slate-400">Top 5% Performers</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded">Fixed Amount</span>
+</td>
+<td class="px-6 py-4 font-semibold text-slate-700">$2,500.00</td>
+<td class="px-6 py-4 text-slate-600">Main Campus</td>
+<td class="px-6 py-4">
+<div class="relative inline-flex items-center cursor-pointer">
+<div class="w-9 h-5 bg-green-500 rounded-full"></div>
+<div class="absolute left-1 w-3 h-3 bg-white rounded-full translate-x-4 transition-transform"></div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-bold text-slate-900 dark:text-slate-100">Staff Child</div>
+<div class="text-[11px] text-slate-400">Internal Benefit</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold rounded">Percentage</span>
+</td>
+<td class="px-6 py-4 font-semibold text-slate-700">50% Off</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1 text-slate-600">
+<span class="material-symbols-outlined text-sm text-slate-400">public</span> All Branches
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="relative inline-flex items-center cursor-pointer">
+<div class="w-9 h-5 bg-green-500 rounded-full"></div>
+<div class="absolute left-1 w-3 h-3 bg-white rounded-full translate-x-4 transition-transform"></div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4">
+<div class="font-bold text-slate-900 dark:text-slate-100">Early Bird Payment</div>
+<div class="text-[11px] text-slate-400">Before Aug 15th</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded">Fixed Amount</span>
+</td>
+<td class="px-6 py-4 font-semibold text-slate-700">$500.00</td>
+<td class="px-6 py-4 text-slate-600">West Wing, East Prep</td>
+<td class="px-6 py-4">
+<div class="relative inline-flex items-center cursor-pointer">
+<div class="w-9 h-5 bg-slate-300 rounded-full"></div>
+<div class="absolute left-1 w-3 h-3 bg-white rounded-full transition-transform"></div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</div>
+<!-- Add Discount Drawer (Simulated visible state with absolute positioning) -->
+<div class="absolute right-0 top-0 bottom-0 w-96 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col transform transition-transform duration-300 translate-x-full">
+<!-- Toggle this with JS usually, but here for design preview -->
+</div>
+<!-- Change History Sidebar (Secondary) -->
+<div class="absolute right-0 top-0 bottom-0 w-80 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 flex flex-col z-20 hidden lg:flex">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<h3 class="font-bold text-sm uppercase tracking-wider text-slate-400">Change History</h3>
+<span class="material-symbols-outlined text-slate-300">history</span>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+<div class="relative pl-6 border-l border-slate-200 dark:border-slate-800 space-y-6">
+<!-- History Item 1 -->
+<div class="relative">
+<div class="absolute -left-[29px] top-0 w-2.5 h-2.5 bg-primary rounded-full border-2 border-white dark:border-slate-900"></div>
+<p class="text-[11px] text-slate-400 font-bold mb-1 uppercase tracking-tighter">Today, 10:45 AM</p>
+<p class="text-xs font-semibold">Alex Johnson</p>
+<p class="text-xs text-slate-500 mt-1">Changed <span class="text-slate-900 font-medium">Sibling Discount</span> from 8% to 10%.</p>
+</div>
+<!-- History Item 2 -->
+<div class="relative">
+<div class="absolute -left-[29px] top-0 w-2.5 h-2.5 bg-slate-300 rounded-full border-2 border-white dark:border-slate-900"></div>
+<p class="text-[11px] text-slate-400 font-bold mb-1 uppercase tracking-tighter">Yesterday, 4:12 PM</p>
+<p class="text-xs font-semibold">Sarah Miller</p>
+<p class="text-xs text-slate-500 mt-1">Updated <span class="text-slate-900 font-medium">Main Campus</span> Grade 1 tuition to $15,000.</p>
+</div>
+<!-- History Item 3 -->
+<div class="relative">
+<div class="absolute -left-[29px] top-0 w-2.5 h-2.5 bg-slate-300 rounded-full border-2 border-white dark:border-slate-900"></div>
+<p class="text-[11px] text-slate-400 font-bold mb-1 uppercase tracking-tighter">Oct 24, 2023</p>
+<p class="text-xs font-semibold">Alex Johnson</p>
+<p class="text-xs text-slate-500 mt-1">Created new rule: <span class="text-slate-900 font-medium">Early Bird Payment</span>.</p>
+</div>
+<!-- History Item 4 -->
+<div class="relative">
+<div class="absolute -left-[29px] top-0 w-2.5 h-2.5 bg-slate-300 rounded-full border-2 border-white dark:border-slate-900"></div>
+<p class="text-[11px] text-slate-400 font-bold mb-1 uppercase tracking-tighter">Oct 20, 2023</p>
+<p class="text-xs font-semibold">System Audit</p>
+<p class="text-xs text-slate-500 mt-1">Annual pricing rollover completed successfully.</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-slate-50 dark:bg-slate-800/50 m-4 rounded-xl">
+<p class="text-[10px] text-center text-slate-400 font-medium">Viewing logs for last 30 days</p>
+</div>
+</div>
+</main>
+</div>
+<!-- Hidden Rule Creation Drawer Overlay (for UI visibility) -->
+<!-- In a real app, this would be toggled. Here it's shown for representation by removing translate-x-full -->
+<div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex justify-end invisible opacity-0 transition-opacity" id="drawer">
+<div class="w-[450px] bg-white h-full shadow-2xl flex flex-col">
+<div class="p-6 border-b border-slate-100 flex items-center justify-between">
+<div>
+<h3 class="text-lg font-bold">Add New Discount Rule</h3>
+<p class="text-xs text-slate-500">Define how the system calculates tuition reductions.</p>
+</div>
+<button class="p-2 hover:bg-slate-100 rounded-lg"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Rule Name</label>
+<input class="w-full border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:ring-primary focus:border-primary" placeholder="e.g. Sibling Multi-Enrollment" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Category</label>
+<select class="w-full border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:ring-primary focus:border-primary">
+<option>Financial Aid</option>
+<option>Merit Based</option>
+<option>Family Discount</option>
+<option>Employee Benefit</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Calculation Logic</label>
+<select class="w-full border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:ring-primary focus:border-primary">
+<option>Percentage</option>
+<option>Fixed Amount</option>
+<option>Subtract from base</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Value</label>
+<div class="relative">
+<input class="w-full border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:ring-primary focus:border-primary" placeholder="0.00" type="text"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">%</span>
+</div>
+</div>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Validation Rule</label>
+<textarea class="w-full border-slate-200 rounded-lg px-4 py-3 text-sm focus:ring-primary focus:border-primary font-mono" placeholder="e.g. Only apply if 'Student Status' is Active AND 'Child Count' &gt; 1" rows="4"></textarea>
+<p class="text-[10px] text-slate-400 mt-2 italic flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">info</span> Use basic logic syntax for custom validations.
+                    </p>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Applicable Branches</label>
+<div class="space-y-2">
+<label class="flex items-center gap-3 p-3 border border-slate-100 rounded-lg cursor-pointer hover:bg-slate-50">
+<input checked="" class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox"/>
+<span class="text-sm font-medium">Main Campus</span>
+</label>
+<label class="flex items-center gap-3 p-3 border border-slate-100 rounded-lg cursor-pointer hover:bg-slate-50">
+<input class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox"/>
+<span class="text-sm font-medium">West Wing</span>
+</label>
+<label class="flex items-center gap-3 p-3 border border-slate-100 rounded-lg cursor-pointer hover:bg-slate-50">
+<input class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox"/>
+<span class="text-sm font-medium">East Prep</span>
+</label>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-slate-100 flex gap-3">
+<button class="flex-1 bg-primary text-white py-3 rounded-xl font-bold text-sm hover:bg-primary/90">Save Discount Rule</button>
+<button class="px-6 py-3 text-slate-600 font-bold text-sm border border-slate-200 rounded-xl hover:bg-slate-50">Cancel</button>
+</div>
+</div>
+</div>
+</body></html>

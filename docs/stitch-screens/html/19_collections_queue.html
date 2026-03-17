@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Collections Queue Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#5048e5",
+                        "primary-content": "#ffffff",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#121121",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e1d2b",
+                        "text-main": "#121117",
+                        "text-sub": "#656487",
+                        "danger": "#ef4444",
+                        "warning": "#f59e0b",
+                        "success": "#10b981",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "0.75rem", /* 12px as requested */
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for better look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light text-text-main h-screen overflow-hidden flex">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 bg-surface-light border-r border-slate-200 flex flex-col justify-between z-20">
+<div class="flex flex-col gap-4 p-4">
+<div class="flex gap-3 items-center mb-4">
+<div class="bg-primary/10 rounded-full h-10 w-10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-text-main text-base font-bold leading-normal">Agent Portal</h1>
+<p class="text-text-sub text-xs font-normal leading-normal">Call Center</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-xl text-text-sub hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-xl bg-primary/5 text-primary" href="#">
+<span class="material-symbols-outlined material-symbols-filled">checklist</span>
+<span class="text-sm font-medium">Collections Queue</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-xl text-text-sub hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="text-sm font-medium">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-xl text-text-sub hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-xl text-text-sub hover:bg-slate-50 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<div class="p-4 border-t border-slate-200">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-cover bg-center" data-alt="Portrait of a female agent" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBV8YXz5KkQRB7ZxuMJaALTkLnj6doOrmPJlYb-3aetjATCOHA7innuvVcy5g71E67tXgYfeO8D3Tu1T2fXaMOjb7J6-6gFezTGEMznreIziaxiKU3ug1Q5rXhnkDtGC7iPEKA8A4xw7IroZnDpgmYoFjBKN4NLXIqyVuUkfFSS20rvFgC9P8a34bTrKo6FnUKBnOf_rgzE01KL5dUi2KLIBLQITEzbLsMqqoulpu44ecTnTW5avGuJirPipTWxc4BKGqdZANdPG44');"></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-sm font-semibold truncate">Jane Doe</p>
+<p class="text-xs text-text-sub truncate">Senior Agent</p>
+</div>
+<button class="ml-auto text-text-sub hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-6 bg-surface-light border-b border-slate-200 flex-shrink-0">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-bold text-text-main flex items-center gap-2">
+<span class="w-2 h-6 bg-primary rounded-full"></span>
+                    Collections Queue
+                </h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-text-sub material-symbols-outlined text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 bg-background-light rounded-xl text-sm border-none focus:ring-2 focus:ring-primary/20 w-64 placeholder:text-slate-400" placeholder="Search student..." type="text"/>
+</div>
+<button class="relative p-2 text-text-sub hover:bg-slate-100 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-danger rounded-full border border-white"></span>
+</button>
+</div>
+</header>
+<!-- Content Body -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Left Side: Metrics & Table -->
+<div class="flex-1 flex flex-col overflow-y-auto p-6 gap-6">
+<!-- Metrics Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-surface-light p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-1 relative overflow-hidden group hover:border-primary/30 transition-all">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">monetization_on</span>
+</div>
+<p class="text-text-sub text-sm font-medium">Total Debt</p>
+<p class="text-2xl font-bold text-text-main">$45,200</p>
+<div class="flex items-center gap-1 text-xs text-danger font-medium mt-2">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+5.2% from yesterday</span>
+</div>
+</div>
+<div class="bg-surface-light p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-1 relative overflow-hidden group hover:border-warning/30 transition-all">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-warning">pending_actions</span>
+</div>
+<p class="text-text-sub text-sm font-medium">Active Tasks</p>
+<p class="text-2xl font-bold text-text-main">28</p>
+<div class="flex items-center gap-1 text-xs text-warning font-medium mt-2">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span>4 High Priority</span>
+</div>
+</div>
+<div class="bg-surface-light p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-1 relative overflow-hidden group hover:border-success/30 transition-all">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-success">check_circle</span>
+</div>
+<p class="text-text-sub text-sm font-medium">Completed Today</p>
+<p class="text-2xl font-bold text-text-main">12</p>
+<div class="flex items-center gap-1 text-xs text-success font-medium mt-2">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span>On track</span>
+</div>
+</div>
+</div>
+<!-- Priority Queue Header & Filters -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-text-main">Priority Queue</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-xs font-medium bg-white border border-slate-200 rounded-lg hover:bg-slate-50 flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> Filter
+                            </button>
+<button class="px-3 py-1.5 text-xs font-medium bg-white border border-slate-200 rounded-lg hover:bg-slate-50 flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">sort</span> Sort
+                            </button>
+</div>
+</div>
+<!-- Table -->
+<div class="bg-surface-light border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 border-b border-slate-200">
+<tr>
+<th class="px-6 py-4 font-semibold text-text-sub">Priority</th>
+<th class="px-6 py-4 font-semibold text-text-sub">Student Name</th>
+<th class="px-6 py-4 font-semibold text-text-sub">Parent Contact</th>
+<th class="px-6 py-4 font-semibold text-text-sub">Overdue</th>
+<th class="px-6 py-4 font-semibold text-text-sub">Debt</th>
+<th class="px-6 py-4 font-semibold text-text-sub">Last Contact</th>
+<th class="px-6 py-4 font-semibold text-text-sub text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Row 1: Selected State logic applied visually -->
+<tr class="bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer border-l-4 border-l-primary">
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-danger/10 text-danger">
+                                                High
+                                            </span>
+</td>
+<td class="px-6 py-4 font-medium text-text-main">
+                                            Alex Johnson
+                                            <div class="text-xs text-text-sub font-normal">ID: #88231</div>
+</td>
+<td class="px-6 py-4 text-text-sub">
+                                            (555) 123-4567
+                                            <div class="text-xs">Father: Mark Johnson</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-danger font-bold">15 days</span>
+</td>
+<td class="px-6 py-4 font-medium text-text-main">$1,200</td>
+<td class="px-6 py-4 text-text-sub">Oct 12</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary/80 font-medium text-sm">Open</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-l-transparent">
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-danger/10 text-danger">
+                                                High
+                                            </span>
+</td>
+<td class="px-6 py-4 font-medium text-text-main">
+                                            Sarah Williams
+                                            <div class="text-xs text-text-sub font-normal">ID: #99102</div>
+</td>
+<td class="px-6 py-4 text-text-sub">
+                                            (555) 987-6543
+                                            <div class="text-xs">Mother: Jane Williams</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-danger font-bold">12 days</span>
+</td>
+<td class="px-6 py-4 font-medium text-text-main">$850</td>
+<td class="px-6 py-4 text-text-sub">Oct 10</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-sub hover:text-primary font-medium text-sm">Open</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-l-transparent">
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-warning/10 text-warning">
+                                                Medium
+                                            </span>
+</td>
+<td class="px-6 py-4 font-medium text-text-main">
+                                            Michael Brown
+                                            <div class="text-xs text-text-sub font-normal">ID: #44210</div>
+</td>
+<td class="px-6 py-4 text-text-sub">
+                                            (555) 456-7890
+                                            <div class="text-xs">Father: James Brown</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-warning font-semibold">5 days</span>
+</td>
+<td class="px-6 py-4 font-medium text-text-main">$300</td>
+<td class="px-6 py-4 text-text-sub">Oct 14</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-sub hover:text-primary font-medium text-sm">Open</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 transition-colors cursor-pointer border-l-4 border-l-transparent">
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">
+                                                Low
+                                            </span>
+</td>
+<td class="px-6 py-4 font-medium text-text-main">
+                                            Emily Davis
+                                            <div class="text-xs text-text-sub font-normal">ID: #33012</div>
+</td>
+<td class="px-6 py-4 text-text-sub">
+                                            (555) 222-3333
+                                            <div class="text-xs">Self</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-text-sub">2 days</span>
+</td>
+<td class="px-6 py-4 font-medium text-text-main">$150</td>
+<td class="px-6 py-4 text-text-sub">Oct 15</td>
+<td class="px-6 py-4 text-right">
+<button class="text-text-sub hover:text-primary font-medium text-sm">Open</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Panel: Task Detail (Active State) -->
+<aside class="w-[400px] bg-surface-light border-l border-slate-200 flex flex-col shadow-xl z-10">
+<!-- Panel Header -->
+<div class="p-6 border-b border-slate-200 flex justify-between items-start bg-slate-50/50">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-danger/10 text-danger border border-danger/20">
+                                High Priority
+                            </span>
+<span class="text-xs text-text-sub">ID: #88231</span>
+</div>
+<h3 class="text-xl font-bold text-text-main">Alex Johnson</h3>
+<p class="text-sm text-text-sub">Computer Science • Year 2</p>
+</div>
+<button class="text-text-sub hover:text-text-main">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Panel Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Debt Summary -->
+<div class="bg-danger/5 rounded-xl p-4 border border-danger/10">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm font-medium text-danger">Outstanding Balance</span>
+<span class="text-xs bg-white px-2 py-1 rounded text-danger border border-danger/20">15 Days Overdue</span>
+</div>
+<div class="text-3xl font-bold text-text-main mb-1">$1,200.00</div>
+<p class="text-xs text-text-sub">Fall Semester Tuition - 2nd Installment</p>
+</div>
+<!-- Contact Information -->
+<div class="space-y-3">
+<h4 class="text-sm font-bold text-text-main uppercase tracking-wider">Contact Details</h4>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-background-light border border-slate-200">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+<div class="flex-1">
+<p class="text-xs text-text-sub">Parent (Father)</p>
+<p class="text-sm font-medium">Mark Johnson</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-background-light border border-slate-200">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">phone</span>
+</div>
+<div class="flex-1">
+<p class="text-xs text-text-sub">Primary Phone</p>
+<p class="text-sm font-medium">(555) 123-4567</p>
+</div>
+<button class="p-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition shadow-sm">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</button>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-background-light border border-slate-200">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</div>
+<div class="flex-1">
+<p class="text-xs text-text-sub">Email</p>
+<p class="text-sm font-medium">mark.j@example.com</p>
+</div>
+<button class="p-2 bg-white border border-slate-200 text-text-main rounded-lg hover:bg-slate-50 transition">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Activity History -->
+<div class="space-y-4">
+<h4 class="text-sm font-bold text-text-main uppercase tracking-wider">Recent Activity</h4>
+<div class="relative pl-4 border-l-2 border-slate-200 space-y-6">
+<!-- Timeline Item 1 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-primary border-2 border-white"></div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-baseline">
+<span class="text-sm font-medium text-text-main">Call: Left Voicemail</span>
+<span class="text-xs text-text-sub">Oct 12</span>
+</div>
+<p class="text-xs text-text-sub leading-relaxed">Agent: Jane Doe. No answer, left message regarding overdue payment.</p>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative">
+<div class="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-slate-300 border-2 border-white"></div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-baseline">
+<span class="text-sm font-medium text-text-main">Automated Email Sent</span>
+<span class="text-xs text-text-sub">Oct 10</span>
+</div>
+<p class="text-xs text-text-sub leading-relaxed">System sent "Payment Reminder #2".</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer: Log Action -->
+<div class="p-4 border-t border-slate-200 bg-white">
+<h4 class="text-sm font-bold text-text-main mb-3">Log Call Result</h4>
+<form class="flex flex-col gap-3" onsubmit="event.preventDefault();">
+<select class="w-full rounded-xl border-slate-200 text-sm focus:ring-primary focus:border-primary bg-background-light">
+<option>Call Outcome...</option>
+<option>Promised to Pay</option>
+<option>Left Voicemail</option>
+<option>Wrong Number</option>
+<option>Refused Payment</option>
+</select>
+<textarea class="w-full rounded-xl border-slate-200 text-sm focus:ring-primary focus:border-primary bg-background-light resize-none h-20 p-3" placeholder="Add notes here..."></textarea>
+<div class="flex gap-2 mt-1">
+<button class="flex-1 bg-primary text-white font-medium py-2.5 rounded-xl text-sm hover:bg-primary/90 transition-colors shadow-md shadow-primary/20">
+                                Save Log
+                            </button>
+<button class="bg-background-light text-text-main font-medium px-4 py-2.5 rounded-xl text-sm border border-slate-200 hover:bg-slate-100 transition-colors">
+                                Add Note
+                            </button>
+</div>
+</form>
+</div>
+</aside>
+</div>
+</main>
+</body></html>

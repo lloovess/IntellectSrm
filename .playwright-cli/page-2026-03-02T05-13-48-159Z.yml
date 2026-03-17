@@ -1,0 +1,199 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: И
+        - generic [ref=e7]:
+          - generic [ref=e8]: Интеллект
+          - generic [ref=e9]: School CRM
+      - navigation [ref=e10]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Дашборд" [ref=e14] [cursor=pointer]:
+              - /url: /
+              - img [ref=e15]
+              - generic [ref=e20]: Дашборд
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Модули
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "Рабочее место" [ref=e25] [cursor=pointer]:
+                - /url: /assistant
+                - img [ref=e26]
+                - generic [ref=e29]: Рабочее место
+            - listitem [ref=e30]:
+              - link "Ученики" [ref=e31] [cursor=pointer]:
+                - /url: /students
+                - img [ref=e32]
+                - generic [ref=e35]: Ученики
+            - listitem [ref=e36]:
+              - link "Отчисления" [ref=e37] [cursor=pointer]:
+                - /url: /withdrawals
+                - img [ref=e38]
+                - generic [ref=e41]: Отчисления
+      - button "Свернуть" [ref=e43]:
+        - img
+        - generic [ref=e44]: Свернуть
+    - generic [ref=e45]:
+      - banner [ref=e46]:
+        - navigation [ref=e47]:
+          - link "Главная" [ref=e48] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e49]:
+            - img [ref=e50]
+            - link "assistant" [ref=e52] [cursor=pointer]:
+              - /url: /assistant
+        - generic [ref=e53]:
+          - button [ref=e54]:
+            - img
+          - button "3" [ref=e55]:
+            - img
+            - generic [ref=e56]: "3"
+          - button "AS assist@intellect.edu.kg Ассистент" [ref=e57]:
+            - generic [ref=e59]: AS
+            - generic [ref=e60]:
+              - generic [ref=e61]: assist@intellect.edu.kg
+              - generic [ref=e62]: Ассистент
+      - main [ref=e63]:
+        - generic [ref=e65]:
+          - generic [ref=e66]:
+            - 'heading "Рабочее место: Ассистент директора" [level=1] [ref=e67]'
+            - paragraph [ref=e68]: Регистрация учеников, зачисление и оформление договоров
+          - generic [ref=e69]:
+            - generic [ref=e71]:
+              - link "Всего учеников 32" [ref=e72] [cursor=pointer]:
+                - /url: /students
+                - generic [ref=e73]:
+                  - img [ref=e75]
+                  - generic [ref=e77]:
+                    - paragraph [ref=e78]: Всего учеников
+                    - paragraph [ref=e79]: "32"
+              - generic [ref=e80]:
+                - img [ref=e82]
+                - generic [ref=e84]:
+                  - paragraph [ref=e85]: Активных зачислений
+                  - paragraph [ref=e86]: "29"
+              - generic [ref=e87]:
+                - img [ref=e89]
+                - generic [ref=e91]:
+                  - paragraph [ref=e92]: Без договора
+                  - paragraph [ref=e93]: "2"
+              - generic [ref=e94]:
+                - img [ref=e96]
+                - generic [ref=e98]:
+                  - paragraph [ref=e99]: Договоров за месяц
+                  - paragraph [ref=e100]: "0"
+            - generic [ref=e101]:
+              - heading "Быстрые действия" [level=2] [ref=e102]
+              - generic [ref=e103]:
+                - link "Добавить ученика Создать новый профиль студента" [ref=e104] [cursor=pointer]:
+                  - /url: /students/new
+                  - img [ref=e106]
+                  - generic [ref=e108]:
+                    - paragraph [ref=e109]: Добавить ученика
+                    - paragraph [ref=e110]: Создать новый профиль студента
+                - link "Реестр учеников Список всех студентов по классам" [ref=e111] [cursor=pointer]:
+                  - /url: /students
+                  - img [ref=e113]
+                  - generic [ref=e115]:
+                    - paragraph [ref=e116]: Реестр учеников
+                    - paragraph [ref=e117]: Список всех студентов по классам
+                - link "Центр выбытия Заявки на выбытие учеников" [ref=e118] [cursor=pointer]:
+                  - /url: /withdrawals
+                  - img [ref=e120]
+                  - generic [ref=e122]:
+                    - paragraph [ref=e123]: Центр выбытия
+                    - paragraph [ref=e124]: Заявки на выбытие учеников
+                - link "Управление филиалами Справочник и настройки филиалов" [ref=e125] [cursor=pointer]:
+                  - /url: /settings/branches
+                  - img [ref=e127]
+                  - generic [ref=e129]:
+                    - paragraph [ref=e130]: Управление филиалами
+                    - paragraph [ref=e131]: Справочник и настройки филиалов
+            - generic [ref=e132]:
+              - generic [ref=e133]:
+                - generic [ref=e134]:
+                  - generic [ref=e135]:
+                    - heading "Ученики без договора" [level=2] [ref=e136]
+                    - paragraph [ref=e137]: Активные зачисления без активного контракта
+                  - generic [ref=e138]: "2"
+                - generic [ref=e139]:
+                  - generic [ref=e140]:
+                    - generic [ref=e141]:
+                      - paragraph [ref=e142]: Мусаилов Эмир
+                      - paragraph [ref=e143]: — · —
+                    - link "Создать договор" [ref=e144] [cursor=pointer]:
+                      - /url: /students/f355b9c3-bb25-41a1-8b16-f6111eada5db/contract
+                  - generic [ref=e145]:
+                    - generic [ref=e146]:
+                      - paragraph [ref=e147]: ввв
+                      - paragraph [ref=e148]: — · —
+                    - link "Создать договор" [ref=e149] [cursor=pointer]:
+                      - /url: /students/67ce5eed-15b1-46e6-8134-e8241fb0b08f/contract
+              - generic [ref=e150]:
+                - generic [ref=e151]:
+                  - heading "Последние зачисления" [level=2] [ref=e152]
+                  - paragraph [ref=e153]: 10 последних записей
+                - generic [ref=e154]:
+                  - generic [ref=e156]:
+                    - generic [ref=e157]:
+                      - link "Бекова Айжан Маратовна" [ref=e158] [cursor=pointer]:
+                        - /url: /students/b0000000-0000-0000-0000-000000000002
+                      - generic [ref=e159]: Активно
+                    - paragraph [ref=e160]: 5Б · Интеллект Про · 28.02.2026
+                  - generic [ref=e162]:
+                    - generic [ref=e163]:
+                      - link "Оразбаев Дамир Асланович" [ref=e164] [cursor=pointer]:
+                        - /url: /students/b0000000-0000-0000-0000-000000000003
+                      - generic [ref=e165]: Активно
+                    - paragraph [ref=e166]: 6А · Интеллект Про · 28.02.2026
+                  - generic [ref=e168]:
+                    - generic [ref=e169]:
+                      - link "Сулейменова Дана Кайратовна" [ref=e170] [cursor=pointer]:
+                        - /url: /students/b0000000-0000-0000-0000-000000000004
+                      - generic [ref=e171]: Активно
+                    - paragraph [ref=e172]: 6Б · Интеллект Про · 28.02.2026
+                  - generic [ref=e174]:
+                    - generic [ref=e175]:
+                      - link "Касымов Арман Талгатович" [ref=e176] [cursor=pointer]:
+                        - /url: /students/b0000000-0000-0000-0000-000000000005
+                      - generic [ref=e177]: Активно
+                    - paragraph [ref=e178]: 7А · Интеллект Про · 28.02.2026
+                  - generic [ref=e180]:
+                    - generic [ref=e181]:
+                      - link "Нурланова Камила Серикова" [ref=e182] [cursor=pointer]:
+                        - /url: /students/b0000000-0000-0000-0000-000000000006
+                      - generic [ref=e183]: Активно
+                    - paragraph [ref=e184]: 7Б · Интеллект Про · 28.02.2026
+                  - generic [ref=e186]:
+                    - generic [ref=e187]:
+                      - link "Жумабеков Тимур Ержанович" [ref=e188] [cursor=pointer]:
+                        - /url: /students/b0000000-0000-0000-0000-000000000007
+                      - generic [ref=e189]: Активно
+                    - paragraph [ref=e190]: 8А · Интеллект Про · 28.02.2026
+                  - generic [ref=e192]:
+                    - generic [ref=e193]:
+                      - link "Есенова Малика Болатовна" [ref=e194] [cursor=pointer]:
+                        - /url: /students/b0000000-0000-0000-0000-000000000008
+                      - generic [ref=e195]: Активно
+                    - paragraph [ref=e196]: 9А · Интеллект Про · 28.02.2026
+                  - generic [ref=e198]:
+                    - generic [ref=e199]:
+                      - link "Мухтаров Ильяс Даниярович" [ref=e200] [cursor=pointer]:
+                        - /url: /students/b0000000-0000-0000-0000-000000000009
+                      - generic [ref=e201]: Активно
+                    - paragraph [ref=e202]: 10А · Интеллект Про · 28.02.2026
+                  - generic [ref=e204]:
+                    - generic [ref=e205]:
+                      - link "Алиева Зарина Нурлановна" [ref=e206] [cursor=pointer]:
+                        - /url: /students/b0000000-0000-0000-0000-000000000010
+                      - generic [ref=e207]: Активно
+                    - paragraph [ref=e208]: 11А · Интеллект Про · 28.02.2026
+                  - generic [ref=e210]:
+                    - generic [ref=e211]:
+                      - link "Ахметов Султан Ерланович" [ref=e212] [cursor=pointer]:
+                        - /url: /students/b0000000-0000-0000-0000-000000000001
+                      - generic [ref=e213]: Активно
+                    - paragraph [ref=e214]: 5А · Интеллект Про · 28.02.2026
+  - region "Notifications alt+T"
+  - alert [ref=e215]

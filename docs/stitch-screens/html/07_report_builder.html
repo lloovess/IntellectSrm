@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report Builder Management Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-size: 20px; vertical-align: middle; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="flex h-screen flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 shrink-0">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-1.5 rounded-lg text-white">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight">School CRM</h2>
+</div>
+<nav class="flex items-center gap-6">
+<a class="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#">Students</a>
+<a class="text-sm font-medium text-primary border-b-2 border-primary py-5" href="#">Reports</a>
+<a class="text-sm font-medium text-slate-600 hover:text-primary transition-colors" href="#">Payments</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/20" placeholder="Search reports..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined">play_arrow</span>
+                    Run Report
+                </button>
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden border border-slate-300 dark:border-slate-600" data-alt="User profile avatar circle">
+<img alt="User" data-alt="Headshot of a professional user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU40mYYV8Uk9Nbbs56eCoIMyafl4qEAdCuMzU_lbsBNLYXbSb-IwwFK05tmo_9HEo3zMQGBIPsNcFilr2SeExZ3vn-i3i-8gUETS_fzO5IGkp1Q075yZPrOIrW1ZWBLR1CvAnXRd8whqwZIaMCCQKz-2CXCXGYF6qaRdKUFNVCWSouLfK_2H8xaH87BfTrf2FAbjSff5fXdhaw-VwP5ZbJoXbo4YnBcD-u-CfoOTBNJT4HeimfWZWQPlplhix4NtBpsLrp6FDSpiE"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex flex-1 overflow-hidden">
+<!-- Slim Left Sidebar for Navigation -->
+<aside class="w-16 flex flex-col items-center py-6 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 gap-6">
+<button class="p-2 rounded-xl bg-primary/10 text-primary">
+<span class="material-symbols-outlined">add_chart</span>
+</button>
+<button class="p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">folder_open</span>
+</button>
+<button class="p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">schedule</span>
+</button>
+<button class="p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors mt-auto">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</aside>
+<!-- Workspace -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- Breadcrumbs & Local Header -->
+<div class="px-6 py-4 flex items-center justify-between">
+<nav class="flex items-center gap-2 text-sm">
+<span class="text-slate-400">Reports</span>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+<span class="font-semibold text-slate-900 dark:text-white">Report Builder</span>
+</nav>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-white transition-colors">Draft Saved 2m ago</button>
+</div>
+</div>
+<div class="flex flex-1 gap-6 px-6 pb-6 overflow-hidden">
+<!-- Left Column: Configuration Panel (30%) -->
+<section class="w-[30%] min-w-[320px] bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col overflow-hidden">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800">
+<h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">tune</span>
+                                Configuration Panel
+                            </h3>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<!-- Data Source Selection -->
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Data Source</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center gap-2 p-2 rounded-lg border-2 border-primary bg-primary/5 text-primary text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">group</span> Students
+                                    </button>
+<button class="flex items-center gap-2 p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-slate-300 text-slate-600 dark:text-slate-400 text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">description</span> Contracts
+                                    </button>
+<button class="flex items-center gap-2 p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-slate-300 text-slate-600 dark:text-slate-400 text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">payments</span> Payments
+                                    </button>
+<button class="flex items-center gap-2 p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-slate-300 text-slate-600 dark:text-slate-400 text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">account_balance</span> Collections
+                                    </button>
+</div>
+</div>
+<!-- Column Selector -->
+<div>
+<div class="flex justify-between items-center mb-3">
+<label class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Visible Columns</label>
+<button class="text-[10px] text-primary font-bold uppercase">Select All</button>
+</div>
+<div class="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
+<label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors group">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">Student Name</span>
+<span class="material-symbols-outlined ml-auto text-slate-300 opacity-0 group-hover:opacity-100 cursor-move">drag_indicator</span>
+</label>
+<label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors group">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">Grade Level</span>
+<span class="material-symbols-outlined ml-auto text-slate-300 opacity-0 group-hover:opacity-100 cursor-move">drag_indicator</span>
+</label>
+<label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors group">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">Balance</span>
+<span class="material-symbols-outlined ml-auto text-slate-300 opacity-0 group-hover:opacity-100 cursor-move">drag_indicator</span>
+</label>
+<label class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors group">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm text-slate-700 dark:text-slate-300">Enrollment Date</span>
+<span class="material-symbols-outlined ml-auto text-slate-300 opacity-0 group-hover:opacity-100 cursor-move">drag_indicator</span>
+</label>
+</div>
+</div>
+<!-- Filter Engine -->
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Filter Logic</label>
+<div class="space-y-3">
+<div class="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+<select class="bg-transparent border-none text-xs font-semibold focus:ring-0 p-1 w-24">
+<option>Grade</option>
+</select>
+<span class="text-xs text-slate-400">is</span>
+<select class="bg-transparent border-none text-xs font-semibold focus:ring-0 p-1">
+<option>Grade 5</option>
+</select>
+<button class="ml-auto text-slate-400 hover:text-red-500"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="flex items-center justify-center">
+<div class="h-px bg-slate-200 dark:bg-slate-800 flex-1"></div>
+<span class="px-2 text-[10px] font-bold text-slate-400 uppercase">And</span>
+<div class="h-px bg-slate-200 dark:bg-slate-800 flex-1"></div>
+</div>
+<div class="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+<select class="bg-transparent border-none text-xs font-semibold focus:ring-0 p-1 w-24">
+<option>Balance</option>
+</select>
+<span class="text-xs text-slate-400">is &gt;</span>
+<input class="w-16 bg-transparent border-none text-xs font-semibold focus:ring-0 p-1" type="number" value="0"/>
+<button class="ml-auto text-slate-400 hover:text-red-500"><span class="material-symbols-outlined">close</span></button>
+</div>
+<button class="w-full py-2 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-lg text-slate-400 text-xs font-medium hover:border-primary/50 hover:text-primary transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined">add</span> Add Condition
+                                    </button>
+</div>
+</div>
+<!-- Grouping & Sorting -->
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Sorting</label>
+<div class="flex items-center gap-2">
+<select class="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm px-3 py-2 focus:ring-primary focus:border-primary">
+<option>Student Name</option>
+<option>Grade Level</option>
+<option>Balance</option>
+</select>
+<button class="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">sort_by_alpha</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Live Preview (70%) -->
+<section class="flex-1 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col overflow-hidden">
+<!-- Preview Header -->
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900">
+<div class="flex items-center gap-3">
+<h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">visibility</span>
+                                    Live Preview
+                                </h3>
+<span class="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-semibold">10 of 1,240 Rows</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-white dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">save</span>
+                                    Save as Template
+                                </button>
+<div class="relative group">
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-slate-800 dark:bg-slate-700 rounded-lg hover:bg-slate-900 dark:hover:bg-slate-600">
+<span class="material-symbols-outlined">download</span>
+                                        Export
+                                        <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="flex-1 overflow-auto bg-slate-50 dark:bg-background-dark p-4">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 uppercase text-[10px] font-bold tracking-widest border-b border-slate-200 dark:border-slate-800">
+<tr>
+<th class="px-6 py-4">Student Name</th>
+<th class="px-6 py-4">Grade Level</th>
+<th class="px-6 py-4">Balance ($)</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Last Contact</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Alex Thompson</td>
+<td class="px-6 py-4">Grade 5</td>
+<td class="px-6 py-4 text-red-500 font-semibold">$1,250.00</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-md text-[10px] font-bold uppercase">Overdue</span></td>
+<td class="px-6 py-4 text-slate-500 italic">2 days ago</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Beatrice Kim</td>
+<td class="px-6 py-4">Grade 5</td>
+<td class="px-6 py-4">$450.00</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-md text-[10px] font-bold uppercase">Current</span></td>
+<td class="px-6 py-4 text-slate-500 italic">Today</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Caleb Ross</td>
+<td class="px-6 py-4">Grade 5</td>
+<td class="px-6 py-4 text-red-500 font-semibold">$2,100.00</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-md text-[10px] font-bold uppercase">Overdue</span></td>
+<td class="px-6 py-4 text-slate-500 italic">1 week ago</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Diana Prince</td>
+<td class="px-6 py-4">Grade 5</td>
+<td class="px-6 py-4">$300.00</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-md text-[10px] font-bold uppercase">Current</span></td>
+<td class="px-6 py-4 text-slate-500 italic">Yesterday</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Elias Thorne</td>
+<td class="px-6 py-4">Grade 5</td>
+<td class="px-6 py-4 text-red-500 font-semibold">$85.00</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-md text-[10px] font-bold uppercase">Overdue</span></td>
+<td class="px-6 py-4 text-slate-500 italic">4 days ago</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Fiona Gallagher</td>
+<td class="px-6 py-4">Grade 5</td>
+<td class="px-6 py-4">$120.00</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-md text-[10px] font-bold uppercase">Current</span></td>
+<td class="px-6 py-4 text-slate-500 italic">3 hours ago</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Gavin Newsom</td>
+<td class="px-6 py-4">Grade 5</td>
+<td class="px-6 py-4 text-red-500 font-semibold">$3,400.00</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-red-100 text-red-700 rounded-md text-[10px] font-bold uppercase">Critical</span></td>
+<td class="px-6 py-4 text-slate-500 italic">2 weeks ago</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Hanna Baker</td>
+<td class="px-6 py-4">Grade 5</td>
+<td class="px-6 py-4">$0.00</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-md text-[10px] font-bold uppercase">Paid</span></td>
+<td class="px-6 py-4 text-slate-500 italic">Yesterday</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Isaac Newton</td>
+<td class="px-6 py-4">Grade 5</td>
+<td class="px-6 py-4 text-red-500 font-semibold">$150.00</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-md text-[10px] font-bold uppercase">Overdue</span></td>
+<td class="px-6 py-4 text-slate-500 italic">5 days ago</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium">Julia Roberts</td>
+<td class="px-6 py-4">Grade 5</td>
+<td class="px-6 py-4">$2,000.00</td>
+<td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-md text-[10px] font-bold uppercase">Current</span></td>
+<td class="px-6 py-4 text-slate-500 italic">2 days ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Table Footer / Action Bar -->
+<div class="px-6 py-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-medium">
+<div class="text-slate-500">
+                                This is a live preview. Running the report will process all <span class="text-slate-900 dark:text-white font-bold">1,240 records</span>.
+                            </div>
+<div class="flex items-center gap-4">
+<span class="text-slate-400">Viewing 1-10 of 1,240</span>
+<div class="flex gap-1">
+<button class="p-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-400 disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="p-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+</body></html>

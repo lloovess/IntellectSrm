@@ -1,0 +1,66 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: И
+        - generic [ref=e7]:
+          - generic [ref=e8]: Интеллект
+          - generic [ref=e9]: School CRM
+      - navigation [ref=e10]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Дашборд" [ref=e14] [cursor=pointer]:
+              - /url: /
+              - img [ref=e15]
+              - generic [ref=e20]: Дашборд
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Модули
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "Рабочее место" [ref=e25] [cursor=pointer]:
+                - /url: /assistant
+                - img [ref=e26]
+                - generic [ref=e29]: Рабочее место
+            - listitem [ref=e30]:
+              - link "Ученики" [ref=e31] [cursor=pointer]:
+                - /url: /students
+                - img [ref=e32]
+                - generic [ref=e35]: Ученики
+            - listitem [ref=e36]:
+              - link "Отчисления" [ref=e37] [cursor=pointer]:
+                - /url: /withdrawals
+                - img [ref=e38]
+                - generic [ref=e41]: Отчисления
+      - button "Свернуть" [ref=e43]:
+        - img
+        - generic [ref=e44]: Свернуть
+    - generic [ref=e45]:
+      - banner [ref=e46]:
+        - navigation [ref=e47]:
+          - link "Главная" [ref=e48] [cursor=pointer]:
+            - /url: /
+        - generic [ref=e49]:
+          - button [ref=e50]:
+            - img
+          - button "3" [ref=e51]:
+            - img
+            - generic [ref=e52]: "3"
+          - button "AS assist@intellect.edu.kg Ассистент" [ref=e53]:
+            - generic [ref=e55]: AS
+            - generic [ref=e56]:
+              - generic [ref=e57]: assist@intellect.edu.kg
+              - generic [ref=e58]: Ассистент
+      - main [ref=e59]:
+        - generic [ref=e61]:
+          - generic [ref=e62]:
+            - heading "Dashboard" [level=2] [ref=e63]
+            - paragraph [ref=e64]: Сводка по филиалам и основным показателям
+          - generic [ref=e66]:
+            - generic [ref=e67]:
+              - generic [ref=e68]:
+                - paragraph [ref=e69]: Активных учеников
+                - paragraph [ref=e70]: "32"
+              - generic [ref=e71]: —
+            - img [ref=e73]
+  - region "Notifications alt+T"
+  - alert [ref=e78]

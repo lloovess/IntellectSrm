@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Payment Calendar Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+        .compact-text {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex overflow-hidden">
+<!-- Slim Sidebar -->
+<aside class="w-20 lg:w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col transition-all">
+<div class="p-6 flex items-center gap-3">
+<div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined fill-icon">account_balance_wallet</span>
+</div>
+<div class="hidden lg:block overflow-hidden">
+<h1 class="font-bold text-base truncate">EduPay Admin</h1>
+<p class="text-xs text-slate-500 truncate">Main Branch</p>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="hidden lg:block font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/10 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined fill-icon">calendar_month</span>
+<span class="hidden lg:block font-medium">Payment Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="hidden lg:block font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="hidden lg:block font-medium">Fees</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="hidden lg:block font-medium">Reports</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="User profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2LsmXRI1xsHqnYSq23S-XEA6J_xmAJYOpb58TNtvzNfU-kfSLccwaqsCJWJlcWK4PehtZhJcxOSdc2i34DzbQcLVEoLLotEd3fEZrX7s6RRnUm1Ff39Pz57qWqB7FFWnjspirnh3S1c7a6BdnBmVaQrcaqSoryuv-4IewvUhN0JM8NosXoOJYL_q4O6t7sWAbwODa6A9S8uFmu2P6KAwcnCey8CYWWVTu3wk0JcVbFjFc4k3tRbOFi1ASNLFEPF-EgJEymLoFywk"/>
+</div>
+<div class="hidden lg:block">
+<p class="text-xs font-bold">Alex Rivera</p>
+<p class="text-[10px] text-slate-500">Finance Manager</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Header -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-between px-6 z-10">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-bold">Payment Calendar</h2>
+<div class="flex items-center bg-background-light dark:bg-slate-800 rounded-lg p-1">
+<button class="px-3 py-1 text-xs font-semibold rounded bg-white dark:bg-slate-700 shadow-sm">Month</button>
+<button class="px-3 py-1 text-xs font-medium text-slate-500">Week</button>
+<button class="px-3 py-1 text-xs font-medium text-slate-500">List</button>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<select class="pl-9 pr-8 py-2 bg-background-light dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-primary">
+<option>All Branches</option>
+<option>North Campus</option>
+<option>South Campus</option>
+</select>
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400">location_on</span>
+</div>
+<button class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm">
+<span class="material-symbols-outlined">add</span>
+                    Add Payment
+                </button>
+<button class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Sub-Header: Mass Actions -->
+<div class="bg-white dark:bg-slate-900 px-6 py-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4">
+<div class="flex items-center gap-4 text-sm font-medium">
+<span class="text-slate-500">Mass Actions:</span>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-primary">event_repeat</span>
+                    Adjust Due Dates
+                </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-primary">sell</span>
+                    Bulk Apply Discount
+                </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-primary">sync</span>
+                    Regenerate Schedule
+                </button>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-emerald-500"></span>
+<span class="text-xs text-slate-500">Paid</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-slate-300"></span>
+<span class="text-xs text-slate-500">Pending</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-rose-500"></span>
+<span class="text-xs text-slate-500">Overdue</span>
+</div>
+</div>
+</div>
+<div class="flex-1 flex overflow-hidden">
+<!-- Calendar Section -->
+<div class="flex-1 overflow-auto p-6 bg-background-light dark:bg-background-dark">
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="calendar-grid border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800">
+<div class="py-3 text-center text-xs font-bold text-slate-500">SUN</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500">MON</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500">TUE</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500">WED</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500">THU</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500">FRI</div>
+<div class="py-3 text-center text-xs font-bold text-slate-500">SAT</div>
+</div>
+<div class="calendar-grid">
+<!-- Day Cells (Sample Row) -->
+<!-- Row 1 starts here -->
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2 opacity-40">
+<span class="compact-text">27</span>
+</div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2 opacity-40">
+<span class="compact-text">28</span>
+</div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2 opacity-40">
+<span class="compact-text">29</span>
+</div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2 opacity-40">
+<span class="compact-text">30</span>
+</div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2 p-2">
+<span class="compact-text font-bold">1</span>
+<div class="mt-2 space-y-1">
+<div class="bg-primary/10 rounded px-1.5 py-0.5 flex justify-between items-center">
+<span class="compact-text font-medium text-primary">$12k</span>
+<div class="flex gap-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2">
+<span class="compact-text font-bold">2</span>
+<div class="mt-2 space-y-1">
+<div class="bg-primary/10 rounded px-1.5 py-0.5 flex justify-between items-center">
+<span class="compact-text font-medium text-primary">$4.5k</span>
+<div class="flex gap-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-28 border-b border-slate-100 dark:border-slate-800 p-2">
+<span class="compact-text font-bold">3</span>
+</div>
+<!-- Row 2 -->
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2">
+<span class="compact-text font-bold">4</span>
+</div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2 bg-primary/5 ring-1 ring-inset ring-primary">
+<div class="flex justify-between items-start">
+<span class="compact-text font-bold text-primary">5</span>
+<span class="text-[10px] bg-primary text-white px-1 rounded">Today</span>
+</div>
+<div class="mt-2 space-y-1">
+<div class="bg-primary rounded px-1.5 py-0.5 flex justify-between items-center">
+<span class="compact-text font-bold text-white">$22.4k</span>
+<div class="flex gap-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-white/40"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-white/40"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-rose-400"></div>
+</div>
+</div>
+<div class="compact-text text-slate-500 px-1">42 Payments</div>
+</div>
+</div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2">
+<span class="compact-text font-bold">6</span>
+<div class="mt-2">
+<div class="bg-primary/10 rounded px-1.5 py-0.5 flex justify-between items-center">
+<span class="compact-text font-medium text-primary">$8.2k</span>
+<div class="flex gap-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2">
+<span class="compact-text font-bold">7</span>
+</div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2 bg-rose-50 dark:bg-rose-900/10">
+<span class="compact-text font-bold text-rose-600">8</span>
+<div class="mt-2">
+<div class="bg-rose-500 rounded px-1.5 py-0.5 flex justify-between items-center">
+<span class="compact-text font-bold text-white">$15k</span>
+<div class="flex gap-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+</div>
+</div>
+<div class="compact-text text-rose-600 font-medium px-1 mt-1">Overdue High</div>
+</div>
+</div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2">
+<span class="compact-text font-bold">9</span>
+</div>
+<div class="h-28 border-b border-slate-100 dark:border-slate-800 p-2">
+<span class="compact-text font-bold">10</span>
+</div>
+<!-- Rows 3-5 Placeholder -->
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">11</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">12</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">13</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">14</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">15</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">16</span></div>
+<div class="h-28 border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">17</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">18</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">19</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">20</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">21</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">22</span></div>
+<div class="h-28 border-r border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">23</span></div>
+<div class="h-28 border-b border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">24</span></div>
+<div class="h-28 border-r border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">25</span></div>
+<div class="h-28 border-r border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">26</span></div>
+<div class="h-28 border-r border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">27</span></div>
+<div class="h-28 border-r border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">28</span></div>
+<div class="h-28 border-r border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">29</span></div>
+<div class="h-28 border-r border-slate-100 dark:border-slate-800 p-2"><span class="compact-text font-bold">30</span></div>
+<div class="h-28 p-2"><span class="compact-text font-bold">31</span></div>
+</div>
+</div>
+</div>
+<!-- Detail Side Panel -->
+<aside class="w-96 border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col shadow-xl">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold text-lg">Daily Details</h3>
+<span class="text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded-full">Oct 05, 2023</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-background-light dark:bg-slate-800 p-3 rounded-lg">
+<p class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Total Expected</p>
+<p class="text-xl font-bold">$22,400</p>
+</div>
+<div class="bg-background-light dark:bg-slate-800 p-3 rounded-lg">
+<p class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Completion</p>
+<p class="text-xl font-bold text-emerald-500">64%</p>
+</div>
+</div>
+</div>
+<!-- Daily List -->
+<div class="flex-1 overflow-y-auto p-4 space-y-3">
+<div class="flex items-center justify-between mb-2 px-2">
+<p class="text-xs font-bold text-slate-400">42 STUDENTS</p>
+<button class="text-xs text-primary font-bold hover:underline">Select All</button>
+</div>
+<!-- Student Item 1 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-primary/30 hover:bg-primary/5 transition-all">
+<input class="rounded text-primary focus:ring-primary" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-sm truncate">Marcus Wright</p>
+<p class="text-[10px] text-slate-500">Tuition Fee • Grade 10A</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-sm text-emerald-500">$1,200</p>
+<span class="text-[10px] font-bold text-slate-400">PAID</span>
+</div>
+</div>
+<!-- Student Item 2 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-primary/30 hover:bg-primary/5 transition-all">
+<input class="rounded text-primary focus:ring-primary" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-sm truncate">Elena Gilbert</p>
+<p class="text-[10px] text-slate-500">Lab Fees • Grade 11C</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-sm">$450</p>
+<span class="text-[10px] font-bold text-slate-400">PENDING</span>
+</div>
+</div>
+<!-- Student Item 3 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-primary/30 hover:bg-primary/5 transition-all bg-rose-50/50 dark:bg-rose-900/10 border-rose-100">
+<input class="rounded text-primary focus:ring-primary" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-sm truncate">Julian Thorne</p>
+<p class="text-[10px] text-slate-500">Sports Fee • Grade 9B</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-sm text-rose-500">$300</p>
+<span class="text-[10px] font-bold text-rose-500">OVERDUE</span>
+</div>
+</div>
+<!-- Student Item 4 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-primary/30 hover:bg-primary/5 transition-all">
+<input class="rounded text-primary focus:ring-primary" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-sm truncate">Sophia Chen</p>
+<p class="text-[10px] text-slate-500">Transport • Grade 12</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-sm">$800</p>
+<span class="text-[10px] font-bold text-slate-400">PENDING</span>
+</div>
+</div>
+<!-- Student Item 5 -->
+<div class="flex items-center gap-4 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:border-primary/30 hover:bg-primary/5 transition-all">
+<input class="rounded text-primary focus:ring-primary" type="checkbox"/>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-sm truncate">Lucas Miller</p>
+<p class="text-[10px] text-slate-500">Tuition Fee • Grade 10A</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-sm text-emerald-500">$1,200</p>
+<span class="text-[10px] font-bold text-slate-400">PAID</span>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-slate-100 dark:border-slate-800">
+<div class="flex gap-2">
+<button class="flex-1 bg-primary/10 text-primary py-2.5 rounded-lg font-bold text-sm transition-colors hover:bg-primary/20">Mark as Paid</button>
+<button class="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 py-2.5 rounded-lg font-bold text-sm hover:bg-slate-200 dark:hover:bg-slate-700">Send Reminder</button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</body></html>

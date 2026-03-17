@@ -1,0 +1,35 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img [ref=e9]
+        - heading "Intellect School CRM" [level=1] [ref=e14]
+      - generic [ref=e15]:
+        - heading "Empowering the next generation of leaders." [level=2] [ref=e16]
+        - paragraph [ref=e17]: "The most advanced management system for modern educational institutions. Streamline your workflow and focus on what matters most: the students."
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - heading "С возвращением" [level=3] [ref=e25]
+        - paragraph [ref=e26]: Пожалуйста, введите учетные данные для доступа к системе.
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]: Email адрес
+          - textbox "Email адрес" [ref=e30]:
+            - /placeholder: name@school.edu
+        - generic [ref=e31]:
+          - generic [ref=e32]:
+            - generic [ref=e33]: Пароль
+            - link "Забыли пароль?" [ref=e34] [cursor=pointer]:
+              - /url: "#"
+          - textbox "Пароль" [ref=e35]:
+            - /placeholder: ••••••••
+        - generic [ref=e36]:
+          - checkbox "Оставаться в системе 30 дней" [ref=e37]
+          - generic [ref=e38]: Оставаться в системе 30 дней
+        - button "Войти" [ref=e39]:
+          - generic [ref=e40]: Войти
+          - img
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e47] [cursor=pointer]:
+    - img [ref=e48]
+  - alert [ref=e41]

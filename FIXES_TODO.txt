@@ -1,0 +1,309 @@
+═══════════════════════════════════════════════════════════════════════════════
+                   ✅ FIXES TODO - ТОЧНЫЙ СПИСОК ИСПРАВЛЕНИЙ
+═══════════════════════════════════════════════════════════════════════════════
+
+ВСЕГО ОШИБОК: 42 ошибки в 15 файлах
+ВРЕМЯ: ~1-2 часа
+СЛОЖНОСТЬ: Низкая (copy-paste)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 БЫСТРЫЙ СТАРТ (2 МИНУТЫ):
+
+1. Открой terminal
+2. Перейди в папку проекта:
+   cd /Users/intellectmac/Personal/srmIntellect
+
+3. Запусти auto-fix:
+   npm run lint -- --fix
+
+4. Проверь результат:
+   npm run lint
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 СПИСОК ВСЕХ ФАЙЛОВ И ОШИБОК:
+
+FILE 1: app/(dashboard)/_components/bottom-grid.tsx
+├─ Line 32-33: any type → ChangeEvent<HTMLInputElement>
+└─ Status: [ ] TODO
+
+FILE 2: app/(dashboard)/_components/kpi-grid.tsx
+├─ Line 75-76: any type → proper event type
+└─ Status: [ ] TODO
+
+FILE 3: app/(dashboard)/operations/transition/page.tsx
+├─ Line 25: any type → proper type
+└─ Status: [ ] TODO
+
+FILE 4: app/(dashboard)/students/[id]/contract/_components/add-payment-item-dialog.tsx
+├─ Line 14: unused 'studentId'
+├─ Line 65: any type
+└─ Status: [ ] TODO
+
+FILE 5: app/(dashboard)/students/[id]/contract/_components/edit-payment-item-dialog.tsx
+├─ Line 18: unused 'fmt'
+├─ Line 71: any type
+└─ Status: [ ] TODO
+
+FILE 6: app/(dashboard)/students/[id]/contract/_components/payment-history-drawer.tsx
+├─ Line 205-207: Unescaped quotes → use &quot; or backticks
+└─ Status: [ ] TODO
+
+FILE 7: app/(dashboard)/settings/import-export/_components/step4-import.tsx
+├─ Line 84: <a> → replace with <Link from next/link>
+└─ Status: [ ] TODO
+
+FILE 8: app/(dashboard)/finance/_components/export-debtors-btn.tsx
+├─ Line 4: unused 'formatMoney'
+└─ Status: [ ] TODO
+
+FILE 9: app/(dashboard)/finance/page.tsx
+├─ Line 3: unused 'paymentStatusLabel'
+└─ Status: [ ] TODO
+
+FILE 10: app/(dashboard)/settings/classes/_components/classes-manager.tsx
+├─ Line 89: unused 'originalBranchId'
+├─ Line 115: unused 'getBranchName'
+└─ Status: [ ] TODO
+
+FILE 11: app/(dashboard)/students/_components/student-grade-groups.tsx
+├─ Line 43: unused expression
+└─ Status: [ ] TODO
+
+FILE 12: app/api/classes/route.ts
+├─ Line 5: unused 'request'
+├─ Line 11: any type
+└─ Status: [ ] TODO
+
+FILE 13: app/api/import/pdf/route.ts
+├─ Line 138: unused 'e'
+└─ Status: [ ] TODO
+
+FILE 14: app/api/test-classes/route.ts
+├─ Line 10: any type
+└─ Status: [ ] TODO
+
+FILE 15: components/layout/top-bar.tsx
+├─ Line 5: unused 'cn'
+└─ Status: [ ] TODO
+
+FILE 16: components/pdf/contract-document.tsx
+├─ Line 70, 226: Unescaped quotes
+└─ Status: [ ] TODO
+
+FILE 17: lib/actions/class.actions.ts
+├─ Line 51: any type
+└─ Status: [ ] TODO
+
+FILE 18: lib/actions/interaction.actions.ts
+├─ Line 38: any type
+└─ Status: [ ] TODO
+
+FILE 19: lib/actions/student.actions.ts
+├─ Line 35-37: let → const (3 переменные)
+├─ Line 74: any type
+├─ Line 99: unused vars (_grade, _branchId, _year, _cls)
+└─ Status: [ ] TODO
+
+FILE 20: lib/actions/transition.actions.ts
+├─ Line 11: any type
+├─ Line 29: any type
+└─ Status: [ ] TODO
+
+FILE 21: lib/db/repositories/class.repo.ts
+├─ Line 18: unused 'academicYear'
+└─ Status: [ ] TODO
+
+FILE 22: lib/db/repositories/collection.repo.ts
+├─ Line 9: unused 'desc' import
+└─ Status: [ ] TODO
+
+FILE 23: lib/db/repositories/financial-journal.repo.ts
+├─ Line 5: unused 'PaymentTransactionRow'
+├─ Line 44: unused 'BranchRow'
+├─ Line 49: unused 'AuditLogRow'
+└─ Status: [ ] TODO
+
+FILE 24: lib/db/repositories/student.repo.ts
+├─ Line 11: unused 'or', 'inArray' imports
+├─ Line 169: require() → import (2 места)
+├─ Line 535: any type
+└─ Status: [ ] TODO
+
+FILE 25: lib/db/schema/student-interactions.ts
+├─ Line 3: unused 'auditLogs'
+└─ Status: [ ] TODO
+
+FILE 26: lib/import/pdf.ts
+├─ Line 2: unused 'KZ_MONTHS'
+└─ Status: [ ] TODO
+
+FILE 27: lib/services/dashboard.service.ts
+├─ Line 53: unused '_role'
+└─ Status: [ ] TODO
+
+FILE 28: lib/services/payment.service.ts
+├─ Line 1: unused 'RecordPaymentData'
+└─ Status: [ ] TODO
+
+FILE 29: lib/services/transition.service.ts
+├─ Line 51-52: any type (2)
+├─ Line 121: let → const (errors)
+├─ Line 136: unused 'newEnr'
+├─ Line 165: any type
+└─ Status: [ ] TODO
+
+FILE 30: lib/services/withdrawal.service.ts
+├─ Line 86: any type
+└─ Status: [ ] TODO
+
+FILE 31: lib/user-role.ts
+├─ Line 5: unused 'cookies'
+├─ Line 7: unused 'CurrentUser'
+└─ Status: [ ] TODO
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 КАТЕГОРИИ ОШИБОК И КОЛ-ВО:
+
+1. ❌ ANY TYPES (нужна правильная типизация)
+   └─ Кол-во: ~14 ошибок
+   └─ Как исправить: e: any → e: ChangeEvent<HTMLInputElement> или другой тип
+
+2. ❌ UNUSED VARIABLES
+   └─ Кол-во: ~15 ошибок
+   └─ Как исправить: Удалить или префиксить подчеркиванием (_varName)
+
+3. ❌ HTML LINKS (<a> вместо <Link>)
+   └─ Кол-во: 1 ошибка
+   └─ Как исправить: import Link from 'next/link'; потом <Link href="...">
+
+4. ❌ UNESCAPED QUOTES
+   └─ Кол-во: ~4 ошибки
+   └─ Как исправить: "text" → &quot;text&quot; или `text "quoted" here`
+
+5. ❌ LET INSTEAD OF CONST
+   └─ Кол-во: ~4 ошибки
+   └─ Как исправить: let x = → const x =
+
+6. ❌ REQUIRE IMPORTS
+   └─ Кол-во: ~2 ошибки
+   └─ Как исправить: require('x') → import x from 'x'
+
+═══════════════════════════════════════════════════════════════════════════════
+
+⚡ САМЫЙ БЫСТРЫЙ СПОСОБ (5 МИНУТ):
+
+Шаг 1: Auto-fix все что можно
+───────────────────────────────
+npm run lint -- --fix
+
+Это автоматически исправит:
+✓ Все unused variables (если в начале строки)
+✓ Некоторые const/let issues
+✓ Некоторые import issues
+
+Шаг 2: Проверить что осталось
+───────────────────────────────
+npm run lint
+
+Шаг 3: Исправить оставшееся вручную (остаток обычно ~10-15 ошибок)
+───────────────────────────────
+- Открыть файл через VSCode
+- Ctrl+G - перейти на строку
+- Исправить строку
+- Ctrl+S - сохранить
+- Repeat для каждой ошибки
+
+Шаг 4: Финальная проверка
+───────────────────────────
+npm run lint
+npm run type-check
+npm run build
+
+Если ✓ Compiled successfully - ГОТОВО!
+
+═══════════════════════════════════════════════════════════════════════════════
+
+💡 TIPS & TRICKS:
+
+1. Используй VSCode Multi-cursor для быстрых замен:
+   Ctrl+H - Find and Replace
+   Пример:
+   Find: ": any"
+   Replace: ": unknown" или ": any (нужно определить тип)"
+
+2. Используй VSCode Go to Line:
+   Ctrl+G
+   Введи номер линии
+
+3. Используй Quick Fix (ESLint):
+   Ctrl+. (точка) когда cursor на ошибке
+   Выбери предложение
+
+4. Автоматическое удаление неиспользованных:
+   npm run lint -- --fix
+   Это удалит большинство unused variables!
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 PROGRESS TRACKER:
+
+Используй эту таблицу чтобы отслеживать:
+
+START TIME: ___________
+AUTO-FIX TIME: _________ (обычно 2-3 мин)
+
+FILES FIXED:
+[ ] 1. bottom-grid.tsx
+[ ] 2. kpi-grid.tsx
+[ ] 3. transition/page.tsx
+[ ] 4. add-payment-item-dialog.tsx
+[ ] 5. edit-payment-item-dialog.tsx
+[ ] 6. payment-history-drawer.tsx
+[ ] 7. step4-import.tsx
+[ ] 8-31. (другие файлы)
+
+FINAL CHECK:
+[ ] npm run lint ✓
+[ ] npm run type-check ✓
+[ ] npm run build ✓
+
+COMPLETION TIME: ___________
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 EXPECTED RESULT:
+
+После всех исправлений:
+
+$ npm run lint
+✓ No errors!
+
+$ npm run type-check
+✓ No errors!
+
+$ npm run build
+✓ Compiled successfully!
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 NEXT AFTER FIXES:
+
+1. npm run dev
+2. Open http://localhost:3000
+3. Test все работает
+4. npm run build для production
+5. npm run start (локальный production test)
+6. Deploy на Vercel
+
+═══════════════════════════════════════════════════════════════════════════════
+
+START NOW!
+
+cd /Users/intellectmac/Personal/srmIntellect
+npm run lint -- --fix
+npm run lint
+
+═══════════════════════════════════════════════════════════════════════════════

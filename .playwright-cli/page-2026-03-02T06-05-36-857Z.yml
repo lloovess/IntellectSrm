@@ -1,0 +1,17 @@
+- generic [ref=e1]:
+  - generic [ref=e12]:
+    - generic [ref=e13]:
+      - generic [ref=e15]: AS
+      - img [ref=e17]
+    - generic [ref=e21]:
+      - heading "Сессия заблокирована" [level=2] [ref=e22]
+      - paragraph [ref=e23]: assist@intellect.edu.kg
+      - paragraph [ref=e24]: Введите пароль для продолжения
+    - generic [ref=e25]:
+      - textbox "Ваш пароль" [active] [ref=e27]
+      - button "Разблокировать сессию" [ref=e28]
+      - button "Выйти и сменить аккаунт" [ref=e30]:
+        - img [ref=e31]
+        - text: Выйти и сменить аккаунт
+  - region "Notifications alt+T"
+  - alert [ref=e34]

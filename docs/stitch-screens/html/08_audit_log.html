@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Audit Log Viewer - School CRM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800">
+<div class="p-6">
+<div class="flex items-center gap-3">
+<div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<h1 class="font-bold text-lg leading-tight">School CRM</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Admin Panel</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined">shield_lock</span>
+<span class="text-sm font-medium">Audit Log</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 px-2">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="User profile avatar" data-alt="Avatar of a professional administrative user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6mCEbl2IXp9ZDac-xzomBbPOYXK72hf7GwopgqkjiaIaONSzvJnZjl4bqb93XrG08fxv4u6D8hdcF-dSQrdLrtuIfVEMGIMEkpu6Cx0V9FnekqZ5mWXTY1QqStyPnH7CQvyr2-KC4Mv1q2ZeEpHhHFJ6Zi-BZ4tyCB-knoPIpfUZbP5UPd4KJAI6pILTRb-A9YpE3bGwiM_YBlqViLXyLR_6w3RJW7PPJLRQh-miEpFt9nDGBi65fHj8OQ69oiCdy9E2hgrWrH1c"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold truncate">Jane Smith</p>
+<p class="text-xs text-slate-500 truncate">Super Admin</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">logout</span>
+</div>
+</div>
+</aside>
+<div class="flex-1 flex flex-col min-w-0">
+<header class="h-16 flex items-center justify-between px-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shrink-0">
+<div class="flex items-center gap-6">
+<h2 class="text-xl font-bold">Audit Log Viewer</h2>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-sm text-slate-500">calendar_today</span>
+<span class="text-sm font-medium">Oct 12, 2023 - Oct 19, 2023</span>
+</div>
+<div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-sm text-slate-500">person</span>
+<span class="text-sm font-medium">All Users</span>
+</div>
+<div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-sm text-slate-500">filter_list</span>
+<span class="text-sm font-medium">Entity: Students</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-semibold text-sm hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                        Export CSV
+                    </button>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<div class="flex-1 flex flex-col overflow-y-auto bg-slate-50 dark:bg-background-dark p-8 gap-6">
+<div class="flex items-center justify-between">
+<div class="space-y-1">
+<h3 class="text-lg font-bold">Activity Feed</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Showing 124 recorded events in the last 7 days</p>
+</div>
+<div class="flex items-center gap-4">
+<label class="relative block">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-slate-400">search</span>
+</span>
+<input class="placeholder:text-slate-400 block bg-white dark:bg-slate-900 w-full border border-slate-200 dark:border-slate-800 rounded-lg py-2 pl-10 pr-3 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm" name="search" placeholder="Search events..." type="text"/>
+</label>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-4 flex items-start gap-4">
+<div class="size-10 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0">
+<img alt="Jane Smith's avatar" data-alt="Close-up of a smiling professional woman avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQLjRQGQv8QxQ7jn-Nwpd2N_aCbWtsdFCIGosfUpM4IR2WfyBFfZjqrFtLFtZLc9d8VQoSWr-oNPEETH6uVaX4X6dIjHS7z0el88iWDtqzzR8LcSXw5fT122UE9m-PETrgnWwuBSioaPwMTBegshSQPNper1KrcpQk9ZdGvk8NtxvR53GR6pCKwRpe-an7fxaxI3ZSmYRcIfMuvpOfge-bxZrVoVXorosLc3urK3KwcLLcnheZ4gAB17Hr55h9rPmJ67uW9e1-hao"/>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-bold">Admin Jane</span>
+<span class="text-slate-400 text-xs">•</span>
+<span class="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold uppercase tracking-wider">Update</span>
+<span class="text-slate-400 text-xs">•</span>
+<span class="text-sm">Changed status for <a class="text-primary hover:underline" href="#">Alexander Ivanov</a></span>
+</div>
+<div class="text-right">
+<p class="text-xs font-medium">14:23:05</p>
+<p class="text-[10px] text-slate-400">IP: 192.168.1.45</p>
+</div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs border border-slate-100 dark:border-slate-700">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-[10px] text-slate-400 mb-1 uppercase font-display font-bold">Old Value</p>
+<div class="p-2 bg-red-50 dark:bg-red-900/10 text-red-700 dark:text-red-400 rounded line-through">
+                                                    "status": "pending_payment"
+                                                </div>
+</div>
+<div>
+<p class="text-[10px] text-slate-400 mb-1 uppercase font-display font-bold">New Value</p>
+<div class="p-2 bg-emerald-50 dark:bg-emerald-900/10 text-emerald-700 dark:text-emerald-400 rounded">
+                                                    "status": "enrolled"
+                                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-4 flex items-start gap-4">
+<div class="size-10 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0">
+<img alt="Michael's avatar" data-alt="Avatar of a professional male administrator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGaNBUvz2shOiAb5OxJgZw7LfYfcMX4izgEYVxdh_DKi766FMHR0gVHZNLhLTl7eeXKjwAQJU9lacy7bd48jTzx96qNb-r6O97T9RvrNfAZsj6R4W8FmgzFJlUjX69WxjOcn94hJz6BgWu_b0Qo-xp09aDCXDNG7UoWlEGM067OsjfyIoZewRMEKpwpE6UICt1nJYFRZaiVDzHB8DShr5n5jGZWCp3PfJXPtR1dIP0LemqykssDzCqiKcqDhp3V8CkdJ_2nmBGznE"/>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-bold">Admin Michael</span>
+<span class="text-slate-400 text-xs">•</span>
+<span class="px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-[10px] font-bold uppercase tracking-wider">Create</span>
+<span class="text-slate-400 text-xs">•</span>
+<span class="text-sm">Added new record <a class="text-primary hover:underline" href="#">Invoice #4402</a></span>
+</div>
+<div class="text-right">
+<p class="text-xs font-medium">13:10:22</p>
+<p class="text-[10px] text-slate-400">IP: 192.168.1.12</p>
+</div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs border border-slate-100 dark:border-slate-700">
+<div class="text-emerald-700 dark:text-emerald-400">
+                                            + { "amount": 1200, "due_date": "2023-11-15", "currency": "USD" }
+                                        </div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-4 flex items-start gap-4 border-l-4 border-red-500">
+<div class="size-10 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0">
+<img alt="Jane Smith's avatar" data-alt="Avatar of a professional woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUUbFyTZUp6P5W8NTn_Ln2EFxxDBCSD16XOC85rJzAK0mCTAPLNDdnldvN4rDMBNK4MBF5xuLBGkr81-G2al2UldTPanBWv8nNec6vgyrPBsC8QP6X4FUiACWVybj5M5uVls-zdBPo5ydCqttn4iAOJx5h_U_tOUyQfOqkAjmfu4_hJagpEnx499tisQovNUGoscSs2diND8xq_hs1L0sEOhP_xgXrlJW9_UJZwHVkULKPsps3a4CzgeT4CNVYdtbdVQKZIBxnhWM"/>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-bold">Admin Jane</span>
+<span class="text-slate-400 text-xs">•</span>
+<span class="px-2 py-0.5 rounded bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-[10px] font-bold uppercase tracking-wider">Delete</span>
+<span class="text-slate-400 text-xs">•</span>
+<span class="text-sm">Removed <a class="text-primary hover:underline" href="#">Staff Record: D. Miller</a></span>
+</div>
+<div class="text-right">
+<p class="text-xs font-medium">11:45:00</p>
+<p class="text-[10px] text-slate-400">IP: 192.168.1.45</p>
+</div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 font-mono text-xs border border-slate-100 dark:border-slate-700">
+<div class="text-red-700 dark:text-red-400">
+                                            - { "id": "staff_992", "name": "David Miller", "role": "Tutor" }
+                                        </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside class="w-80 border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 overflow-y-auto">
+<div class="space-y-6">
+<div>
+<h3 class="font-bold text-sm mb-4 uppercase tracking-wider text-slate-500 dark:text-slate-400">Actor Timeline</h3>
+<div class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg mb-6">
+<img alt="Profile" class="size-10 rounded-full" data-alt="Small profile avatar circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3xf8dhyrprk2qlQDMz_AHdVF7SeKvogbdRxF-0fl-ChaZ26o8QQq05JyyapGigRT88PhybnCUShd3UPV8MNbcs53getLXvrun--Urj8RU5oIfUBMCEMEKFQPODpK0ygvg6nIMdlVKuBgZjz8tbhyQtqLnr2Qcms_QvxNU8LuULDaeq3x9WMd-P2UIgHueaijFWHJTeJvW4gTcPiEKUCv_5ygqTgOCqxcfHxf7sAoLwBdRGHK69Q-I_fGDP8qYsQAl4g7I-bqQpHo"/>
+<div>
+<p class="text-sm font-bold leading-tight">Jane Smith</p>
+<p class="text-xs text-slate-500">Currently Selected</p>
+</div>
+</div>
+</div>
+<div class="relative space-y-6 before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-100 dark:before:bg-slate-800">
+<div class="relative pl-8">
+<div class="absolute left-0 top-1.5 size-6 rounded-full bg-amber-100 dark:bg-amber-900/30 border-4 border-white dark:border-slate-900 flex items-center justify-center">
+<div class="size-1.5 rounded-full bg-amber-500"></div>
+</div>
+<p class="text-xs font-bold text-slate-900 dark:text-slate-100">14:23:05</p>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-0.5">Updated student record status for Ivanov</p>
+<p class="text-[10px] text-slate-400 mt-1 uppercase">Students Module</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-1.5 size-6 rounded-full bg-red-100 dark:bg-red-900/30 border-4 border-white dark:border-slate-900 flex items-center justify-center">
+<div class="size-1.5 rounded-full bg-red-500"></div>
+</div>
+<p class="text-xs font-bold text-slate-900 dark:text-slate-100">11:45:00</p>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-0.5">Deleted staff record: David Miller</p>
+<p class="text-[10px] text-slate-400 mt-1 uppercase">Human Resources</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-1.5 size-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 border-4 border-white dark:border-slate-900 flex items-center justify-center">
+<div class="size-1.5 rounded-full bg-emerald-500"></div>
+</div>
+<p class="text-xs font-bold text-slate-900 dark:text-slate-100">09:12:44</p>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-0.5">System Login Successful</p>
+<p class="text-[10px] text-slate-400 mt-1 uppercase">Auth System</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-1.5 size-6 rounded-full bg-blue-100 dark:bg-blue-900/30 border-4 border-white dark:border-slate-900 flex items-center justify-center">
+<div class="size-1.5 rounded-full bg-blue-500"></div>
+</div>
+<p class="text-xs font-bold text-slate-900 dark:text-slate-100">Oct 18, 17:30</p>
+<p class="text-sm text-slate-600 dark:text-slate-400 mt-0.5">Generated Monthly Revenue Report</p>
+<p class="text-[10px] text-slate-400 mt-1 uppercase">Finance Module</p>
+</div>
+</div>
+<div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+<button class="w-full py-2 px-4 rounded-lg border border-slate-200 dark:border-slate-700 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                View Full User History
+                            </button>
+</div>
+</div>
+</aside>
+</main>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Advanced Branch Management - School CRM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .sparkline {
+            height: 32px;
+            width: 80px;
+            background: linear-gradient(90deg, transparent 0%, rgba(32, 127, 223, 0.1) 50%, transparent 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .sparkline::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #207fdf;
+            clip-path: polygon(0% 50%, 15% 20%, 30% 60%, 45% 10%, 60% 80%, 75% 30%, 90% 50%, 100% 40%, 100% 100%, 0% 100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex">
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col h-screen sticky top-0">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<h1 class="font-bold text-sm leading-tight">School CRM</h1>
+<p class="text-xs text-slate-500">Admin Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">account_tree</span>
+<span class="text-sm font-medium">Branches</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span class="text-sm font-medium">Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+<span class="text-sm font-medium">Staff</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="text-sm font-medium">Finance</span>
+</a>
+<div class="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</div>
+</nav>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-slate-200" data-alt="User profile avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCyUmsCsmouLzXRfxR_c8dpZJNbrEzwoV1l5gOvv4ulbvc7WKpL-JYvEU8l-O94OYXqfl6ZmqImdEVN_btFqtFayfCoPOTKD4CAKpVVTnylRE9O6y5TsW2zzhPkLGuJf-J09z8g78M9yUPJrSP1nRmzAhaevw49d8pJ9tECtyKZcWPdkIqJN8ezBrEE_9M9W4oPqzc4kNJSTJGILC45unvFZVzbVuqE0zxe8nod71V3PG3FCRuKdbw_Rk0hZ91_zyrX261beuy-86I'); background-size: cover;"></div>
+<div class="flex-1 overflow-hidden">
+<p class="text-xs font-bold truncate">Alex Morgan</p>
+<p class="text-[10px] text-slate-500 truncate">Super Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark">
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-between px-8 sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-bold">Branch Management</h2>
+<div class="h-4 w-[1px] bg-slate-200 dark:bg-slate-700 mx-2"></div>
+<nav class="flex items-center gap-2 text-sm text-slate-500">
+<span>Settings</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-100 font-medium">Branches</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary/20" placeholder="Search branches..." type="text"/>
+</div>
+<button class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+                    Add New Branch
+                </button>
+</div>
+</header>
+<div class="p-8">
+<div class="mb-8">
+<h1 class="text-3xl font-bold tracking-tight">School Locations</h1>
+<p class="text-slate-500 mt-1">Manage 4 active school campuses and regional learning centers.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/50 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">location_on</span>
+</div>
+<span class="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold uppercase rounded-full tracking-wider">Active</span>
+</div>
+<div class="mb-4">
+<h3 class="font-bold text-lg group-hover:text-primary transition-colors">North Campus</h3>
+<p class="text-xs text-slate-500 font-mono">ID: NC-001</p>
+</div>
+<div class="space-y-3 mb-6">
+<div class="flex items-start gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm mt-1">map</span>
+<span class="text-xs">123 Education St, Springfield, IL</span>
+</div>
+<div class="flex items-start gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm mt-1">call</span>
+<span class="text-xs">(555) 123-4567</span>
+</div>
+</div>
+<div class="mb-6">
+<div class="flex justify-between text-xs mb-2">
+<span class="text-slate-500">Capacity Status</span>
+<span class="font-bold">850 / 1000</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-sm">groups</span>
+<span class="text-xs font-bold">42 Staff</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Revenue</p>
+<div class="sparkline"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/50 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">location_on</span>
+</div>
+<span class="px-2 py-1 bg-amber-100 text-amber-700 text-[10px] font-bold uppercase rounded-full tracking-wider">Maintenance</span>
+</div>
+<div class="mb-4">
+<h3 class="font-bold text-lg group-hover:text-primary transition-colors">South Wing Academy</h3>
+<p class="text-xs text-slate-500 font-mono">ID: SW-002</p>
+</div>
+<div class="space-y-3 mb-6">
+<div class="flex items-start gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm mt-1">map</span>
+<span class="text-xs">456 Learning Blvd, Riverside, CA</span>
+</div>
+<div class="flex items-start gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm mt-1">call</span>
+<span class="text-xs">(555) 987-6543</span>
+</div>
+</div>
+<div class="mb-6">
+<div class="flex justify-between text-xs mb-2">
+<span class="text-slate-500">Capacity Status</span>
+<span class="font-bold">320 / 400</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+<div class="bg-amber-400 h-full rounded-full" style="width: 80%"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-sm">groups</span>
+<span class="text-xs font-bold">18 Staff</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Revenue</p>
+<div class="sparkline opacity-50"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/50 transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl">location_on</span>
+</div>
+<span class="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold uppercase rounded-full tracking-wider">Active</span>
+</div>
+<div class="mb-4">
+<h3 class="font-bold text-lg group-hover:text-primary transition-colors">East Scholar Hub</h3>
+<p class="text-xs text-slate-500 font-mono">ID: EH-003</p>
+</div>
+<div class="space-y-3 mb-6">
+<div class="flex items-start gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm mt-1">map</span>
+<span class="text-xs">789 Scholar Ave, Downtown, NY</span>
+</div>
+<div class="flex items-start gap-2 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-sm mt-1">call</span>
+<span class="text-xs">(555) 444-2222</span>
+</div>
+</div>
+<div class="mb-6">
+<div class="flex justify-between text-xs mb-2">
+<span class="text-slate-500">Capacity Status</span>
+<span class="font-bold">120 / 600</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 20%"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-slate-50 dark:border-slate-800">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-sm">groups</span>
+<span class="text-xs font-bold">12 Staff</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Revenue</p>
+<div class="sparkline"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl shadow-sm border border-dashed border-slate-200 dark:border-slate-700 hover:bg-slate-100 transition-all cursor-pointer group flex flex-col items-center justify-center text-center">
+<div class="w-12 h-12 bg-slate-200 dark:bg-slate-800 rounded-full flex items-center justify-center text-slate-500 mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">add</span>
+</div>
+<p class="font-bold text-slate-700 dark:text-slate-300">Add New Location</p>
+<p class="text-xs text-slate-500 max-w-[160px] mx-auto mt-1">Create a new branch or regional learning center.</p>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 hidden" id="drawer-overlay"></div>
+<div class="fixed top-0 right-0 w-[450px] h-full bg-white dark:bg-slate-900 shadow-2xl z-50 flex flex-col transform translate-x-0 transition-transform">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<div>
+<h2 class="text-xl font-bold">North Campus Settings</h2>
+<p class="text-xs text-slate-500 mt-0.5">Configure location-specific parameters</p>
+</div>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+<span class="material-symbols-outlined text-slate-500">close</span>
+</button>
+</div>
+<div class="flex border-b border-slate-100 dark:border-slate-800 px-6 overflow-x-auto no-scrollbar">
+<button class="px-4 py-3 text-sm font-bold border-b-2 border-primary text-primary whitespace-nowrap">General</button>
+<button class="px-4 py-3 text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 whitespace-nowrap">Pricing Rules</button>
+<button class="px-4 py-3 text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 whitespace-nowrap">Access Control</button>
+<button class="px-4 py-3 text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 whitespace-nowrap">Archive</button>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-8">
+<section>
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Location Details</h4>
+<div class="space-y-4">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-medium text-slate-500 mb-1.5">Branch Name</label>
+<input class="w-full text-sm rounded-lg border-slate-200 dark:border-slate-800 dark:bg-slate-800" type="text" value="North Campus"/>
+</div>
+<div>
+<label class="block text-xs font-medium text-slate-500 mb-1.5">Branch ID</label>
+<input class="w-full text-sm rounded-lg border-slate-200 dark:border-slate-800 dark:bg-slate-800 bg-slate-50 text-slate-500" readonly="" type="text" value="NC-001"/>
+</div>
+</div>
+<div>
+<label class="block text-xs font-medium text-slate-500 mb-1.5">Map Location</label>
+<div class="w-full h-40 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden relative">
+<div class="absolute inset-0 bg-cover bg-center opacity-80" data-alt="Satellite map view of campus location" data-location="Springfield, IL" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCkNq72Xt5rfgB2VSAdyUd1ykjPUvVOCoFsDW2LCSmCa2uw3ZJNCUZQMmbq7r7JgLRqHh2URheOVpPi_oSR3yUE-EzT_SUju9RD3L-7qAF0OECCt2HmGSU8UM16Klmj-w-n6UQElE2Jxn3eDjOJF1USpcdrQU_-upVl4NbzA0qSbpB6jzvWgKtRU4KL72pqFbk7UJSrdJDBVFPVdL6CDzprL7Z9XXI7QOQW9AM9-TgrrWkmggcmd0U6jTzDSGLhVo2sUx1aulk6S0k');"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-white dark:bg-slate-900 p-2 rounded-full shadow-lg border-2 border-primary">
+<span class="material-symbols-outlined text-primary">location_on</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Access Control</h4>
+<button class="text-xs text-primary font-bold">+ Assign User</button>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200" data-alt="Staff profile photo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAg0joLhHj6G6t3qpvXxa5szJtk5RnlOD_2jBPEELLKZJao5YiHX8SmFs_E4TKlf1ZFlh9URyaCOv1qhXDeM8smDK2Ua2MKzo5iwECyOUSY2czM6J-7zbKs1Mqz0YtR1-Z4Js601pBtjQXKCPOFOSld90N-GpqTv1CB3X76bBuGzQPQL6wesip794m6hUREMea-Rquc2w09Fzc407yfZiOCvYGCP0hyjC1nWKy9UpCcHf-BXODhrdp89pFPdy83roF8PqMX6IH4sKI'); background-size: cover;"></div>
+<div>
+<p class="text-xs font-bold">Sarah Jenkins</p>
+<p class="text-[10px] text-slate-500">Campus Director</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-lg">more_vert</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200" data-alt="Staff profile photo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzIiAdV8Txm2zOHRklVzwQGVjem5SpKIP7vNRetUc63J2G7PYkluWRNXzhQAe9jMq_wGM6nKQbDQbtQz_lImia4EfVEdakLDA4Fz5ZLz5et5uaRxjmVMl-SvRsCj7N3wQXVL8b-u-sIxFaD29lHh52Jy1c6gYRJzQIycmG-xK0dAeGvMzaC6rvtLUiOhSK44UscaBvU9yWip1FnGF4dlfL2czCmvwafEjG9c5hoBcN3qyPFwRYsjPOYnez63ywLJkm7CA7h35aNI4'); background-size: cover;"></div>
+<div>
+<p class="text-xs font-bold">Michael Chen</p>
+<p class="text-[10px] text-slate-500">Registrar</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-lg">more_vert</span>
+</div>
+</div>
+</section>
+<section class="pt-6 border-t border-slate-100 dark:border-slate-800">
+<div class="bg-red-50 dark:bg-red-900/10 p-4 rounded-lg border border-red-100 dark:border-red-900/20">
+<h4 class="text-xs font-bold text-red-700 dark:text-red-400 uppercase tracking-wider mb-2">Danger Zone</h4>
+<p class="text-[11px] text-red-600 dark:text-red-300/80 mb-4 leading-relaxed">Archiving this branch will hide it from active dashboards. All associated records (students, staff, finances) will be retained for legal compliance but will not be editable.</p>
+<button class="w-full py-2 bg-red-600 text-white text-xs font-bold rounded-lg hover:bg-red-700 transition-colors">Deactivate Branch</button>
+</div>
+</section>
+</div>
+<div class="p-6 border-t border-slate-100 dark:border-slate-800 flex gap-3 bg-white dark:bg-slate-900">
+<button class="flex-1 py-2.5 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary/90 transition-all">Save Changes</button>
+<button class="px-6 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-bold rounded-lg hover:bg-slate-200 transition-all">Cancel</button>
+</div>
+</div>
+</body></html>

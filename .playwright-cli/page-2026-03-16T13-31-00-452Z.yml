@@ -1,0 +1,32 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img [ref=e9]
+        - heading "Intellect School CRM" [level=1] [ref=e14]
+      - generic [ref=e15]:
+        - heading "Empowering the next generation of leaders." [level=2] [ref=e16]
+        - paragraph [ref=e17]: "The most advanced management system for modern educational institutions. Streamline your workflow and focus on what matters most: the students."
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - heading "С возвращением" [level=3] [ref=e21]
+        - paragraph [ref=e22]: Пожалуйста, введите учетные данные для доступа к системе.
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - text: Email адрес
+          - textbox "Email адрес" [ref=e25]:
+            - /placeholder: name@school.edu
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - text: Пароль
+            - link "Забыли пароль?" [ref=e28] [cursor=pointer]:
+              - /url: "#"
+          - textbox "Пароль" [ref=e29]:
+            - /placeholder: ••••••••
+        - generic [ref=e30]:
+          - checkbox "Оставаться в системе 30 дней" [ref=e31]
+          - text: Оставаться в системе 30 дней
+        - button "Войти" [ref=e32]:
+          - text: Войти
+          - img [ref=e33]
+  - region "Notifications alt+T"

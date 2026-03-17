@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Academic Year Transition Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                        "warning": "#f59e0b",
+                        "success": "#10b981",
+                        "danger": "#ef4444"
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen overflow-hidden">
+<!-- Slim Sidebar -->
+<aside class="w-20 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col items-center py-6 gap-8">
+<div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<nav class="flex flex-col gap-6">
+<a class="p-2 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">dashboard</span>
+</a>
+<a class="p-2 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">group</span>
+</a>
+<a class="p-2 text-primary bg-primary/10 rounded-lg" href="#">
+<span class="material-symbols-outlined text-2xl">sync_alt</span>
+</a>
+<a class="p-2 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">payments</span>
+</a>
+<a class="p-2 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">bar_chart</span>
+</a>
+<a class="p-2 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+</a>
+</nav>
+<div class="mt-auto">
+<div class="size-10 rounded-full bg-slate-200" data-alt="User avatar placeholder"></div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Header -->
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<h1 class="text-xl font-bold">Academic Year Transition</h1>
+<div class="flex items-center gap-3 px-4 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700">
+<span class="text-sm font-semibold text-slate-500">2023-2024</span>
+<span class="material-symbols-outlined text-slate-400 text-sm">arrow_forward</span>
+<span class="text-sm font-semibold text-primary">2024-2025</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-xl">help</span>
+                    Support
+                </button>
+<button class="bg-primary text-white px-6 py-2 rounded-lg font-bold hover:bg-primary/90 transition-colors shadow-sm">
+                    Finalize Phase
+                </button>
+</div>
+</header>
+<!-- Stepper -->
+<div class="px-8 py-6 bg-white dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-5xl mx-auto flex items-center">
+<div class="flex flex-col items-center flex-1">
+<div class="size-10 rounded-full bg-success text-white flex items-center justify-center font-bold">
+<span class="material-symbols-outlined">check</span>
+</div>
+<span class="text-xs font-semibold mt-2 text-success uppercase tracking-wider">1. Setup New Year</span>
+</div>
+<div class="h-px bg-success flex-1 -mt-6"></div>
+<div class="flex flex-col items-center flex-1">
+<div class="size-10 rounded-full bg-primary text-white flex items-center justify-center font-bold ring-4 ring-primary/20">
+                        2
+                    </div>
+<span class="text-xs font-bold mt-2 text-primary uppercase tracking-wider">2. Batch Promotion</span>
+</div>
+<div class="h-px bg-slate-200 dark:bg-slate-700 flex-1 -mt-6"></div>
+<div class="flex flex-col items-center flex-1">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 flex items-center justify-center font-bold">
+                        3
+                    </div>
+<span class="text-xs font-semibold mt-2 text-slate-500 uppercase tracking-wider">3. Contract Renewal</span>
+</div>
+<div class="h-px bg-slate-200 dark:bg-slate-700 flex-1 -mt-6"></div>
+<div class="flex flex-col items-center flex-1">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 flex items-center justify-center font-bold">
+                        4
+                    </div>
+<span class="text-xs font-semibold mt-2 text-slate-500 uppercase tracking-wider">4. Review</span>
+</div>
+</div>
+</div>
+<!-- Main Body Area -->
+<div class="flex-1 overflow-y-auto p-8 space-y-6">
+<div class="grid grid-cols-12 gap-6">
+<!-- Batch Promotion Split View -->
+<div class="col-span-12 lg:col-span-8 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col shadow-sm">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">swap_horiz</span>
+                            Student Promotion Transfer
+                        </h3>
+<div class="flex items-center gap-2">
+<span class="text-xs font-medium text-slate-500">Selection: 12 Students</span>
+</div>
+</div>
+<div class="grid grid-cols-2 flex-1 divide-x divide-slate-200 dark:divide-slate-800">
+<!-- Source Column -->
+<div class="flex flex-col">
+<div class="p-4 bg-slate-50 dark:bg-slate-800/30">
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Source Class (2023-2024)</label>
+<select class="w-full rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm">
+<option>Grade 2A (Emerald)</option>
+<option>Grade 2B (Sapphire)</option>
+<option>Grade 1A (Ruby)</option>
+</select>
+</div>
+<div class="flex-1 overflow-y-auto max-h-[400px]">
+<table class="w-full text-sm text-left">
+<thead class="bg-slate-50 dark:bg-slate-800 text-slate-500 sticky top-0">
+<tr>
+<th class="px-4 py-2 font-semibold w-10"><input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/></th>
+<th class="px-2 py-2 font-semibold">Student Name</th>
+<th class="px-2 py-2 font-semibold">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-4 py-3"><input checked="" class="rounded border-slate-300 text-primary" type="checkbox"/></td>
+<td class="px-2 py-3 font-medium">Alex Thompson</td>
+<td class="px-2 py-3"><span class="px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-bold uppercase">Cleared</span></td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-4 py-3"><input checked="" class="rounded border-slate-300 text-primary" type="checkbox"/></td>
+<td class="px-2 py-3 font-medium">Beatrice Kim</td>
+<td class="px-2 py-3"><span class="px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-bold uppercase">Cleared</span></td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-4 py-3"><input checked="" class="rounded border-slate-300 text-primary" type="checkbox"/></td>
+<td class="px-2 py-3 font-medium">Charlie Davis</td>
+<td class="px-2 py-3"><span class="px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-bold uppercase">Cleared</span></td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors bg-warning/5">
+<td class="px-4 py-3"><input class="rounded border-slate-300 opacity-50" disabled="" type="checkbox"/></td>
+<td class="px-2 py-3 font-medium opacity-50">Diana Prince</td>
+<td class="px-2 py-3"><span class="px-2 py-0.5 rounded-full bg-warning/10 text-warning text-[10px] font-bold uppercase">Debt</span></td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-4 py-3"><input checked="" class="rounded border-slate-300 text-primary" type="checkbox"/></td>
+<td class="px-2 py-3 font-medium">Ethan Hunt</td>
+<td class="px-2 py-3"><span class="px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-bold uppercase">Cleared</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Target Column -->
+<div class="flex flex-col bg-primary/5">
+<div class="p-4 border-b border-primary/10">
+<label class="block text-xs font-bold text-primary uppercase mb-2">Target Class (2024-2025)</label>
+<select class="w-full rounded-lg border-primary/20 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:ring-primary focus:border-primary">
+<option>Grade 3A (Diamond)</option>
+<option>Grade 3B (Topaz)</option>
+<option>Create New Branch...</option>
+</select>
+</div>
+<div class="p-8 flex flex-col items-center justify-center text-center flex-1">
+<div class="size-16 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined text-3xl">keyboard_double_arrow_right</span>
+</div>
+<h4 class="font-bold text-slate-800 dark:text-slate-200">Ready for Promotion</h4>
+<p class="text-sm text-slate-500 mt-2">12 students from Grade 2A will be promoted to Grade 3A diamond for the upcoming year.</p>
+<button class="mt-6 w-full bg-primary text-white py-3 rounded-lg font-bold hover:bg-primary/90 shadow-md flex items-center justify-center gap-2">
+                                    Execute Promotion
+                                    <span class="material-symbols-outlined">launch</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar Cards -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- Promotion Rules Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">rule</span>
+                                Promotion Rules
+                            </h3>
+</div>
+<div class="p-4 space-y-4">
+<label class="flex items-start gap-3 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<input checked="" class="mt-1 rounded border-slate-300 text-primary" type="checkbox"/>
+<div>
+<span class="block text-sm font-bold">Keep same discount</span>
+<span class="block text-xs text-slate-500">Carry over sibling or merit discounts automatically</span>
+</div>
+</label>
+<label class="flex items-start gap-3 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<input checked="" class="mt-1 rounded border-slate-300 text-primary" type="checkbox"/>
+<div>
+<span class="block text-sm font-bold">Update base price</span>
+<span class="block text-xs text-slate-500">Apply the new grade level's tuition fee automatically</span>
+</div>
+</label>
+<label class="flex items-start gap-3 p-3 rounded-lg border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<input class="mt-1 rounded border-slate-300 text-primary" type="checkbox"/>
+<div>
+<span class="block text-sm font-bold">Bulk generate contracts</span>
+<span class="block text-xs text-slate-500">Create pending 2024-25 contracts upon promotion</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Conflict Resolver -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm border-l-4 border-l-warning">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h3 class="font-bold flex items-center gap-2 text-warning">
+<span class="material-symbols-outlined">warning</span>
+                                Conflict Resolver
+                            </h3>
+<span class="px-2 py-0.5 rounded bg-warning/10 text-warning text-xs font-bold">3 Issues</span>
+</div>
+<div class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Conflict Item 1 -->
+<div class="p-4 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold" data-alt="Student initials DP">DP</div>
+<div>
+<p class="text-sm font-bold">Diana Prince</p>
+<p class="text-[10px] text-danger font-semibold uppercase tracking-tighter">Unpaid Debt: $1,200</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded text-primary">
+<span class="material-symbols-outlined text-lg">payments</span>
+</button>
+<button class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded text-slate-400">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+</div>
+<!-- Conflict Item 2 -->
+<div class="p-4 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold" data-alt="Student initials FL">FL</div>
+<div>
+<p class="text-sm font-bold">Frank Lewis</p>
+<p class="text-[10px] text-warning font-semibold uppercase tracking-tighter">Withdrawal Pending</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded text-primary">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded text-slate-400">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+</div>
+<!-- Conflict Item 3 -->
+<div class="p-4 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold" data-alt="Student initials GM">GM</div>
+<div>
+<p class="text-sm font-bold">Grace Miller</p>
+<p class="text-[10px] text-slate-500 font-semibold uppercase tracking-tighter">Missing Documentation</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded text-primary">
+<span class="material-symbols-outlined text-lg">upload_file</span>
+</button>
+<button class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded text-slate-400">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+</div>
+</div>
+<div class="p-3 bg-slate-50 dark:bg-slate-800/50">
+<button class="w-full text-center text-xs font-bold text-primary hover:underline">View All Conflicts</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Promotion Progress Overview (Bottom Bar style) -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-12">
+<div class="flex-1">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm font-bold">Global Transition Progress</span>
+<span class="text-sm font-bold text-primary">42%</span>
+</div>
+<div class="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all" style="width: 42%;"></div>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-center">
+<span class="block text-lg font-black leading-none">412</span>
+<span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Promoted</span>
+</div>
+<div class="text-center">
+<span class="block text-lg font-black leading-none text-slate-400">568</span>
+<span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Remaining</span>
+</div>
+<div class="text-center">
+<span class="block text-lg font-black leading-none text-warning">24</span>
+<span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Blocked</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

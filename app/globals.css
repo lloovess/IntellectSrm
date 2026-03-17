@@ -1,0 +1,201 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design System Tokens — SRM Intellect School CRM
+ * Primary: #5048e5 | Success: #078841 | Danger: #e74008
+ * Source: /docs/stitch-screens/ui-specification.md
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* shadcn semantic colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Custom app tokens */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Primary — #5048e5 */
+  --primary: #5048e5;
+  --primary-foreground: #ffffff;
+
+  /* Backgrounds — from UI spec */
+  --background: #f6f6f8;
+  --foreground: #121117;
+
+  /* Cards */
+  --card: #ffffff;
+  --card-foreground: #121117;
+
+  /* Popover */
+  --popover: #ffffff;
+  --popover-foreground: #121117;
+
+  /* Secondary */
+  --secondary: #e0e7ff;
+  --secondary-foreground: #3e38b3;
+
+  /* Muted */
+  --muted: #f1f5f9;
+  --muted-foreground: #656487;
+
+  /* Accent */
+  --accent: #f1f5f9;
+  --accent-foreground: #121117;
+
+  /* Destructive — #e74008 */
+  --destructive: #e74008;
+
+  /* Borders — #dcdce5 from UI spec */
+  --border: #dcdce5;
+  --input: #dcdce5;
+  --ring: #5048e5;
+
+  /* Status colors */
+  --success: #078841;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
+  --info: #3b82f6;
+  --info-foreground: #ffffff;
+
+  /* Charts */
+  --chart-1: #5048e5;
+  --chart-2: #078841;
+  --chart-3: #f59e0b;
+  --chart-4: #e74008;
+  --chart-5: #8b5cf6;
+
+  /* Sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #121117;
+  --sidebar-primary: #5048e5;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #121117;
+  --sidebar-border: #dcdce5;
+  --sidebar-ring: #5048e5;
+}
+
+.dark {
+  /* Primary stays vibrant in dark */
+  --primary: #7c75f0;
+  --primary-foreground: #ffffff;
+
+  /* Dark backgrounds — from UI spec */
+  --background: #121121;
+  --foreground: #f1f5f9;
+
+  /* Cards */
+  --card: #1a1a2e;
+  --card-foreground: #f1f5f9;
+
+  /* Popover */
+  --popover: #1a1a2e;
+  --popover-foreground: #f1f5f9;
+
+  /* Secondary */
+  --secondary: #2d2b5e;
+  --secondary-foreground: #e0e7ff;
+
+  /* Muted */
+  --muted: #1e1e38;
+  --muted-foreground: #94a3b8;
+
+  /* Accent */
+  --accent: #1e1e38;
+  --accent-foreground: #f1f5f9;
+
+  /* Destructive */
+  --destructive: #ef5533;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #7c75f0;
+
+  /* Status */
+  --success: #10b981;
+  --success-foreground: #ffffff;
+  --warning: #fbbf24;
+  --warning-foreground: #121117;
+  --info: #60a5fa;
+  --info-foreground: #ffffff;
+
+  /* Charts */
+  --chart-1: #7c75f0;
+  --chart-2: #10b981;
+  --chart-3: #fbbf24;
+  --chart-4: #ef5533;
+  --chart-5: #a78bfa;
+
+  /* Sidebar */
+  --sidebar: #1a1a2e;
+  --sidebar-foreground: #f1f5f9;
+  --sidebar-primary: #7c75f0;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1e1e38;
+  --sidebar-accent-foreground: #f1f5f9;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #7c75f0;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}

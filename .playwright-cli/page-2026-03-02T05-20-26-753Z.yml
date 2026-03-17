@@ -1,0 +1,262 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: И
+        - generic [ref=e7]:
+          - generic [ref=e8]: Интеллект
+          - generic [ref=e9]: School CRM
+      - navigation [ref=e10]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Дашборд" [ref=e14] [cursor=pointer]:
+              - /url: /
+              - img [ref=e15]
+              - generic [ref=e20]: Дашборд
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Модули
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "Рабочее место" [ref=e25] [cursor=pointer]:
+                - /url: /assistant
+                - img [ref=e26]
+                - generic [ref=e29]: Рабочее место
+            - listitem [ref=e30]:
+              - link "Ученики" [ref=e31] [cursor=pointer]:
+                - /url: /students
+                - img [ref=e32]
+                - generic [ref=e35]: Ученики
+            - listitem [ref=e36]:
+              - link "Отчисления" [ref=e37] [cursor=pointer]:
+                - /url: /withdrawals
+                - img [ref=e38]
+                - generic [ref=e41]: Отчисления
+      - button "Свернуть" [ref=e43]:
+        - img
+        - generic [ref=e44]: Свернуть
+    - generic [ref=e45]:
+      - banner [ref=e46]:
+        - navigation [ref=e47]:
+          - link "Главная" [ref=e48] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e49]:
+            - img [ref=e50]
+            - link "Ученики" [ref=e52] [cursor=pointer]:
+              - /url: /students
+          - generic [ref=e53]:
+            - img [ref=e54]
+            - link "b0000000-0000-0000-0000-000000000002" [ref=e56] [cursor=pointer]:
+              - /url: /students/b0000000-0000-0000-0000-000000000002
+          - generic [ref=e205]:
+            - img [ref=e206]
+            - link "contract" [ref=e208] [cursor=pointer]:
+              - /url: /students/b0000000-0000-0000-0000-000000000002/contract
+        - generic [ref=e57]:
+          - button [ref=e58]:
+            - img
+          - button "3" [ref=e59]:
+            - img
+            - generic [ref=e60]: "3"
+          - button "AS assist@intellect.edu.kg Ассистент" [ref=e61]:
+            - generic [ref=e63]: AS
+            - generic [ref=e64]:
+              - generic [ref=e65]: assist@intellect.edu.kg
+              - generic [ref=e66]: Ассистент
+      - main [ref=e67]:
+        - generic [ref=e209]:
+          - navigation [ref=e210]:
+            - link "Студенты" [ref=e211] [cursor=pointer]:
+              - /url: /students
+            - generic [ref=e212]: /
+            - link "Бекова Айжан Маратовна" [ref=e213] [cursor=pointer]:
+              - /url: /students/b0000000-0000-0000-0000-000000000002
+            - generic [ref=e214]: /
+            - generic [ref=e215]: Договор
+          - generic [ref=e217]:
+            - heading "Договор и платежи" [level=1] [ref=e218]
+            - paragraph [ref=e219]: Бекова Айжан Маратовна
+          - generic [ref=e220]:
+            - generic [ref=e221]:
+              - generic [ref=e222]:
+                - generic [ref=e223]:
+                  - generic [ref=e224]:
+                    - 'heading "Договор #02-26" [level=3] [ref=e225]'
+                    - generic [ref=e226]: Active
+                  - paragraph [ref=e227]: "Начало: 1 июн. 2025 г."
+                - generic [ref=e228]:
+                  - button "Печать" [ref=e229]:
+                    - img [ref=e230]
+                    - text: Печать
+                  - button "Изменить условия" [active] [ref=e232]:
+                    - img [ref=e233]
+                    - text: Изменить условия
+              - generic [ref=e235]:
+                - generic [ref=e236]:
+                  - paragraph [ref=e237]: Базовая цена
+                  - paragraph [ref=e238]: 910 000 ₸
+                - generic [ref=e239]:
+                  - paragraph [ref=e240]: Скидка
+                  - generic [ref=e242]: 0%
+                - generic [ref=e243]:
+                  - paragraph [ref=e244]: Итого к оплате
+                  - paragraph [ref=e245]: 910 000 ₸
+                - generic [ref=e246]:
+                  - paragraph [ref=e247]: Режим оплаты
+                  - paragraph [ref=e248]:
+                    - img
+                    - text: Ежемесячно
+            - generic [ref=e250]:
+              - heading "Сводка по оплате" [level=4] [ref=e251]:
+                - img [ref=e252]
+                - text: Сводка по оплате
+              - list [ref=e254]:
+                - listitem [ref=e255]:
+                  - img [ref=e256]
+                  - generic [ref=e258]: "Оплачено: 622 500 ₸"
+                - listitem [ref=e259]:
+                  - img [ref=e260]
+                  - generic [ref=e262]: "Итого: 830 000 ₸"
+                - listitem [ref=e263]:
+                  - img [ref=e264]
+                  - generic [ref=e266]: "Следующий платёж: 1 марта"
+              - generic [ref=e268]:
+                - generic [ref=e269]: Прогресс оплаты
+                - generic [ref=e270]: 75% оплачено
+          - generic [ref=e273]:
+            - generic [ref=e274]:
+              - heading "График платежей" [level=3] [ref=e275]
+              - generic [ref=e276]:
+                - button "Фильтр" [ref=e277]:
+                  - img [ref=e278]
+                - button "Скачать" [ref=e280]:
+                  - img [ref=e281]
+            - table [ref=e284]:
+              - rowgroup [ref=e285]:
+                - row "Платёж Срок К оплате Оплачено Остаток Статус Действия" [ref=e286]:
+                  - columnheader "Платёж" [ref=e287]
+                  - columnheader "Срок" [ref=e288]
+                  - columnheader "К оплате" [ref=e289]
+                  - columnheader "Оплачено" [ref=e290]
+                  - columnheader "Остаток" [ref=e291]
+                  - columnheader "Статус" [ref=e292]
+                  - columnheader "Действия" [ref=e293]
+              - rowgroup [ref=e294]:
+                - row "#1 Июнь 1 июн. 2025 г. 69 167 ₸ 69 167 ₸ 0 ₸ Оплачено" [ref=e295]:
+                  - cell "#1 Июнь" [ref=e296]
+                  - cell "1 июн. 2025 г." [ref=e297]
+                  - cell "69 167 ₸" [ref=e298]
+                  - cell "69 167 ₸" [ref=e299]
+                  - cell "0 ₸" [ref=e300]
+                  - cell "Оплачено" [ref=e301]:
+                    - generic [ref=e302]: Оплачено
+                  - cell [ref=e303]
+                - row "#2 Июль 1 июл. 2025 г. 69 167 ₸ 69 167 ₸ 0 ₸ Оплачено" [ref=e304]:
+                  - cell "#2 Июль" [ref=e305]
+                  - cell "1 июл. 2025 г." [ref=e306]
+                  - cell "69 167 ₸" [ref=e307]
+                  - cell "69 167 ₸" [ref=e308]
+                  - cell "0 ₸" [ref=e309]
+                  - cell "Оплачено" [ref=e310]:
+                    - generic [ref=e311]: Оплачено
+                  - cell [ref=e312]
+                - row "#3 Август 1 авг. 2025 г. 69 167 ₸ 69 167 ₸ 0 ₸ Оплачено" [ref=e313]:
+                  - cell "#3 Август" [ref=e314]
+                  - cell "1 авг. 2025 г." [ref=e315]
+                  - cell "69 167 ₸" [ref=e316]
+                  - cell "69 167 ₸" [ref=e317]
+                  - cell "0 ₸" [ref=e318]
+                  - cell "Оплачено" [ref=e319]:
+                    - generic [ref=e320]: Оплачено
+                  - cell [ref=e321]
+                - row "#4 Сентябрь 1 сент. 2025 г. 69 167 ₸ 69 167 ₸ 0 ₸ Оплачено" [ref=e322]:
+                  - cell "#4 Сентябрь" [ref=e323]
+                  - cell "1 сент. 2025 г." [ref=e324]
+                  - cell "69 167 ₸" [ref=e325]
+                  - cell "69 167 ₸" [ref=e326]
+                  - cell "0 ₸" [ref=e327]
+                  - cell "Оплачено" [ref=e328]:
+                    - generic [ref=e329]: Оплачено
+                  - cell [ref=e330]
+                - row "#5 Октябрь 1 окт. 2025 г. 69 167 ₸ 69 167 ₸ 0 ₸ Оплачено" [ref=e331]:
+                  - cell "#5 Октябрь" [ref=e332]
+                  - cell "1 окт. 2025 г." [ref=e333]
+                  - cell "69 167 ₸" [ref=e334]
+                  - cell "69 167 ₸" [ref=e335]
+                  - cell "0 ₸" [ref=e336]
+                  - cell "Оплачено" [ref=e337]:
+                    - generic [ref=e338]: Оплачено
+                  - cell [ref=e339]
+                - row "#6 Ноябрь 1 нояб. 2025 г. 69 167 ₸ 69 167 ₸ 0 ₸ Оплачено" [ref=e340]:
+                  - cell "#6 Ноябрь" [ref=e341]
+                  - cell "1 нояб. 2025 г." [ref=e342]
+                  - cell "69 167 ₸" [ref=e343]
+                  - cell "69 167 ₸" [ref=e344]
+                  - cell "0 ₸" [ref=e345]
+                  - cell "Оплачено" [ref=e346]:
+                    - generic [ref=e347]: Оплачено
+                  - cell [ref=e348]
+                - row "#7 Декабрь 1 дек. 2025 г. 69 167 ₸ 69 167 ₸ 0 ₸ Оплачено" [ref=e349]:
+                  - cell "#7 Декабрь" [ref=e350]
+                  - cell "1 дек. 2025 г." [ref=e351]
+                  - cell "69 167 ₸" [ref=e352]
+                  - cell "69 167 ₸" [ref=e353]
+                  - cell "0 ₸" [ref=e354]
+                  - cell "Оплачено" [ref=e355]:
+                    - generic [ref=e356]: Оплачено
+                  - cell [ref=e357]
+                - row "#8 Январь 1 янв. 2026 г. 69 167 ₸ 69 167 ₸ 0 ₸ Оплачено" [ref=e358]:
+                  - cell "#8 Январь" [ref=e359]
+                  - cell "1 янв. 2026 г." [ref=e360]
+                  - cell "69 167 ₸" [ref=e361]
+                  - cell "69 167 ₸" [ref=e362]
+                  - cell "0 ₸" [ref=e363]
+                  - cell "Оплачено" [ref=e364]:
+                    - generic [ref=e365]: Оплачено
+                  - cell [ref=e366]
+                - row "#9 Февраль 1 февр. 2026 г. 69 167 ₸ 69 167 ₸ 0 ₸ Оплачено" [ref=e367]:
+                  - cell "#9 Февраль" [ref=e368]
+                  - cell "1 февр. 2026 г." [ref=e369]
+                  - cell "69 167 ₸" [ref=e370]
+                  - cell "69 167 ₸" [ref=e371]
+                  - cell "0 ₸" [ref=e372]
+                  - cell "Оплачено" [ref=e373]:
+                    - generic [ref=e374]: Оплачено
+                  - cell [ref=e375]
+                - row "#10 Март 1 мар. 2026 г. 69 167 ₸ 0 ₸ 69 167 ₸ Ожидается" [ref=e376]:
+                  - cell "#10 Март" [ref=e377]
+                  - cell "1 мар. 2026 г." [ref=e378]
+                  - cell "69 167 ₸" [ref=e379]
+                  - cell "0 ₸" [ref=e380]
+                  - cell "69 167 ₸" [ref=e381]
+                  - cell "Ожидается" [ref=e382]:
+                    - generic [ref=e383]: Ожидается
+                  - cell [ref=e384]:
+                    - button [ref=e386]:
+                      - img [ref=e387]
+                - row "#11 Апрель 1 апр. 2026 г. 69 167 ₸ 0 ₸ 69 167 ₸ Ожидается" [ref=e389]:
+                  - cell "#11 Апрель" [ref=e390]
+                  - cell "1 апр. 2026 г." [ref=e391]
+                  - cell "69 167 ₸" [ref=e392]
+                  - cell "0 ₸" [ref=e393]
+                  - cell "69 167 ₸" [ref=e394]
+                  - cell "Ожидается" [ref=e395]:
+                    - generic [ref=e396]: Ожидается
+                  - cell [ref=e397]:
+                    - button [ref=e399]:
+                      - img [ref=e400]
+                - row "#12 Май 1 мая 2026 г. 69 167 ₸ 0 ₸ 69 167 ₸ Ожидается" [ref=e402]:
+                  - cell "#12 Май" [ref=e403]
+                  - cell "1 мая 2026 г." [ref=e404]
+                  - cell "69 167 ₸" [ref=e405]
+                  - cell "0 ₸" [ref=e406]
+                  - cell "69 167 ₸" [ref=e407]
+                  - cell "Ожидается" [ref=e408]:
+                    - generic [ref=e409]: Ожидается
+                  - cell [ref=e410]:
+                    - button [ref=e412]:
+                      - img [ref=e413]
+            - paragraph [ref=e416]: "Всего платежей: 12"
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e422] [cursor=pointer]:
+    - img [ref=e423]
+  - alert [ref=e204]

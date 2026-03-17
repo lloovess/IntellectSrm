@@ -1,0 +1,88 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: И
+        - generic [ref=e7]:
+          - generic [ref=e8]: Интеллект
+          - generic [ref=e9]: School CRM
+      - navigation [ref=e10]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Дашборд" [ref=e14] [cursor=pointer]:
+              - /url: /
+              - img [ref=e15]
+              - generic [ref=e20]: Дашборд
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Модули
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "Рабочее место" [ref=e25] [cursor=pointer]:
+                - /url: /assistant
+                - img [ref=e26]
+                - generic [ref=e29]: Рабочее место
+            - listitem [ref=e30]:
+              - link "Ученики" [ref=e31] [cursor=pointer]:
+                - /url: /students
+                - img [ref=e32]
+                - generic [ref=e35]: Ученики
+            - listitem [ref=e36]:
+              - link "Отчисления" [ref=e37] [cursor=pointer]:
+                - /url: /withdrawals
+                - img [ref=e38]
+                - generic [ref=e41]: Отчисления
+      - button "Свернуть" [ref=e43]:
+        - img
+        - generic [ref=e44]: Свернуть
+    - generic [ref=e45]:
+      - banner [ref=e46]:
+        - navigation [ref=e47]:
+          - link "Главная" [ref=e48] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e221]:
+            - img [ref=e222]
+            - link "Ученики" [ref=e224] [cursor=pointer]:
+              - /url: /students
+          - generic [ref=e225]:
+            - img [ref=e226]
+            - link "f355b9c3-bb25-41a1-8b16-f6111eada5db" [ref=e228] [cursor=pointer]:
+              - /url: /students/f355b9c3-bb25-41a1-8b16-f6111eada5db
+          - generic [ref=e229]:
+            - img [ref=e230]
+            - link "contract" [ref=e232] [cursor=pointer]:
+              - /url: /students/f355b9c3-bb25-41a1-8b16-f6111eada5db/contract
+        - generic [ref=e53]:
+          - button [ref=e54]:
+            - img
+          - button "3" [ref=e55]:
+            - img
+            - generic [ref=e56]: "3"
+          - button "AS assist@intellect.edu.kg Ассистент" [ref=e57]:
+            - generic [ref=e59]: AS
+            - generic [ref=e60]:
+              - generic [ref=e61]: assist@intellect.edu.kg
+              - generic [ref=e62]: Ассистент
+      - main [ref=e63]:
+        - generic [ref=e233]:
+          - navigation [ref=e234]:
+            - link "Студенты" [ref=e235] [cursor=pointer]:
+              - /url: /students
+            - generic [ref=e236]: /
+            - link "Мусаилов Эмир" [ref=e237] [cursor=pointer]:
+              - /url: /students/f355b9c3-bb25-41a1-8b16-f6111eada5db
+            - generic [ref=e238]: /
+            - generic [ref=e239]: Договор
+          - generic [ref=e240]:
+            - generic [ref=e241]:
+              - heading "Договор и платежи" [level=1] [ref=e242]
+              - paragraph [ref=e243]: Мусаилов Эмир
+            - generic [ref=e244]: ⚠ Сначала создайте зачисление
+          - generic [ref=e245]:
+            - img [ref=e247]
+            - heading "Договор не создан" [level=3] [ref=e249]
+            - paragraph [ref=e250]: У студента ещё нет активного договора
+            - paragraph [ref=e251]: ⚠ Сначала создайте зачисление для студента
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e257] [cursor=pointer]:
+    - img [ref=e258]
+  - alert [ref=e220]

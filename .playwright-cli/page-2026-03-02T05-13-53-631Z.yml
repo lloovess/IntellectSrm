@@ -1,0 +1,73 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: И
+        - generic [ref=e7]:
+          - generic [ref=e8]: Интеллект
+          - generic [ref=e9]: School CRM
+      - navigation [ref=e10]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Дашборд" [ref=e14] [cursor=pointer]:
+              - /url: /
+              - img [ref=e15]
+              - generic [ref=e20]: Дашборд
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Модули
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - link "Рабочее место" [ref=e25] [cursor=pointer]:
+                - /url: /assistant
+                - img [ref=e26]
+                - generic [ref=e29]: Рабочее место
+            - listitem [ref=e30]:
+              - link "Ученики" [ref=e31] [cursor=pointer]:
+                - /url: /students
+                - img [ref=e32]
+                - generic [ref=e35]: Ученики
+            - listitem [ref=e36]:
+              - link "Отчисления" [ref=e37] [cursor=pointer]:
+                - /url: /withdrawals
+                - img [ref=e38]
+                - generic [ref=e41]: Отчисления
+      - button "Свернуть" [ref=e43]:
+        - img
+        - generic [ref=e44]: Свернуть
+    - generic [ref=e45]:
+      - banner [ref=e46]:
+        - navigation [ref=e47]:
+          - link "Главная" [ref=e48] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e49]:
+            - img [ref=e50]
+            - link "Ученики" [ref=e52] [cursor=pointer]:
+              - /url: /students
+          - generic [ref=e53]:
+            - img [ref=e54]
+            - link "Создание" [ref=e56] [cursor=pointer]:
+              - /url: /students/new
+        - generic [ref=e57]:
+          - button [ref=e58]:
+            - img
+          - button "3" [ref=e59]:
+            - img
+            - generic [ref=e60]: "3"
+          - button "AS assist@intellect.edu.kg Ассистент" [ref=e61]:
+            - generic [ref=e63]: AS
+            - generic [ref=e64]:
+              - generic [ref=e65]: assist@intellect.edu.kg
+              - generic [ref=e66]: Ассистент
+      - main [ref=e67]:
+        - generic [ref=e69]:
+          - heading "Новый ученик" [level=1] [ref=e70]
+          - generic [ref=e71]:
+            - paragraph [ref=e72]: ФИО
+            - textbox [ref=e73]
+            - paragraph [ref=e74]: Телефон
+            - textbox [ref=e75]
+            - button "Создать" [ref=e77]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e83] [cursor=pointer]:
+    - img [ref=e84]
+  - alert [ref=e87]

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KPI Dashboard Constructor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#207fdf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                        "neutral-light": "#e2e8f0",
+                        "neutral-dark": "#1e293b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .canvas-grid {
+            background-size: 24px 24px;
+            background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden h-screen flex flex-col">
+<header class="flex h-16 items-center justify-between border-b border-neutral-light dark:border-neutral-dark bg-white dark:bg-background-dark px-6 shrink-0">
+<div class="flex items-center gap-4">
+<div class="text-primary size-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">dashboard_customize</span>
+</div>
+<div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">KPI Constructor</h2>
+<p class="text-xs text-slate-500 dark:text-slate-400">School CRM / Executive Dashboard Builder</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 mr-4 text-slate-500 border-r border-neutral-light dark:border-neutral-dark pr-4">
+<span class="material-symbols-outlined text-xl">cloud_done</span>
+<span class="text-xs font-medium">Autosaved 2m ago</span>
+</div>
+<button class="flex h-10 items-center justify-center rounded-lg border border-neutral-light dark:border-neutral-dark px-4 hover:bg-slate-50 dark:hover:bg-neutral-dark transition-colors">
+<span class="text-sm font-semibold">Preview</span>
+</button>
+<button class="flex h-10 items-center justify-center rounded-lg bg-primary px-6 text-white hover:bg-primary/90 transition-colors">
+<span class="text-sm font-semibold">Save Dashboard</span>
+</button>
+<div class="size-10 rounded-full bg-slate-200 dark:bg-neutral-dark overflow-hidden" data-alt="User profile avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBEkVS8h6sV9shy3Wp4_zgDnR81AOXVLrZQGK68ctfkSy-oNdteorYsuE3mr_xEb6-WWHBjw73l224qDliXCn4pMeH5YNI1JGWx-t1E9hK38N3WezNQiCsl1AWFZMz20BVXQM5RuQZUjrNc1DGUo2hYe6iMsSdF6aw6tRJeRy97EeLlz5twfOAT_QyF--4c0sEHRXIGhydWjeUx4KTy34EQVbSyUhzmUJ-HgbGZlIt-espWwfLdRm07jBJbd09qN7wop8a2zOUusEM');"></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-72 flex flex-col border-r border-neutral-light dark:border-neutral-dark bg-white dark:bg-background-dark">
+<div class="p-4 border-b border-neutral-light dark:border-neutral-dark">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400 text-sm">search</span>
+<input class="w-full pl-9 pr-4 py-2 text-sm border-neutral-light dark:border-neutral-dark rounded-lg bg-background-light dark:bg-neutral-dark focus:ring-primary focus:border-primary" placeholder="Search widgets..." type="text"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<div>
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Popular Charts</h3>
+<div class="grid grid-cols-2 gap-2">
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border-2 border-dashed border-neutral-light dark:border-neutral-dark cursor-grab hover:bg-primary/5 hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary mb-1">show_chart</span>
+<span class="text-[10px] font-medium">Line Chart</span>
+</div>
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border-2 border-dashed border-neutral-light dark:border-neutral-dark cursor-grab hover:bg-primary/5 hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary mb-1">bar_chart</span>
+<span class="text-[10px] font-medium">Bar Chart</span>
+</div>
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border-2 border-dashed border-neutral-light dark:border-neutral-dark cursor-grab hover:bg-primary/5 hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary mb-1">pie_chart</span>
+<span class="text-[10px] font-medium">Pie Chart</span>
+</div>
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border-2 border-dashed border-neutral-light dark:border-neutral-dark cursor-grab hover:bg-primary/5 hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary mb-1">speed</span>
+<span class="text-[10px] font-medium">Gauge</span>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Ready-made Metrics</h3>
+<div class="space-y-2">
+<div class="flex items-center gap-3 p-3 rounded-lg bg-white dark:bg-neutral-dark border border-neutral-light dark:border-neutral-dark shadow-sm cursor-grab hover:border-primary transition-colors">
+<div class="size-8 rounded bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">monetization_on</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold">Revenue Gauge</p>
+<p class="text-[10px] text-slate-500">Finance Metric</p>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm">drag_indicator</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-white dark:bg-neutral-dark border border-neutral-light dark:border-neutral-dark shadow-sm cursor-grab hover:border-primary transition-colors">
+<div class="size-8 rounded bg-green-100 flex items-center justify-center text-green-600">
+<span class="material-symbols-outlined text-xl">trending_up</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold">Student Growth</p>
+<p class="text-[10px] text-slate-500">Enrollment Stats</p>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm">drag_indicator</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-white dark:bg-neutral-dark border border-neutral-light dark:border-neutral-dark shadow-sm cursor-grab hover:border-primary transition-colors">
+<div class="size-8 rounded bg-red-100 flex items-center justify-center text-red-600">
+<span class="material-symbols-outlined text-xl">warning</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold">Debt by Branch</p>
+<p class="text-[10px] text-slate-500">Outstanding Payments</p>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm">drag_indicator</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-white dark:bg-neutral-dark border border-neutral-light dark:border-neutral-dark shadow-sm cursor-grab hover:border-primary transition-colors">
+<div class="size-8 rounded bg-purple-100 flex items-center justify-center text-purple-600">
+<span class="material-symbols-outlined text-xl">group</span>
+</div>
+<div class="flex-1">
+<p class="text-xs font-bold">Staff Performance</p>
+<p class="text-[10px] text-slate-500">Table Overview</p>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-sm">drag_indicator</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-slate-50 dark:bg-neutral-dark border-t border-neutral-light dark:border-neutral-dark">
+<button class="w-full flex items-center justify-center gap-2 py-2 text-sm font-semibold text-primary hover:bg-primary/5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+                    Create Custom Metric
+                </button>
+</div>
+</aside>
+<main class="flex-1 overflow-auto bg-background-light dark:bg-background-dark canvas-grid p-8">
+<div class="max-w-6xl mx-auto min-h-full grid grid-cols-12 gap-6 relative">
+<div class="col-span-8 h-48 rounded-xl bg-white dark:bg-neutral-dark border-2 border-primary shadow-xl p-6 relative">
+<div class="absolute -top-3 -left-3 bg-primary text-white size-6 rounded-full flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-xs">open_with</span>
+</div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-sm font-bold">Total Annual Revenue</p>
+<p class="text-2xl font-black text-primary">$1,284,000</p>
+</div>
+<div class="text-green-500 flex items-center gap-1 bg-green-50 px-2 py-1 rounded text-xs font-bold">
+<span class="material-symbols-outlined text-xs">north</span> +12.5%
+                        </div>
+</div>
+<div class="w-full h-16 bg-gradient-to-r from-primary/5 to-primary/20 rounded flex items-end px-2 gap-1 overflow-hidden">
+<div class="w-full h-[30%] bg-primary/40 rounded-t"></div>
+<div class="w-full h-[50%] bg-primary/40 rounded-t"></div>
+<div class="w-full h-[40%] bg-primary/40 rounded-t"></div>
+<div class="w-full h-[70%] bg-primary/40 rounded-t"></div>
+<div class="w-full h-[90%] bg-primary/60 rounded-t"></div>
+<div class="w-full h-[60%] bg-primary/40 rounded-t"></div>
+<div class="w-full h-[80%] bg-primary/80 rounded-t"></div>
+</div>
+</div>
+<div class="col-span-4 h-48 rounded-xl bg-white dark:bg-neutral-dark border border-neutral-light dark:border-neutral-dark shadow-sm p-6">
+<p class="text-sm font-bold mb-4">Target Progress</p>
+<div class="relative size-32 mx-auto">
+<svg class="size-full" viewbox="0 0 36 36">
+<path class="text-slate-100 dark:text-slate-800" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="75, 100" stroke-linecap="round" stroke-width="3"></path>
+<text class="text-[8px] font-bold" fill="currentColor" text-anchor="middle" x="18" y="21">75%</text>
+</svg>
+</div>
+</div>
+<div class="col-span-12 h-64 rounded-xl bg-white dark:bg-neutral-dark border border-neutral-light dark:border-neutral-dark shadow-sm p-6">
+<div class="flex justify-between items-center mb-6">
+<p class="text-sm font-bold">New Registrations vs Withdrawals</p>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-primary"></div>
+<span class="text-[10px] text-slate-500 uppercase font-bold">New</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-slate-300"></div>
+<span class="text-[10px] text-slate-500 uppercase font-bold">Withdrawal</span>
+</div>
+</div>
+</div>
+<div class="w-full h-40 flex items-end justify-between px-4 pb-2 border-b border-slate-100 dark:border-slate-800">
+<div class="flex flex-col gap-1 w-full max-w-[40px] h-full justify-end">
+<div class="bg-primary/80 h-[60%] w-full rounded-t-sm"></div>
+<div class="bg-slate-300 h-[20%] w-full rounded-t-sm"></div>
+</div>
+<div class="flex flex-col gap-1 w-full max-w-[40px] h-full justify-end">
+<div class="bg-primary/80 h-[75%] w-full rounded-t-sm"></div>
+<div class="bg-slate-300 h-[15%] w-full rounded-t-sm"></div>
+</div>
+<div class="flex flex-col gap-1 w-full max-w-[40px] h-full justify-end">
+<div class="bg-primary/80 h-[50%] w-full rounded-t-sm"></div>
+<div class="bg-slate-300 h-[30%] w-full rounded-t-sm"></div>
+</div>
+<div class="flex flex-col gap-1 w-full max-w-[40px] h-full justify-end">
+<div class="bg-primary/80 h-[90%] w-full rounded-t-sm"></div>
+<div class="bg-slate-300 h-[10%] w-full rounded-t-sm"></div>
+</div>
+<div class="flex flex-col gap-1 w-full max-w-[40px] h-full justify-end">
+<div class="bg-primary/80 h-[80%] w-full rounded-t-sm"></div>
+<div class="bg-slate-300 h-[25%] w-full rounded-t-sm"></div>
+</div>
+<div class="flex flex-col gap-1 w-full max-w-[40px] h-full justify-end">
+<div class="bg-primary/80 h-[65%] w-full rounded-t-sm"></div>
+<div class="bg-slate-300 h-[40%] w-full rounded-t-sm"></div>
+</div>
+</div>
+</div>
+<div class="col-span-6 h-48 border-2 border-dashed border-slate-300 dark:border-neutral-dark rounded-xl flex items-center justify-center bg-slate-50/50 dark:bg-neutral-dark/30">
+<div class="text-center text-slate-400">
+<span class="material-symbols-outlined text-3xl mb-1">add_circle</span>
+<p class="text-xs font-medium">Drop widget here</p>
+</div>
+</div>
+</div>
+</main>
+<aside class="w-80 border-l border-neutral-light dark:border-neutral-dark bg-white dark:bg-background-dark flex flex-col">
+<div class="p-4 border-b border-neutral-light dark:border-neutral-dark flex justify-between items-center">
+<h3 class="text-sm font-bold">Widget Settings</h3>
+<button class="text-slate-400 hover:text-slate-600 transition-colors">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-5 space-y-6">
+<div>
+<label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Selected Metric</label>
+<div class="flex items-center gap-3 p-2 border border-primary bg-primary/5 rounded-lg">
+<span class="material-symbols-outlined text-primary text-xl">monetization_on</span>
+<span class="text-sm font-semibold">Total Annual Revenue</span>
+</div>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Display Mode</label>
+<div class="flex bg-background-light dark:bg-neutral-dark p-1 rounded-lg">
+<button class="flex-1 text-[11px] font-bold py-1.5 rounded-md bg-white dark:bg-neutral-800 shadow-sm">Summary</button>
+<button class="flex-1 text-[11px] font-bold py-1.5 rounded-md text-slate-500">Detailed</button>
+<button class="flex-1 text-[11px] font-bold py-1.5 rounded-md text-slate-500">List</button>
+</div>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Date Filter</label>
+<select class="w-full text-sm border-neutral-light dark:border-neutral-dark rounded-lg bg-background-light dark:bg-neutral-dark focus:ring-primary focus:border-primary">
+<option>Year-to-date (YTD)</option>
+<option>Last 30 Days</option>
+<option>Quarterly</option>
+<option>Custom Range</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Chart Style</label>
+<div class="grid grid-cols-4 gap-2">
+<button class="aspect-square flex items-center justify-center border-2 border-primary rounded-lg bg-primary/5">
+<span class="material-symbols-outlined text-primary">show_chart</span>
+</button>
+<button class="aspect-square flex items-center justify-center border border-neutral-light dark:border-neutral-dark rounded-lg hover:border-slate-400">
+<span class="material-symbols-outlined text-slate-400">bar_chart</span>
+</button>
+<button class="aspect-square flex items-center justify-center border border-neutral-light dark:border-neutral-dark rounded-lg hover:border-slate-400">
+<span class="material-symbols-outlined text-slate-400">stacked_line_chart</span>
+</button>
+<button class="aspect-square flex items-center justify-center border border-neutral-light dark:border-neutral-dark rounded-lg hover:border-slate-400">
+<span class="material-symbols-outlined text-slate-400">area_chart</span>
+</button>
+</div>
+</div>
+<div class="pt-4 border-t border-neutral-light dark:border-neutral-dark">
+<label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-4">Goal Setting</label>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium">Show progress against target</span>
+<div class="w-8 h-4 bg-primary rounded-full relative">
+<div class="absolute right-0.5 top-0.5 size-3 bg-white rounded-full"></div>
+</div>
+</div>
+<div>
+<span class="text-[10px] text-slate-400 mb-1 block">Annual Goal ($)</span>
+<input class="w-full text-sm border-neutral-light dark:border-neutral-dark rounded-lg bg-background-light dark:bg-neutral-dark focus:ring-primary focus:border-primary" type="number" value="1500000"/>
+</div>
+</div>
+</div>
+</div>
+<div class="p-5 bg-slate-50 dark:bg-neutral-dark border-t border-neutral-light dark:border-neutral-dark mt-auto">
+<div class="flex gap-3">
+<button class="flex-1 py-2 bg-red-50 text-red-600 text-xs font-bold rounded-lg hover:bg-red-100 transition-colors">
+                        Delete
+                    </button>
+<button class="flex-1 py-2 bg-slate-900 dark:bg-slate-700 text-white text-xs font-bold rounded-lg hover:opacity-90 transition-opacity">
+                        Apply
+                    </button>
+</div>
+</div>
+</aside>
+</div>
+</body></html>
