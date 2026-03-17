@@ -26,12 +26,12 @@ export async function getPromotionPreviewAction(sourceYear: string, branchId?: s
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function promoteStudentsAction(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     promotions: any[],
     dryRun: boolean
 ): Promise<ActionResult<any>> {
+/* eslint-enable @typescript-eslint/no-explicit-any */
     try {
         const user = await requireAuth();
         if (user.role !== "admin") throw new Error("Unauthorized");
@@ -47,12 +47,17 @@ export async function promoteStudentsAction(
             revalidateTag('dashboard_metrics');
         }
 
-        return result;
+        // Transform service result to ActionResult format
+        if (result.ok) {
+            return { ok: true, data: { message: result.message, count: result.count } };
+        } else {
+            return { ok: false, error: result.message };
+        }
     } catch (err) {
         console.error("Promotion execution error:", err);
         return {
             ok: false,
-            message: err instanceof Error ? err.message : "Неизвестная ошибка при переводе",
+            error: err instanceof Error ? err.message : "Неизвестная ошибка при переводе",
         };
     }
 }
