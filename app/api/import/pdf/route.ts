@@ -72,72 +72,79 @@ export async function POST(req: NextRequest) {
         console.log("[REGEX] contractNumber:", regexContractNumber);
         console.log("[REGEX] phone:", regexPhone);
 
-        // === OLLAMA: Only for financial data (numbers) ===
-        const ollamaBaseUrl = process.env.OLLAMA_URL || "http://localhost:11434";
-        const model = "qwen2.5:latest";
+        // === OLLAMA: Only for financial data (numbers) - OPTIONAL ===
+        const ollamaBaseUrl = process.env.OLLAMA_URL;
+        let parsedJson: Record<string, unknown> = {};
 
-        const systemPrompt = `You are a strict data extraction assistant. Extract ONLY financial data from the provided contract text.
+        if (ollamaBaseUrl) {
+            try {
+                const model = "qwen2.5:latest";
+                const systemPrompt = `You are a strict data extraction assistant. Extract ONLY financial data from the provided contract text.
 Return ONLY valid JSON with the exact keys in the schema. If a field is missing, output 0 for numbers.`;
 
-        // Only send the bottom portion with financial info to speed up LLM
-        const financialText = text.length > 4000 ? text.substring(text.length - 4000) : text;
-        console.log("SENDING TEXT LENGTH TO OLLAMA:", financialText.length);
+                // Only send the bottom portion with financial info to speed up LLM
+                const financialText = text.length > 4000 ? text.substring(text.length - 4000) : text;
+                console.log("SENDING TEXT LENGTH TO OLLAMA:", financialText.length);
 
-        const ollamaRes = await fetch(`${ollamaBaseUrl}/api/chat`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                model,
-                messages: [
-                    { role: "user", content: `${systemPrompt}\n\nContract financial section:\n\n${financialText}` }
-                ],
-                format: {
-                    type: "object",
-                    properties: {
-                        basePrice: {
-                            type: "number",
-                            description: "Total contract price for the whole academic year (look for 'Общий контракт' or 'Стоимость обучения'). Output as a plain number, no spaces or currency symbols."
-                        },
-                        monthlyAmount: {
-                            type: "number",
-                            description: "Monthly payment amount. Look for the recurring equal payment amounts in the payment schedule table."
-                        },
-                        prepayment: {
-                            type: "number",
-                            description: "First/initial payment (Первоначальный взнос). The first amount in the payment schedule."
-                        },
-                        monthPayments: {
+                const ollamaRes = await fetch(`${ollamaBaseUrl}/api/chat`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        model,
+                        messages: [
+                            { role: "user", content: `${systemPrompt}\n\nContract financial section:\n\n${financialText}` }
+                        ],
+                        format: {
                             type: "object",
-                            description: "A map of month numbers (as string keys '1'-'12') to amounts already paid. Only include months where payment is listed.",
-                            additionalProperties: { type: "number" }
+                            properties: {
+                                basePrice: {
+                                    type: "number",
+                                    description: "Total contract price for the whole academic year (look for 'Общий контракт' or 'Стоимость обучения'). Output as a plain number, no spaces or currency symbols."
+                                },
+                                monthlyAmount: {
+                                    type: "number",
+                                    description: "Monthly payment amount. Look for the recurring equal payment amounts in the payment schedule table."
+                                },
+                                prepayment: {
+                                    type: "number",
+                                    description: "First/initial payment (Первоначальный взнос). The first amount in the payment schedule."
+                                },
+                                monthPayments: {
+                                    type: "object",
+                                    description: "A map of month numbers (as string keys '1'-'12') to amounts already paid. Only include months where payment is listed.",
+                                    additionalProperties: { type: "number" }
+                                }
+                            },
+                            required: ["basePrice", "monthlyAmount", "prepayment", "monthPayments"]
+                        },
+                        stream: false,
+                        options: {
+                            temperature: 0.1
                         }
-                    },
-                    required: ["basePrice", "monthlyAmount", "prepayment", "monthPayments"]
-                },
-                stream: false,
-                options: {
-                    temperature: 0.1
+                    }),
+                    signal: AbortSignal.timeout(30000)
+                });
+
+                if (ollamaRes.ok) {
+                    const ollamaData = await ollamaRes.json();
+                    const messageContent = ollamaData.message?.content || "";
+                    console.log("OLLAMA RESPONSE:", messageContent);
+
+                    try {
+                        parsedJson = JSON.parse(messageContent);
+                    } catch (e) {
+                        console.error("Ollama returned invalid JSON:", messageContent);
+                        // Continue with empty parsedJson
+                    }
+                } else {
+                    const errorText = await ollamaRes.text();
+                    console.warn("[Ollama Warning] Status", ollamaRes.status, "- will use regex-only data");
                 }
-            })
-        });
-
-        if (!ollamaRes.ok) {
-            const errorText = await ollamaRes.text();
-            console.error("[Ollama Error]", ollamaRes.status, errorText);
-            return NextResponse.json({ error: "Ошибка при работе с ИИ (Ollama)" }, { status: 500 });
-        }
-
-        const ollamaData = await ollamaRes.json();
-        const messageContent = ollamaData.message?.content || "";
-        console.log("OLLAMA RESPONSE:", messageContent);
-
-        // Parse Ollama JSON (financial data only) and merge with regex-extracted fields
-        let parsedJson: Record<string, unknown> = {};
-        try {
-            parsedJson = JSON.parse(messageContent);
-        } catch (e) {
-            console.error("Ollama returned invalid JSON:", messageContent);
-            // Still continue - regex data is reliable, we'll just have 0s for financial
+            } catch (ollamaErr) {
+                console.warn("[Ollama Warning]", ollamaErr instanceof Error ? ollamaErr.message : String(ollamaErr), "- will use regex-only data");
+            }
+        } else {
+            console.log("[Info] OLLAMA_URL not configured - using regex-only extraction");
         }
 
         // Build the final merged payload: regex wins for names/contract/phone; LLM wins for financial
