@@ -1,11 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { type PdfParsedData } from "@/lib/import/pdf";
-import { Loader2, UploadCloud } from "lucide-react";
+import { Loader2, UploadCloud, AlertCircle, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
-import { KZ_MONTHS } from "@/lib/import/csv";
 import { ImportResult } from "@/lib/import/csv";
+
+interface Class {
+    id: string;
+    name: string;
+    capacity: number;
+    currentEnrollment: number;
+}
+
+interface AcademicYear {
+    id: string;
+    name: string;
+}
 
 interface PdfImportWizardProps {
     branches: { id: string; name: string }[];
@@ -20,12 +31,72 @@ export function PdfImportWizard({ branches, defaultAcademicYear }: PdfImportWiza
     const [parsedData, setParsedData] = useState<PdfParsedData | null>(null);
     const [isParsing, setIsParsing] = useState(false);
     const [isImporting, setIsImporting] = useState(false);
+    const [isLoadingClasses, setIsLoadingClasses] = useState(false);
 
     // Form states for step 3
     const [formData, setFormData] = useState<PdfParsedData | null>(null);
     const [branchId, setBranchId] = useState("");
-    const [grade, setGrade] = useState("");
-    const [academicYear, setAcademicYear] = useState(defaultAcademicYear);
+    const [classId, setClassId] = useState("");
+    const [academicYearId, setAcademicYearId] = useState("");
+    const [academicYears, setAcademicYears] = useState<AcademicYear[]>([]);
+    const [classes, setClasses] = useState<Class[]>([]);
+    const [selectedClass, setSelectedClass] = useState<Class | null>(null);
+
+    // Load academic years on mount
+    useEffect(() => {
+        const fetchAcademicYears = async () => {
+            try {
+                const response = await fetch("/api/academic-years");
+                const data = await response.json();
+                setAcademicYears(data.data || []);
+                // Set default year if available
+                const defaultYear = data.data?.find(
+                    (y: AcademicYear) => y.name === defaultAcademicYear
+                );
+                if (defaultYear) {
+                    setAcademicYearId(defaultYear.id);
+                }
+            } catch (error) {
+                console.error("Failed to load academic years:", error);
+                toast.error("Не удалось загрузить учебные годы");
+            }
+        };
+        fetchAcademicYears();
+    }, [defaultAcademicYear]);
+
+    // Load classes when branch or year changes
+    useEffect(() => {
+        if (!branchId || !academicYearId) {
+            setClasses([]);
+            setClassId("");
+            setSelectedClass(null);
+            return;
+        }
+
+        const fetchClasses = async () => {
+            setIsLoadingClasses(true);
+            try {
+                const response = await fetch(
+                    `/api/classes?branchId=${branchId}&academicYearId=${academicYearId}`
+                );
+                const data = await response.json();
+                setClasses(data.data || []);
+            } catch (error) {
+                console.error("Failed to load classes:", error);
+                toast.error("Не удалось загрузить классы");
+            } finally {
+                setIsLoadingClasses(false);
+            }
+        };
+
+        fetchClasses();
+    }, [branchId, academicYearId]);
+
+    // Update selected class when classId changes
+    useEffect(() => {
+        const selected = classes.find((c) => c.id === classId);
+        setSelectedClass(selected || null);
+    }, [classId, classes]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -63,8 +134,19 @@ export function PdfImportWizard({ branches, defaultAcademicYear }: PdfImportWiza
     };
 
     const handleImport = async () => {
-        if (!formData || !branchId || !grade || !academicYear) {
+        if (!formData || !branchId || !classId || !academicYearId) {
             toast.error("Пожалуйста, заполните все обязательные поля");
+            return;
+        }
+
+        // Check capacity
+        if (
+            selectedClass &&
+            selectedClass.currentEnrollment >= selectedClass.capacity
+        ) {
+            toast.error(
+                `Класс "${selectedClass.name}" полный (${selectedClass.currentEnrollment}/${selectedClass.capacity})`
+            );
             return;
         }
 
@@ -75,10 +157,10 @@ export function PdfImportWizard({ branches, defaultAcademicYear }: PdfImportWiza
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     branchId,
-                    grade,
-                    academicYear,
-                    parsedData: formData
-                })
+                    classId,
+                    academicYearId,
+                    parsedData: formData,
+                }),
             });
 
             if (!res.ok) {
@@ -98,7 +180,9 @@ export function PdfImportWizard({ branches, defaultAcademicYear }: PdfImportWiza
             }
         } catch (error) {
             console.error(error);
-            toast.error(error instanceof Error ? error.message : "Ошибка импорта");
+            toast.error(
+                error instanceof Error ? error.message : "Ошибка импорта"
+            );
         } finally {
             setIsImporting(false);
         }
@@ -202,36 +286,131 @@ export function PdfImportWizard({ branches, defaultAcademicYear }: PdfImportWiza
                             </div>
                         </div>
 
-                        <div className="border-t pt-4 grid grid-cols-3 gap-4">
-                            <div className="space-y-1">
-                                <label className="text-xs font-semibold text-slate-500 uppercase">Филиал</label>
-                                <select value={branchId} onChange={e => setBranchId(e.target.value)} className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700 text-sm">
-                                    <option value="">Выберите...</option>
-                                    {branches.map(b => (
-                                        <option key={b.id} value={b.id}>{b.name}</option>
-                                    ))}
-                                </select>
+                        <div className="border-t pt-4 space-y-4">
+                            <div className="grid grid-cols-3 gap-4">
+                                <div className="space-y-1">
+                                    <label className="text-xs font-semibold text-slate-500 uppercase">
+                                        Филиал
+                                    </label>
+                                    <select
+                                        value={branchId}
+                                        onChange={(e) => setBranchId(e.target.value)}
+                                        className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700 text-sm"
+                                    >
+                                        <option value="">Выберите...</option>
+                                        {branches.map((b) => (
+                                            <option key={b.id} value={b.id}>
+                                                {b.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-xs font-semibold text-slate-500 uppercase">
+                                        Уч. год
+                                    </label>
+                                    <select
+                                        value={academicYearId}
+                                        onChange={(e) => setAcademicYearId(e.target.value)}
+                                        className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700 text-sm"
+                                    >
+                                        <option value="">Выберите...</option>
+                                        {academicYears.map((y) => (
+                                            <option key={y.id} value={y.id}>
+                                                {y.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-xs font-semibold text-slate-500 uppercase">
+                                        Класс
+                                    </label>
+                                    <select
+                                        value={classId}
+                                        onChange={(e) => setClassId(e.target.value)}
+                                        disabled={isLoadingClasses || !branchId || !academicYearId}
+                                        className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700 text-sm disabled:opacity-50"
+                                    >
+                                        <option value="">
+                                            {isLoadingClasses
+                                                ? "Загрузка..."
+                                                : "Выберите..."}
+                                        </option>
+                                        {classes.map((c) => (
+                                            <option key={c.id} value={c.id}>
+                                                {c.name} ({c.currentEnrollment}/{c.capacity})
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
-                            <div className="space-y-1">
-                                <label className="text-xs font-semibold text-slate-500 uppercase">Класс</label>
-                                <select value={grade} onChange={e => setGrade(e.target.value)} className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700 text-sm">
-                                    <option value="">Выберите...</option>
-                                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => <option key={n} value={n.toString()}>{n} класс</option>)}
-                                </select>
-                            </div>
-                            <div className="space-y-1">
-                                <label className="text-xs font-semibold text-slate-500 uppercase">Уч. год</label>
-                                <input type="text" value={academicYear} onChange={e => setAcademicYear(e.target.value)} className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700 text-sm" />
-                            </div>
+
+                            {/* Capacity Info */}
+                            {selectedClass && (
+                                <div
+                                    className={`p-3 rounded-lg flex items-start gap-3 ${
+                                        selectedClass.currentEnrollment >=
+                                        selectedClass.capacity
+                                            ? "bg-red-100 dark:bg-red-900/30"
+                                            : "bg-green-100 dark:bg-green-900/30"
+                                    }`}
+                                >
+                                    {selectedClass.currentEnrollment >=
+                                    selectedClass.capacity ? (
+                                        <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                                    ) : (
+                                        <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                                    )}
+                                    <div className="text-sm">
+                                        <p className="font-semibold text-slate-900 dark:text-white">
+                                            Класс {selectedClass.name}
+                                        </p>
+                                        <p className="text-slate-700 dark:text-slate-300">
+                                            Занято мест:{" "}
+                                            <span className="font-semibold">
+                                                {selectedClass.currentEnrollment}/
+                                                {selectedClass.capacity}
+                                            </span>
+                                        </p>
+                                        {selectedClass.currentEnrollment >=
+                                        selectedClass.capacity ? (
+                                            <p className="text-red-600 dark:text-red-400 font-semibold mt-1">
+                                                Класс полный! Импорт невозможен.
+                                            </p>
+                                        ) : (
+                                            <p className="text-green-600 dark:text-green-400 mt-1">
+                                                Доступно:{" "}
+                                                <span className="font-semibold">
+                                                    {selectedClass.capacity -
+                                                        selectedClass.currentEnrollment}
+                                                </span>{" "}
+                                                мест
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div className="flex justify-between mt-6">
-                            <button onClick={() => setStep(1)} className="px-5 py-2.5 text-sm font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-slate-200 dark:border-slate-700">
+                            <button
+                                onClick={() => setStep(1)}
+                                className="px-5 py-2.5 text-sm font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-slate-200 dark:border-slate-700"
+                            >
                                 Назад
                             </button>
                             <button
                                 onClick={() => setStep(4)}
-                                disabled={!branchId || !grade || !formData.fullName || !formData.phone}
+                                disabled={
+                                    !branchId ||
+                                    !classId ||
+                                    !formData.fullName ||
+                                    !formData.phone ||
+                                    (selectedClass &&
+                                        selectedClass.currentEnrollment >=
+                                            selectedClass.capacity)
+                                }
                                 className="px-5 py-2.5 text-sm font-semibold bg-[#207fdf] text-white rounded-lg hover:bg-[#1a6bc4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
                             >
                                 Все верно, далее →
@@ -249,7 +428,12 @@ export function PdfImportWizard({ branches, defaultAcademicYear }: PdfImportWiza
                         </div>
                         <h3 className="text-lg font-bold">Данные готовы к импорту</h3>
                         <p className="text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-                            Будет создан ученик {formData.fullName}, договор {formData.contractNumber || "без номера"} и привязан класс {grade}.
+                            Будет создан ученик {formData.fullName}, договор{" "}
+                            {formData.contractNumber || "без номера"} и привязан класс{" "}
+                            <span className="font-semibold text-slate-900 dark:text-white">
+                                {selectedClass?.name}
+                            </span>
+                            .
                         </p>
                         <div className="flex justify-center gap-4 mt-6">
                             <button onClick={() => setStep(3)} className="px-5 py-2.5 text-sm font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 border dark:border-slate-700">
