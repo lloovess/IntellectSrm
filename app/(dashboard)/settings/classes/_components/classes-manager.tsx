@@ -61,10 +61,11 @@ export function ClassesManager({ initialClasses, branches }: Props) {
         });
         setSaving(false);
 
-        if (!result.ok) { setError(result.error); return; }
+        if (!result.ok) { setError(result.message); return; }
 
+        const classData = result.data as unknown as ClassData | undefined;
         const newRecord: ClassData = {
-            id: result.data.id,
+            id: classData?.id || "",
             name: newName.trim(),
             branch_id: newBranchId,
             academic_year: newAcademicYear.trim(),
@@ -91,7 +92,7 @@ export function ClassesManager({ initialClasses, branches }: Props) {
         setSaving(true);
         const result = await updateClassAction(id, { name: editName, academicYear: editAcademicYear, capacity: editCapacity });
         setSaving(false);
-        if (!result.ok) { setError(result.error); return; }
+        if (!result.ok) { setError(result.message); return; }
         setClassesList((prev) =>
             prev.map((c) => c.id === id ? { ...c, name: editName.trim(), academic_year: editAcademicYear.trim(), capacity: editCapacity } : c)
                 .sort((a, b) => a.name.localeCompare(b.name, "ru"))
@@ -106,7 +107,7 @@ export function ClassesManager({ initialClasses, branches }: Props) {
         setDeletingId(id);
         const result = await deleteClassAction(id);
         setDeletingId(null);
-        if (!result.ok) { setError(result.error); return; }
+        if (!result.ok) { setError(result.message); return; }
         setClassesList((prev) => prev.filter((c) => c.id !== id));
         setSuccess("Класс удалён");
         setTimeout(() => setSuccess(""), 3000);

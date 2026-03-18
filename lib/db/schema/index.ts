@@ -9,6 +9,7 @@ export * from "./collection-tasks";
 export * from "./withdrawal-cases";
 export * from "./audit-logs";
 export * from "./user-roles";
+export * from "./academic-years";
 export * from "./classes";
 export * from "./guardians";
 export * from "./student-interactions";

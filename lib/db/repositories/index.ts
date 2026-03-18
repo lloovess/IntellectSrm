@@ -8,3 +8,5 @@ export * from "./withdrawal.repo";
 export * from "./branch.repo";
 export * from "./audit.repo";
 export * from "./user.repo";
+export * from "./academic-year.repo";
+export * from "./class.repo";
