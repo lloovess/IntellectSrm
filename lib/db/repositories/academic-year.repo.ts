@@ -70,6 +70,7 @@ export class AcademicYearRepository {
     }) {
         const result = await db
             .insert(academicYears)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .values({
                 name: data.name,
                 startDate: data.startDate,
@@ -96,6 +97,7 @@ export class AcademicYearRepository {
     ) {
         const result = await db
             .update(academicYears)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .set({ ...data, updatedAt: new Date() } as any)
             .where(eq(academicYears.id, id))
             .returning();
