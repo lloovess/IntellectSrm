@@ -135,7 +135,7 @@ export const transitionService = {
                     .eq("id", promo.enrollmentId);
 
                 // 2. Create new enrollment
-                const { data: newEnr, error: insErr } = await admin
+                const { error: insErr } = await admin
                     .from("enrollments")
                     .insert({
                         student_id: promo.studentId,

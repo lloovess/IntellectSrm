@@ -1,6 +1,5 @@
 import { pgTable, uuid, text, timestamp } from "drizzle-orm/pg-core";
 import { students } from "./students";
-import { auditLogs } from "./audit-logs"; // or user roles, we don't have users table, createdBy is usually just user ID (text/uuid)
 
 export const studentInteractions = pgTable("student_interactions", {
     id: uuid("id").primaryKey().defaultRandom(),

@@ -1,4 +1,4 @@
-import { paymentRepository, type RecordPaymentData, type PaymentTransaction } from "@/lib/db/repositories/payment.repo";
+import { paymentRepository, type PaymentTransaction } from "@/lib/db/repositories/payment.repo";
 import { recordPaymentSchema, type RecordPaymentInput, reversePaymentSchema, type ReversePaymentInput } from "@/lib/validators/payment.schema";
 import { createAdminClient } from "@/lib/supabase/server";
 import { checkPermission } from "@/lib/auth/guard";

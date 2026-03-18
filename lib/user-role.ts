@@ -2,9 +2,8 @@
  * @deprecated — Use `@/lib/auth` for session and `@/lib/supabase/server` for clients.
  * This file is kept as a backward-compatibility shim for prototype pages.
  */
-import { cookies } from "next/headers";
 import { isRole, type Role } from "@/lib/auth/config";
-import { getCurrentUser, type CurrentUser } from "@/lib/auth/session";
+import { getCurrentUser } from "@/lib/auth/session";
 
 export const ROLE_COOKIE_NAME = "srm_role";
 export const ACCESS_TOKEN_COOKIE_NAME = "srm_access_token";
