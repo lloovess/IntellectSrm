@@ -53,45 +53,113 @@ export async function POST(req: NextRequest) {
         // Phone: comes RIGHT AFTER "Тел:" in the parent (right) section
 
         // === REGEX EXTRACTION: All financial and personal data ===
-        const studentNameMatch = text.match(/([А-ЯЁа-яёA-Za-z\-]+\s+[А-ЯЁа-яёA-Za-z\-]+(?:\s+[А-ЯЁа-яёA-Za-z\-]+)?)\s*,?\s*именуемого\(ой\)\s+в\s+дальнейшем\s+[«"]Учащийся[»"]/u);
-        const parentNameMatch = text.match(/([А-ЯЁа-яёA-Za-z\-]+\s+[А-ЯЁа-яёA-Za-z\-]+(?:\s+[А-ЯЁа-яёA-Za-z\-]+)?)\s*,?\s*именуем\S*\s+в\s+дальнейшем\s+[«"]Законный\s+представитель[»"]/u);
+        // Capture up to 4 words before "именуемого(ой)", then strip known prefixes
+        const studentNameRaw = text.match(/([А-ЯЁа-яёA-Za-z\-]+(?:\s+[А-ЯЁа-яёA-Za-z\-]+){1,3})\s*,?\s*именуемого\(ой\)\s+в\s+дальнейшем\s+[«"]Учащийся[»"]/u);
+        const parentNameRaw = text.match(/([А-ЯЁа-яёA-Za-z\-]+(?:\s+[А-ЯЁа-яёA-Za-z\-]+){1,3})\s*,?\s*именуем\S*\s+в\s+дальнейшем\s+[«"]Законный\s+представитель[»"]/u);
         const contractNumMatch = text.match(/ДОГОВОР\s*№\s*([\w\d\-\/]+)/u);
 
         // Phone from parent side (the last "Тел:" occurrence, which is in parent/requisites section)
         const allPhoneMatches = [...text.matchAll(/Тел[\s:.]*([0-9][0-9\s,]+)/g)];
         const parentPhoneMatch = allPhoneMatches.length > 0 ? allPhoneMatches[allPhoneMatches.length - 1] : null;
 
-        const regexFullName = studentNameMatch ? studentNameMatch[1].trim() : "";
-        const regexParentName = parentNameMatch ? parentNameMatch[1].trim() : "";
+        // Strip known non-name prefixes (представителем, представителя, представитель, лице, etc.)
+        const NON_NAME_PREFIXES = /^(?:представител\S*|законн\S*|лице|уполномоченн\S*)\s+/iu;
+        function cleanName(raw: string): string {
+            let name = raw.trim();
+            // Remove known non-name words from beginning repeatedly
+            let prev = "";
+            while (prev !== name) {
+                prev = name;
+                name = name.replace(NON_NAME_PREFIXES, "").trim();
+            }
+            return name;
+        }
+
+        const regexFullName = studentNameRaw ? cleanName(studentNameRaw[1]) : "";
+        const regexParentName = parentNameRaw ? cleanName(parentNameRaw[1]) : "";
         const regexContractNumber = contractNumMatch ? contractNumMatch[1].trim() : "";
         const regexPhone = parentPhoneMatch
             ? parentPhoneMatch[1].trim().split(/[,\s]+/)[0].trim()
             : "";
 
         // === FINANCIAL DATA EXTRACTION ===
-        // Base price: look for "Общая стоимость обучения", "СТОИМОСТЬ ОБУЧЕНИЯ", "Базовая сумма"
-        const basePriceMatch = text.match(
-            /(?:Общ[а-яё]*\s+стоимост[а-яё]*|СТОИМОСТ[А-Я]*\s+ОБУЧЕНИЯ|Базовая\s+сумма|Итого\s+стоимость)\s*:?\s*(\d+[\d\s,]*)/iu
-        );
-        const basePrice = basePriceMatch
-            ? parseInt(basePriceMatch[1].replace(/\s|,/g, ""))
-            : 0;
+        // Helper: extract number from matched text (handles spaces, dots, commas in numbers)
+        function extractNumber(match: RegExpMatchArray | null, groupIndex = 1): number {
+            if (!match) return 0;
+            const raw = match[groupIndex];
+            const cleaned = raw.replace(/[\s.,]/g, "");
+            const num = parseInt(cleaned, 10);
+            return isNaN(num) ? 0 : num;
+        }
 
-        // Monthly payment: look for "Сумма ежемесячного платежа", "в месяц", "ежемесячно"
-        const monthlyMatch = text.match(
-            /(?:Сумма\s+(?:ежемесячного|ежемесячного)?[^:]*платеж|оплата\s+в\s+месяц|ежемесячно)\s*:?\s*(\d+[\d\s,]*)/iu
-        );
-        const monthlyAmount = monthlyMatch
-            ? parseInt(monthlyMatch[1].replace(/\s|,/g, ""))
-            : 0;
+        // Base price: broader patterns for total tuition cost
+        const basePricePatterns = [
+            // "Общая стоимость обучения составляет 1 500 000"
+            /(?:общ\S*\s+стоимост\S*|стоимость\s+обучени\S*|общая\s+сумм\S*)\s+(?:составля\S*\s+)?([\d\s.,]+)/iu,
+            // "СТОИМОСТЬ ОБУЧЕНИЯ: 1500000" or "СТОИМОСТЬ ОБУЧЕНИЯ – 1 500 000"
+            /СТОИМОСТ\S*\s+ОБУЧЕНИ\S*\s*[:\-–—]?\s*([\d\s.,]+)/u,
+            // "стоимость ... обучения ... 1 500 000 тенге/тг"
+            /стоимость[^.]{0,60}обучени\S*\s*[:\-–—]?\s*([\d\s.,]+)/iu,
+            // "Базовая сумма: 1500000" or "Итого стоимость: 1500000"
+            /(?:базов\S*\s+сумм\S*|итого\s+стоимость)\s*:?\s*([\d\s.,]+)/iu,
+            // "стоимость ... услуг ... 1 500 000"
+            /стоимость[^.]{0,60}услуг\S*\s*[:\-–—]?\s*([\d\s.,]+)/iu,
+            // Fallback: just "1 500 000 (.*тенге)" - a large number followed by currency
+            /([\d\s.,]{5,})\s*(?:\(?[а-яё]*тенге|тг|тңг)/iu,
+        ];
+        let basePrice = 0;
+        for (const pattern of basePricePatterns) {
+            const match = text.match(pattern);
+            const val = extractNumber(match);
+            if (val > 0) {
+                basePrice = val;
+                break;
+            }
+        }
 
-        // Prepayment: look for "Первоначальный взнос", "Первый платеж", "Авансовый платеж"
-        const prepaymentMatch = text.match(
-            /(?:Первоначальный\s+взнос|Первый\s+платеж|Авансовый\s+платеж|Взнос\s+за\s+первый\s+месяц)\s*:?\s*(\d+[\d\s,]*)/iu
-        );
-        const prepayment = prepaymentMatch
-            ? parseInt(prepaymentMatch[1].replace(/\s|,/g, ""))
-            : basePrice > 0 ? basePrice - (monthlyAmount * 11) : 0;
+        // Monthly payment: broader patterns
+        const monthlyPatterns = [
+            // "ежемесячного платежа ... 150 000"
+            /ежемесячн\S*\s+платеж\S*\s*[:\-–—]?\s*([\d\s.,]+)/iu,
+            // "оплата в месяц 150000" or "помесячная оплата 150000"
+            /(?:оплата\s+в\s+месяц|помесячн\S*\s+оплат\S*)\s*[:\-–—]?\s*([\d\s.,]+)/iu,
+            // "сумма ежемесячного ... 150 000"
+            /сумм\S*\s+ежемесячн\S*[^.]{0,30}([\d\s.,]+)/iu,
+            // "ежемесячно ... 150 000"
+            /ежемесячно\s*[:\-–—]?\s*([\d\s.,]+)/iu,
+            // "в размере 150 000 ... ежемесячно" (reversed order)
+            /в\s+размере\s+([\d\s.,]+)[^.]{0,30}ежемесячно/iu,
+        ];
+        let monthlyAmount = 0;
+        for (const pattern of monthlyPatterns) {
+            const match = text.match(pattern);
+            const val = extractNumber(match);
+            if (val > 0) {
+                monthlyAmount = val;
+                break;
+            }
+        }
+
+        // Prepayment: broader patterns
+        const prepaymentPatterns = [
+            /(?:первоначальн\S*\s+взнос|первый\s+платеж|авансов\S*\s+платеж)\s*[:\-–—]?\s*([\d\s.,]+)/iu,
+            /(?:взнос\s+за\s+первый\s+месяц|предоплат\S*)\s*[:\-–—]?\s*([\d\s.,]+)/iu,
+            /(?:первый\s+взнос)\s*[:\-–—]?\s*([\d\s.,]+)/iu,
+        ];
+        let prepayment = 0;
+        for (const pattern of prepaymentPatterns) {
+            const match = text.match(pattern);
+            const val = extractNumber(match);
+            if (val > 0) {
+                prepayment = val;
+                break;
+            }
+        }
+        // Fallback: if we have basePrice and monthly but no prepayment, try to calculate
+        if (prepayment === 0 && basePrice > 0 && monthlyAmount > 0) {
+            const calculated = basePrice - (monthlyAmount * 11);
+            prepayment = calculated > 0 ? calculated : 0;
+        }
 
         // === PAYMENT SCHEDULE EXTRACTION ===
         // Look for payment table: Month | Amount pattern
