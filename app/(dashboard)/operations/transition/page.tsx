@@ -105,6 +105,12 @@ export default function TransitionPage() {
 
     const readyCount = candidates.filter(c => c.status === "ready").length;
     const errorCount = candidates.length - readyCount;
+    const overflowCount = candidates.filter(
+        (c) =>
+            c.status === "ready" &&
+            c.targetClassCapacity &&
+            c.targetClassCurrentEnrollment >= c.targetClassCapacity
+    ).length;
 
     return (
         <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-6">
@@ -185,6 +191,23 @@ export default function TransitionPage() {
                 </div>
             )}
 
+            {/* Capacity Warning */}
+            {hasLoadedPreview && overflowCount > 0 && (
+                <div className="rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-900/50 dark:bg-red-900/20">
+                    <div className="flex items-start gap-3">
+                        <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                        <div>
+                            <p className="text-sm font-medium text-red-800 dark:text-red-300">
+                                ⚠️ {overflowCount} класс{overflowCount === 1 ? "" : "ов"} будут переполнены при переводе!
+                            </p>
+                            <p className="text-xs text-red-700 dark:text-red-400 mt-1">
+                                Проверьте вместимость целевых классов перед выполнением перевода.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Preview Results */}
             {hasLoadedPreview && (
                 <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col h-[600px]">
@@ -251,8 +274,28 @@ export default function TransitionPage() {
                                             </td>
                                             <td className="px-6 py-4 text-right">
                                                 {c.status === "ready" ? (
-                                                    <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-medium">
-                                                        {c.proposedClassName}
+                                                    <div className="space-y-1">
+                                                        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-medium">
+                                                            {c.proposedClassName}
+                                                        </div>
+                                                        {/* Capacity info if available */}
+                                                        {c.targetClassCapacity && (
+                                                            <div className={`text-xs px-2.5 py-1 rounded-md ${
+                                                                c.targetClassCurrentEnrollment >=
+                                                                c.targetClassCapacity
+                                                                    ? "bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400"
+                                                                    : "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+                                                            }`}>
+                                                                {c.targetClassCurrentEnrollment}/
+                                                                {c.targetClassCapacity}
+                                                                {c.targetClassCurrentEnrollment >=
+                                                                c.targetClassCapacity && (
+                                                                    <span className="ml-1 font-semibold">
+                                                                        (Класс будет переполнен!)
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 ) : (
                                                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-semibold">
