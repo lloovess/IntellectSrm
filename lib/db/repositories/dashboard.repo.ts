@@ -1,4 +1,3 @@
-import { unstable_cache } from "next/cache";
 import { db } from "../index";
 import { paymentTransactions } from "../schema/payment-transactions";
 import { paymentItems } from "../schema/payment-items";
@@ -24,64 +23,40 @@ export interface OverdueItem {
 
 export const dashboardRepository = {
     async getTotalRevenue(): Promise<number> {
-        return unstable_cache(
-            async () => {
-                const result = await db
-                    .select({ total: sql<string>`sum(${paymentTransactions.amount})` })
-                    .from(paymentTransactions);
+        const result = await db
+            .select({ total: sql<string>`sum(${paymentTransactions.amount})` })
+            .from(paymentTransactions);
 
-                return parseFloat(result[0]?.total || "0");
-            },
-            ['dashboard-total-revenue'],
-            { revalidate: 3600, tags: ['dashboard_metrics'] }
-        )();
+        return parseFloat(result[0]?.total || "0");
     },
 
     async getTotalDebt(): Promise<number> {
-        return unstable_cache(
-            async () => {
-                const result = await db
-                    .select({
-                        total: sql<string>`sum(GREATEST(0, ${paymentItems.amount} - ${paymentItems.paidAmount}))`
-                    })
-                    .from(paymentItems)
-                    .where(ne(paymentItems.status, 'paid'));
+        const result = await db
+            .select({
+                total: sql<string>`sum(GREATEST(0, ${paymentItems.amount} - ${paymentItems.paidAmount}))`
+            })
+            .from(paymentItems)
+            .where(ne(paymentItems.status, 'paid'));
 
-                return parseFloat(result[0]?.total || "0");
-            },
-            ['dashboard-total-debt'],
-            { revalidate: 3600, tags: ['dashboard_metrics'] }
-        )();
+        return parseFloat(result[0]?.total || "0");
     },
 
     async getActiveStudentsCount(): Promise<number> {
-        return unstable_cache(
-            async () => {
-                const result = await db
-                    .select({ count: sql<number>`count(*)` })
-                    .from(students)
-                    .where(eq(students.status, 'active'));
+        const result = await db
+            .select({ count: sql<number>`count(*)` })
+            .from(students)
+            .where(eq(students.status, 'active'));
 
-                return Number(result[0]?.count || 0);
-            },
-            ['dashboard-active-students'],
-            { revalidate: 3600, tags: ['dashboard_metrics'] }
-        )();
+        return Number(result[0]?.count || 0);
     },
 
     async getOverdueItemsCount(): Promise<number> {
-        return unstable_cache(
-            async () => {
-                const result = await db
-                    .select({ count: sql<number>`count(*)` })
-                    .from(paymentItems)
-                    .where(eq(paymentItems.status, 'overdue'));
+        const result = await db
+            .select({ count: sql<number>`count(*)` })
+            .from(paymentItems)
+            .where(eq(paymentItems.status, 'overdue'));
 
-                return Number(result[0]?.count || 0);
-            },
-            ['dashboard-overdue-count'],
-            { revalidate: 3600, tags: ['dashboard_metrics'] }
-        )();
+        return Number(result[0]?.count || 0);
     },
 
     async getRecentTransactions(limit = 8): Promise<RecentTransaction[]> {

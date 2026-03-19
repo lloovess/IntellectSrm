@@ -10,7 +10,6 @@ import { studentInteractions } from "../schema/student-interactions";
 import { guardians, type NewGuardian, type Guardian } from "../schema/guardians";
 import { classes } from "../schema/classes";
 import { eq, or, ilike, count, sql, desc, ne, and, lt, gte, asc } from "drizzle-orm";
-import { unstable_cache } from "next/cache";
 
 export interface RegistryFilters {
     search?: string;
@@ -419,10 +418,8 @@ export class StudentRepository extends BaseRepository<typeof students, Student, 
     }
 
     async getAssistantStats(): Promise<AssistantStats> {
-        return unstable_cache(
-            async () => {
-                const now = new Date();
-                const firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+        const now = new Date();
+        const firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
 
                 // Active enrollments with no active contract (subquery for NOT IN)
                 const activeEnrollmentsSubquery = db
@@ -593,10 +590,6 @@ export class StudentRepository extends BaseRepository<typeof students, Student, 
                     recentActivity: activityLog,
                     totalDebtAmount: totalDebt,
                 };
-            },
-            ['assistant-dashboard-stats'],
-            { tags: ['dashboard_metrics', 'students', 'payments'], revalidate: 300 }
-        )();
     }
 
     async getActivityLog(studentId: string, limit = 10): Promise<ActivityEvent[]> {
