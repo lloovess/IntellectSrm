@@ -8,6 +8,7 @@ async function getBranches() {
     return (data ?? []) as Array<{ id: string; name: string }>;
 }
 
+
 function getCurrentAcademicYear(): string {
     const now = new Date();
     const year = now.getFullYear();

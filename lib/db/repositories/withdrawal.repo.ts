@@ -1,12 +1,6 @@
 import { BaseRepository } from "./base.repo";
-import { db } from "../index";
+import { createAdminClient } from "@/lib/supabase/server";
 import { withdrawalCases, type WithdrawalCase, type NewWithdrawalCase } from "../schema/withdrawal-cases";
-import { contracts } from "../schema/contracts";
-import { enrollments } from "../schema/enrollments";
-import { paymentItems } from "../schema/payment-items";
-import { students } from "../schema/students";
-import { branches } from "../schema/branches";
-import { eq, and, desc, inArray } from "drizzle-orm";
 
 export interface WithdrawalListRow {
     id: string;
@@ -36,70 +30,86 @@ export class WithdrawalRepository extends BaseRepository<typeof withdrawalCases,
     }
 
     async getList(): Promise<WithdrawalListRow[]> {
-        const rows = await db
-            .select({
-                withdrawal: withdrawalCases,
-                enrollment: enrollments,
-                student: students,
-                branch: branches
-            })
-            .from(withdrawalCases)
-            .innerJoin(enrollments, eq(withdrawalCases.enrollmentId, enrollments.id))
-            .innerJoin(students, eq(enrollments.studentId, students.id))
-            .leftJoin(branches, eq(enrollments.branchId, branches.id))
-            .orderBy(desc(withdrawalCases.createdAt));
+        const admin = await createAdminClient();
+        const { data, error } = await admin
+            .from("withdrawal_cases")
+            .select(`
+                id, enrollment_id, reason, effective_date, settlement_amount, approved_by, approved_at, created_at,
+                enrollments:enrollment_id (
+                    grade,
+                    branches:branch_id ( name ),
+                    students:student_id ( full_name, phone )
+                )
+            `)
+            .order("created_at", { ascending: false });
 
-        return rows.map(row => ({
-            id: row.withdrawal.id,
-            enrollmentId: row.withdrawal.enrollmentId,
-            reason: row.withdrawal.reason,
-            effectiveDate: row.withdrawal.effectiveDate,
-            settlementAmount: parseFloat(row.withdrawal.settlementAmount ?? "0"),
-            isApproved: !!row.withdrawal.approvedAt,
-            approvedBy: row.withdrawal.approvedBy,
-            approvedAt: row.withdrawal.approvedAt ? row.withdrawal.approvedAt.toISOString() : null,
-            createdAt: row.withdrawal.createdAt.toISOString(),
-            student: {
-                fullName: row.student.fullName,
-                phone: row.student.phone ?? "—",
-            },
-            enrollment: {
-                grade: row.enrollment.grade ?? "—",
-                branchName: row.branch?.name ?? "—",
-            },
-        }));
+        if (error) {
+            console.error("Withdrawals getList error:", error);
+            throw new Error(error.message);
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return (data || []).map((row: any) => {
+            const enroll = row.enrollments;
+            // Supabase returns related objects as single object or array depending on relationship.
+            // Since enrollment->branch is many-to-one, branches is an object.
+            const branch = enroll?.branches;
+            const student = enroll?.students;
+
+            return {
+                id: row.id,
+                enrollmentId: row.enrollment_id,
+                reason: row.reason,
+                effectiveDate: row.effective_date,
+                settlementAmount: parseFloat(row.settlement_amount ?? "0"),
+                isApproved: !!row.approved_at,
+                approvedBy: row.approved_by,
+                approvedAt: row.approved_at ? new Date(row.approved_at).toISOString() : null,
+                createdAt: new Date(row.created_at).toISOString(),
+                student: {
+                    fullName: student?.full_name ?? "—",
+                    phone: student?.phone ?? "—",
+                },
+                enrollment: {
+                    grade: enroll?.grade ?? "—",
+                    branchName: branch?.name ?? "—",
+                },
+            };
+        });
     }
 
     async calculateSettlement(enrollmentId: string): Promise<SettlementCalc> {
-        const [contractInfo] = await db
-            .select({
-                id: contracts.id,
-                basePrice: contracts.basePrice,
-            })
-            .from(contracts)
-            .where(and(
-                eq(contracts.enrollmentId, enrollmentId),
-                eq(contracts.status, "active")
-            ))
+        const admin = await createAdminClient();
+        const { data: contractData, error: contractError } = await admin
+            .from("contracts")
+            .select("id, base_price")
+            .eq("enrollment_id", enrollmentId)
+            .eq("status", "active")
             .limit(1);
+
+        if (contractError && contractError.code !== "PGRST116") {
+            // PGRST116 is "JWT string empty" or similar row not found for .single(), but limit(1) doesn't throw it usually.
+            console.error(contractError);
+        }
+
+        const contractInfo = contractData?.[0];
 
         if (!contractInfo) {
             return { basePrice: 0, totalPaid: 0, unpaidMonths: 0, totalMonths: 0, settlementAmount: 0 };
         }
 
-        const items = await db
-            .select({
-                amount: paymentItems.amount,
-                paidAmount: paymentItems.paidAmount,
-                status: paymentItems.status
-            })
-            .from(paymentItems)
-            .where(eq(paymentItems.contractId, contractInfo.id));
+        const { data: itemsData, error: itemsError } = await admin
+            .from("payment_items")
+            .select("amount, paid_amount, status")
+            .eq("contract_id", contractInfo.id);
+
+        if (itemsError) throw new Error(itemsError.message);
+        const items = itemsData || [];
 
         const totalMonths = items.length;
         const unpaidMonths = items.filter(i => i.status === "planned" || i.status === "overdue").length;
-        const totalPaid = items.reduce((sum, i) => sum + (parseFloat(i.paidAmount) || 0), 0);
-        const basePrice = parseFloat(contractInfo.basePrice) || 0;
+        const totalPaid = items.reduce((sum, i) => sum + (parseFloat(i.paid_amount ?? "0") || 0), 0);
+        const basePrice = parseFloat(contractInfo.base_price ?? "0") || 0;
 
         const settlementAmount = totalMonths > 0
             ? Math.round((unpaidMonths / totalMonths) * basePrice)
@@ -115,66 +125,73 @@ export class WithdrawalRepository extends BaseRepository<typeof withdrawalCases,
         settlementType: string;
         settlementAmount: number;
     }): Promise<string> {
-        const task = await super.create({
-            enrollmentId: data.enrollmentId,
-            reason: data.reason,
-            effectiveDate: data.effectiveDate,
-            settlementType: data.settlementType,
-            settlementAmount: data.settlementAmount.toString(),
-            status: "pending"
-        });
-        return task.id;
+        const admin = await createAdminClient();
+        const { data: result, error } = await admin
+            .from("withdrawal_cases")
+            .insert({
+                enrollment_id: data.enrollmentId,
+                reason: data.reason,
+                effective_date: data.effectiveDate,
+                settlement_type: data.settlementType,
+                settlement_amount: data.settlementAmount.toString(),
+                status: "pending"
+            })
+            .select("id")
+            .single();
+
+        if (error) throw new Error(error.message);
+        return result.id;
     }
 
     async approve(id: string, approvedBy: string): Promise<void> {
-        await db.transaction(async (tx) => {
-            const [wc] = await tx
-                .select({ enrollmentId: withdrawalCases.enrollmentId })
-                .from(withdrawalCases)
-                .where(eq(withdrawalCases.id, id));
+        const admin = await createAdminClient();
+        
+        const { data: wcData, error: wcError } = await admin
+            .from("withdrawal_cases")
+            .select("enrollment_id")
+            .eq("id", id)
+            .single();
 
-            if (!wc) throw new Error("Заявка не найдена");
+        if (wcError || !wcData) throw new Error("Заявка не найдена");
 
-            // 1. Update the withdrawal case
-            await tx
-                .update(withdrawalCases)
-                .set({
-                    approvedBy,
-                    approvedAt: new Date(),
-                    status: "approved"
-                })
-                .where(eq(withdrawalCases.id, id));
+        // 1. Update the withdrawal case
+        await admin
+            .from("withdrawal_cases")
+            .update({
+                approved_by: approvedBy,
+                approved_at: new Date().toISOString(),
+                status: "approved"
+            })
+            .eq("id", id);
 
-            // 2. Update enrollment status to 'withdrawn'
-            await tx
-                .update(enrollments)
-                .set({ status: "withdrawn" })
-                .where(eq(enrollments.id, wc.enrollmentId));
+        // 2. Update enrollment status to 'withdrawn'
+        await admin
+            .from("enrollments")
+            .update({ status: "withdrawn" })
+            .eq("id", wcData.enrollment_id);
 
-            // 3. Mark all planned/overdue payment_items as cancelled
-            const [contract] = await tx
-                .select({ id: contracts.id })
-                .from(contracts)
-                .where(and(
-                    eq(contracts.enrollmentId, wc.enrollmentId),
-                    eq(contracts.status, "active")
-                ));
+        // 3. Mark all planned/overdue payment_items as cancelled
+        const { data: contractData } = await admin
+            .from("contracts")
+            .select("id")
+            .eq("enrollment_id", wcData.enrollment_id)
+            .eq("status", "active")
+            .limit(1);
 
-            if (contract) {
-                await tx
-                    .update(paymentItems)
-                    .set({ status: "cancelled" })
-                    .where(and(
-                        eq(paymentItems.contractId, contract.id),
-                        inArray(paymentItems.status, ["planned", "overdue"])
-                    ));
+        const contract = contractData?.[0];
 
-                await tx
-                    .update(contracts)
-                    .set({ status: "cancelled" })
-                    .where(eq(contracts.id, contract.id));
-            }
-        });
+        if (contract) {
+            await admin
+                .from("payment_items")
+                .update({ status: "cancelled" })
+                .eq("contract_id", contract.id)
+                .in("status", ["planned", "overdue"]);
+
+            await admin
+                .from("contracts")
+                .update({ status: "cancelled" })
+                .eq("id", contract.id);
+        }
     }
 }
 

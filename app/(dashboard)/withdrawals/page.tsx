@@ -5,10 +5,11 @@ import { WithdrawalsPageClient } from "./_components/withdrawals-page-client";
 export default async function WithdrawalsPage() {
     const user = await requireAuth();
     const canApprove = ["admin", "finance_manager"].includes(user.role);
+    const canCreate = ["admin", "finance_manager", "accountant", "assistant"].includes(user.role);
 
     const [{ list }, enrollments] = await Promise.all([
         withdrawalService.getPage(),
-        canApprove ? withdrawalService.getActiveEnrollments() : Promise.resolve([]),
+        canCreate ? withdrawalService.getActiveEnrollments() : Promise.resolve([]),
     ]);
 
     return (

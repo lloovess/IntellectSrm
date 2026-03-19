@@ -76,7 +76,7 @@ export function ClassDialog({
             name: data?.name || "",
             academicYear: data?.academicYear || "",
             capacity: data?.capacity || 20,
-            status: data?.status || "active",
+            status: (data?.status as "active" | "archived") || "active",
         },
     });
 

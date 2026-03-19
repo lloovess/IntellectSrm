@@ -273,16 +273,16 @@ export function PdfImportWizard({ branches, defaultAcademicYear }: PdfImportWiza
                                 <input type="text" value={formData.contractNumber} onChange={e => setFormData({ ...formData, contractNumber: e.target.value })} className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700" />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-xs font-semibold text-slate-500 uppercase">Базовая сумма (тг)</label>
-                                <input type="number" value={formData.basePrice} onChange={e => setFormData({ ...formData, basePrice: Number(e.target.value) })} className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700" />
+                                <label className="text-xs font-semibold text-slate-500 uppercase">Базовая сумма (сом)</label>
+                                <input type="text" inputMode="numeric" value={formData.basePrice || ""} onChange={e => { const v = e.target.value.replace(/[^0-9]/g, ""); setFormData({ ...formData, basePrice: v ? Number(v) : 0 }); }} className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700" />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-xs font-semibold text-slate-500 uppercase">Оплата в мес (тг)</label>
-                                <input type="number" value={formData.monthlyAmount} onChange={e => setFormData({ ...formData, monthlyAmount: Number(e.target.value) })} className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700" />
+                                <label className="text-xs font-semibold text-slate-500 uppercase">Оплата в мес (сом)</label>
+                                <input type="text" inputMode="numeric" value={formData.monthlyAmount || ""} onChange={e => { const v = e.target.value.replace(/[^0-9]/g, ""); setFormData({ ...formData, monthlyAmount: v ? Number(v) : 0 }); }} className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700" />
                             </div>
                             <div className="space-y-1">
-                                <label className="text-xs font-semibold text-slate-500 uppercase">Первый взнос (тг)</label>
-                                <input type="number" value={formData.prepayment} onChange={e => setFormData({ ...formData, prepayment: Number(e.target.value) })} className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700" />
+                                <label className="text-xs font-semibold text-slate-500 uppercase">Первый взнос (сом)</label>
+                                <input type="text" inputMode="numeric" value={formData.prepayment || ""} onChange={e => { const v = e.target.value.replace(/[^0-9]/g, ""); setFormData({ ...formData, prepayment: v ? Number(v) : 0 }); }} className="w-full px-3 py-2 border rounded-lg dark:bg-slate-800 dark:border-slate-700" />
                             </div>
                         </div>
 
@@ -407,7 +407,7 @@ export function PdfImportWizard({ branches, defaultAcademicYear }: PdfImportWiza
                                     !classId ||
                                     !formData.fullName ||
                                     !formData.phone ||
-                                    (selectedClass &&
+                                    Boolean(selectedClass &&
                                         selectedClass.currentEnrollment >=
                                             selectedClass.capacity)
                                 }

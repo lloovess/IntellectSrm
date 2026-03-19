@@ -1,3 +1,4 @@
+import { createAdminClient } from "@/lib/supabase/server";
 import { db } from "@/lib/db";
 import { academicYears } from "@/lib/db/schema";
 import { eq, desc } from "drizzle-orm";
@@ -5,58 +6,74 @@ import { eq, desc } from "drizzle-orm";
 export class AcademicYearRepository {
     /**
      * Find all academic years
+     * Uses admin client to bypass RLS (Drizzle has auth.role() = anon)
      */
     static async findAll() {
-        return db
-            .select()
-            .from(academicYears)
-            .orderBy(desc(academicYears.name));
+        const admin = await createAdminClient();
+        const { data, error } = await admin
+            .from("academic_years")
+            .select("*")
+            .order("name", { ascending: false });
+        if (error) throw error;
+        return data ?? [];
     }
 
     /**
      * Find all active academic years
      */
     static async findActive() {
-        return db
-            .select()
-            .from(academicYears)
-            .where(eq(academicYears.status, "active"))
-            .orderBy(desc(academicYears.name));
+        const admin = await createAdminClient();
+        const { data, error } = await admin
+            .from("academic_years")
+            .select("*")
+            .eq("status", "active")
+            .order("name", { ascending: false });
+        if (error) throw error;
+        return data ?? [];
     }
 
     /**
      * Find academic year by ID
      */
     static async findById(id: string) {
-        const result = await db
-            .select()
-            .from(academicYears)
-            .where(eq(academicYears.id, id));
-        return result[0] || null;
+        const admin = await createAdminClient();
+        const { data, error } = await admin
+            .from("academic_years")
+            .select("*")
+            .eq("id", id)
+            .single();
+        if (error && error.code !== "PGRST116") throw error;
+        return data || null;
     }
 
     /**
      * Find academic year by name
      */
     static async findByName(name: string) {
-        const result = await db
-            .select()
-            .from(academicYears)
-            .where(eq(academicYears.name, name));
-        return result[0] || null;
+        const admin = await createAdminClient();
+        const { data, error } = await admin
+            .from("academic_years")
+            .select("*")
+            .eq("name", name)
+            .single();
+        if (error && error.code !== "PGRST116") throw error;
+        return data || null;
     }
 
     /**
      * Find current academic year (active, most recent)
      */
     static async findCurrent() {
-        const result = await db
-            .select()
-            .from(academicYears)
-            .where(eq(academicYears.status, "active"))
-            .orderBy(desc(academicYears.name))
-            .limit(1);
-        return result[0] || null;
+        const admin = await createAdminClient();
+        const { data, error } = await admin
+            .from("academic_years")
+            .select("*")
+            .eq("status", "active")
+            .order("name", { ascending: false })
+            .limit(1)
+            .single();
+        if (error && error.code !== "PGRST116") throw error;
+        return data || null;
     }
 
     /**
@@ -70,7 +87,6 @@ export class AcademicYearRepository {
     }) {
         const result = await db
             .insert(academicYears)
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .values({
                 name: data.name,
                 startDate: data.startDate,
@@ -78,6 +94,7 @@ export class AcademicYearRepository {
                 status: data.status || "active",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any)
             .returning();
         return result[0];

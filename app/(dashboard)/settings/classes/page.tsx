@@ -7,6 +7,7 @@ type ClassData = {
     id: string;
     name: string;
     branch_id: string;
+    academic_year_id: string;
     academic_year: string;
     capacity: number;
     status: string;
@@ -17,16 +18,24 @@ type BranchData = {
     name: string;
 };
 
-async function getClassesAndBranches(): Promise<{ classes: ClassData[]; branches: BranchData[] }> {
+type AcademicYearData = {
+    id: string;
+    name: string;
+    status: string;
+};
+
+async function getClassesAndBranches(): Promise<{ classes: ClassData[]; branches: BranchData[]; academicYears: AcademicYearData[] }> {
     const admin = await createAdminClient();
-    const [classesRes, branchesRes] = await Promise.all([
-        admin.from("classes").select("id, name, branch_id, academic_year, capacity, status").order("name"),
-        admin.from("branches").select("id, name").order("name")
+    const [classesRes, branchesRes, academicYearsRes] = await Promise.all([
+        admin.from("classes").select("id, name, branch_id, academic_year_id, academic_year, capacity, status").order("name"),
+        admin.from("branches").select("id, name").order("name"),
+        admin.from("academic_years").select("id, name, status").order("name", { ascending: false })
     ]);
 
     return {
         classes: (classesRes.data ?? []) as ClassData[],
         branches: (branchesRes.data ?? []) as BranchData[],
+        academicYears: (academicYearsRes.data ?? []) as AcademicYearData[],
     };
 }
 
@@ -41,7 +50,7 @@ export default async function ClassesPage() {
         );
     }
 
-    const { classes, branches } = await getClassesAndBranches();
+    const { classes, branches, academicYears } = await getClassesAndBranches();
 
     return (
         <div className="max-w-5xl p-6 md:p-8 space-y-6">
@@ -52,7 +61,7 @@ export default async function ClassesPage() {
                 </p>
             </div>
 
-            <ClassesManager initialClasses={classes} branches={branches} />
+            <ClassesManager initialClasses={classes} branches={branches} academicYears={academicYears} />
         </div>
     );
 }

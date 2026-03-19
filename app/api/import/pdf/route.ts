@@ -76,36 +76,48 @@ export async function POST(req: NextRequest) {
         }
 
         const regexFullName = studentNameRaw ? cleanName(studentNameRaw[1]) : "";
-        const regexParentName = parentNameRaw ? cleanName(parentNameRaw[1]) : "";
+        // Parent name: try the «Законный представитель» pattern first,
+        // then fallback to "ФИО:" in the Родитель/requisites section (nominative case)
+        let regexParentName = parentNameRaw ? cleanName(parentNameRaw[1]) : "";
+        
+        // Better parent name: look for "ФИО:" after "Родитель" section header
+        const parentFioMatch = text.match(/Родитель[\s\S]{0,200}ФИО\s*:\s*([\u0410-\u042f\u0401][\u0410-\u042f\u0401\u0430-\u044f\u0451A-Za-z\-]+\s+[\u0410-\u042f\u0401\u0430-\u044f\u0451A-Za-z\-]+(?:\s+[\u0410-\u042f\u0401\u0430-\u044f\u0451A-Za-z\-]+)?)/u);
+        if (parentFioMatch) {
+            regexParentName = parentFioMatch[1].trim();
+        }
+        
         const regexContractNumber = contractNumMatch ? contractNumMatch[1].trim() : "";
         const regexPhone = parentPhoneMatch
             ? parentPhoneMatch[1].trim().split(/[,\s]+/)[0].trim()
             : "";
 
         // === FINANCIAL DATA EXTRACTION ===
-        // Helper: extract number from matched text (handles spaces, dots, commas in numbers)
+        // Helper: extract number from matched text (handles spaces in numbers like "450 000")
+        // Requires at least 4 digits to avoid matching section numbers like "3.1" → 31
         function extractNumber(match: RegExpMatchArray | null, groupIndex = 1): number {
             if (!match) return 0;
             const raw = match[groupIndex];
-            const cleaned = raw.replace(/[\s.,]/g, "");
+            // Only strip spaces (not dots — dots are used in section numbers like "3.1")
+            const cleaned = raw.replace(/\s/g, "").replace(/,/g, "");
             const num = parseInt(cleaned, 10);
-            return isNaN(num) ? 0 : num;
+            // Minimum 4 digits to be a valid financial amount (>= 1000)
+            return isNaN(num) || num < 1000 ? 0 : num;
         }
 
-        // Base price: broader patterns for total tuition cost
+        // Base price: patterns for total tuition cost
         const basePricePatterns = [
-            // "Общая стоимость обучения составляет 1 500 000"
-            /(?:общ\S*\s+стоимост\S*|стоимость\s+обучени\S*|общая\s+сумм\S*)\s+(?:составля\S*\s+)?([\d\s.,]+)/iu,
-            // "СТОИМОСТЬ ОБУЧЕНИЯ: 1500000" or "СТОИМОСТЬ ОБУЧЕНИЯ – 1 500 000"
-            /СТОИМОСТ\S*\s+ОБУЧЕНИ\S*\s*[:\-–—]?\s*([\d\s.,]+)/u,
-            // "стоимость ... обучения ... 1 500 000 тенге/тг"
-            /стоимость[^.]{0,60}обучени\S*\s*[:\-–—]?\s*([\d\s.,]+)/iu,
-            // "Базовая сумма: 1500000" or "Итого стоимость: 1500000"
-            /(?:базов\S*\s+сумм\S*|итого\s+стоимость)\s*:?\s*([\d\s.,]+)/iu,
-            // "стоимость ... услуг ... 1 500 000"
-            /стоимость[^.]{0,60}услуг\S*\s*[:\-–—]?\s*([\d\s.,]+)/iu,
-            // Fallback: just "1 500 000 (.*тенге)" - a large number followed by currency
-            /([\d\s.,]{5,})\s*(?:\(?[а-яё]*тенге|тг|тңг)/iu,
+            // "Общий контракт за обучение составляет 450 000" — MAIN pattern for this school
+            /контракт[^.]{0,80}обучени\S*\s+составля\S*\s+([\d\s]+)/iu,
+            // "Общая стоимость обучения составляет 450 000"
+            /(?:общ\S*\s+стоимост\S*|общая\s+сумм\S*)[^.]{0,40}составля\S*\s+([\d\s]+)/iu,
+            // "стоимость обучения: 450000" / "стоимость обучения – 450 000"
+            /стоимост\S*\s+обучени\S*\s*[:\-–—]?\s*([\d\s]+)/iu,
+            // "СТОИМОСТЬ И ПОРЯДОК" section: look for "составляет NUMBER" nearby
+            /составля\S*\s+([\d\s]{5,})\s*(?:\([^)]+\))?\s*(?:сом|тенге|тг)/iu,
+            // "Базовая сумма" / "Итого стоимость"
+            /(?:базов\S*\s+сумм\S*|итого\s+стоимость)\s*:?\s*([\d\s]+)/iu,
+            // Fallback: NUMBER followed by currency word "сом" or "тенге"
+            /([\d\s]{5,})\s*(?:\([^)]+\))?\s*(?:сом|тенге|тг)\b/iu,
         ];
         let basePrice = 0;
         for (const pattern of basePricePatterns) {
@@ -117,92 +129,129 @@ export async function POST(req: NextRequest) {
             }
         }
 
-        // Monthly payment: broader patterns
-        const monthlyPatterns = [
-            // "ежемесячного платежа ... 150 000"
-            /ежемесячн\S*\s+платеж\S*\s*[:\-–—]?\s*([\d\s.,]+)/iu,
-            // "оплата в месяц 150000" or "помесячная оплата 150000"
-            /(?:оплата\s+в\s+месяц|помесячн\S*\s+оплат\S*)\s*[:\-–—]?\s*([\d\s.,]+)/iu,
-            // "сумма ежемесячного ... 150 000"
-            /сумм\S*\s+ежемесячн\S*[^.]{0,30}([\d\s.,]+)/iu,
-            // "ежемесячно ... 150 000"
-            /ежемесячно\s*[:\-–—]?\s*([\d\s.,]+)/iu,
-            // "в размере 150 000 ... ежемесячно" (reversed order)
-            /в\s+размере\s+([\d\s.,]+)[^.]{0,30}ежемесячно/iu,
-        ];
-        let monthlyAmount = 0;
-        for (const pattern of monthlyPatterns) {
-            const match = text.match(pattern);
-            const val = extractNumber(match);
-            if (val > 0) {
-                monthlyAmount = val;
-                break;
-            }
-        }
+        // === PAYMENT SCHEDULE TABLE EXTRACTION ===
+        // Parse structured table: rows like "1  5 марта 2026  135 000  Первоначальный взнос"
+        // or "2  До 05 сентября 2026  45 000"
+        const scheduleRows: Array<{ amount: number; isPrepayment: boolean; monthName: string }> = [];
 
-        // Prepayment: broader patterns
-        const prepaymentPatterns = [
-            /(?:первоначальн\S*\s+взнос|первый\s+платеж|авансов\S*\s+платеж)\s*[:\-–—]?\s*([\d\s.,]+)/iu,
-            /(?:взнос\s+за\s+первый\s+месяц|предоплат\S*)\s*[:\-–—]?\s*([\d\s.,]+)/iu,
-            /(?:первый\s+взнос)\s*[:\-–—]?\s*([\d\s.,]+)/iu,
-        ];
-        let prepayment = 0;
-        for (const pattern of prepaymentPatterns) {
-            const match = text.match(pattern);
-            const val = extractNumber(match);
-            if (val > 0) {
-                prepayment = val;
-                break;
-            }
-        }
-        // Fallback: if we have basePrice and monthly but no prepayment, try to calculate
-        if (prepayment === 0 && basePrice > 0 && monthlyAmount > 0) {
-            const calculated = basePrice - (monthlyAmount * 11);
-            prepayment = calculated > 0 ? calculated : 0;
-        }
+        // Pattern: table row with date and amount — "До 05 сентября 2026  45 000" or "5 марта 2026  135 000"
+        const tableRowMatches = [...text.matchAll(
+            /(?:до\s+)?(\d{1,2})\s+([а-яёА-ЯЁ]+)\s+(\d{4})\s+([\d\s]+?)(?:\s|$|[А-Яа-яЁё])/giu
+        )];
 
-        // === PAYMENT SCHEDULE EXTRACTION ===
-        // Look for payment table: Month | Amount pattern
-        // Handles formats like "Сентябрь 150000" or "1 месяц 150000" or "09.2025 150000"
-        const monthPayments: Record<string, number> = {};
         const monthNames: Record<string, string> = {
-            "январ": "1", "февр": "2", "март": "3", "апрель": "4", "май": "5", "июнь": "6",
-            "июль": "7", "август": "8", "сентябр": "9", "октябр": "10", "ноябр": "11", "декабр": "12",
-            "янв": "1", "фев": "2", "мар": "3", "апр": "4", "июн": "6",
-            "июл": "7", "авг": "8", "сен": "9", "окт": "10", "ноя": "11", "дек": "12"
+            "январ": "Январь", "февр": "Февраль", "март": "Март", "апрел": "Апрель",
+            "май": "Май", "мая": "Май", "июн": "Июнь", "июл": "Июль",
+            "август": "Август", "сентябр": "Сентябрь", "октябр": "Октябрь",
+            "ноябр": "Ноябрь", "декабр": "Декабрь",
         };
 
-        // Pattern 1: Month name followed by amount (e.g., "Сентябрь 150000")
-        const monthNameMatches = [...text.matchAll(
-            /(?:^|\n|Месяц\s+)([А-Яа-яЁё]+)\s+(\d+[\d\s,]*)/gm
-        )];
-        for (const match of monthNameMatches) {
-            const monthName = match[1].toLowerCase();
-            for (const [key, num] of Object.entries(monthNames)) {
-                if (monthName.includes(key)) {
-                    const amount = parseInt(match[2].replace(/\s|,/g, ""));
-                    if (amount > 0) monthPayments[num] = amount;
+        for (const match of tableRowMatches) {
+            const monthWord = match[2].toLowerCase();
+            const amountRaw = match[4].replace(/\s/g, "");
+            const amount = parseInt(amountRaw, 10);
+
+            if (isNaN(amount) || amount < 1000) continue;
+
+            // Determine month name
+            let resolvedMonth = "";
+            for (const [prefix, name] of Object.entries(monthNames)) {
+                if (monthWord.startsWith(prefix)) {
+                    resolvedMonth = name;
+                    break;
+                }
+            }
+
+            // Check if this row is the prepayment (by looking at context after the amount)
+            const fullMatchEnd = (match.index ?? 0) + match[0].length;
+            const contextAfter = text.substring(fullMatchEnd - 1, fullMatchEnd + 80).toLowerCase();
+            const isPrepayment = /первоначальн|взнос|предоплат|задаток/.test(contextAfter);
+
+            scheduleRows.push({ amount, isPrepayment, monthName: resolvedMonth });
+        }
+
+        console.log("[SCHEDULE] Parsed rows:", scheduleRows);
+
+        // Extract prepayment from schedule (row marked as prepayment)
+        let prepayment = 0;
+        const prepaymentRow = scheduleRows.find(r => r.isPrepayment);
+        if (prepaymentRow) {
+            prepayment = prepaymentRow.amount;
+        }
+
+        // If no prepayment found from schedule, try regex patterns
+        if (prepayment === 0) {
+            const prepaymentPatterns = [
+                /(?:первоначальн\S*\s+взнос|первый\s+платеж|авансов\S*\s+платеж)\s*[:\-–—]?\s*([\d\s]+)/iu,
+                /(?:взнос\s+за\s+первый\s+месяц|предоплат\S*)\s*[:\-–—]?\s*([\d\s]+)/iu,
+                /(?:первый\s+взнос)\s*[:\-–—]?\s*([\d\s]+)/iu,
+                /задаток[^.]{0,40}([\d\s]{5,})/iu,
+            ];
+            for (const pattern of prepaymentPatterns) {
+                const match = text.match(pattern);
+                const val = extractNumber(match);
+                if (val > 0) {
+                    prepayment = val;
                     break;
                 }
             }
         }
 
-        // Pattern 2: Numeric month (1-12) with amount (e.g., "1 150000" or "01. 150000")
-        const numericMonthMatches = [...text.matchAll(
-            /(?:^|\n|\s)(?:месяц\s+)?(\d{1,2})[.\s]*(?:месяц)?[:\s]+(\d+[\d\s,]*)/gm
-        )];
-        for (const match of numericMonthMatches) {
-            const monthNum = match[1].padStart(1, "");
-            const amount = parseInt(match[2].replace(/\s|,/g, ""));
-            if (parseInt(monthNum) >= 1 && parseInt(monthNum) <= 12 && amount > 0) {
-                monthPayments[monthNum] = amount;
+        // Monthly payment: derive from schedule (non-prepayment rows, most common amount)
+        const regularRows = scheduleRows.filter(r => !r.isPrepayment);
+        let monthlyAmount = 0;
+        if (regularRows.length > 0) {
+            // Use the most frequent amount as monthly
+            const amountCounts = new Map<number, number>();
+            for (const row of regularRows) {
+                amountCounts.set(row.amount, (amountCounts.get(row.amount) || 0) + 1);
+            }
+            let maxCount = 0;
+            for (const [amount, count] of amountCounts) {
+                if (count > maxCount) {
+                    maxCount = count;
+                    monthlyAmount = amount;
+                }
+            }
+        }
+
+        // If no monthly from schedule, try regex patterns
+        if (monthlyAmount === 0) {
+            const monthlyPatterns = [
+                /ежемесячн\S*\s+платеж\S*\s*[:\-–—]?\s*([\d\s]+)/iu,
+                /(?:оплата\s+в\s+месяц|помесячн\S*\s+оплат\S*)\s*[:\-–—]?\s*([\d\s]+)/iu,
+                /ежемесячно\s*[:\-–—]?\s*([\d\s]+)/iu,
+            ];
+            for (const pattern of monthlyPatterns) {
+                const match = text.match(pattern);
+                const val = extractNumber(match);
+                if (val > 0) {
+                    monthlyAmount = val;
+                    break;
+                }
+            }
+        }
+
+        // Fallback prepayment calculation
+        if (prepayment === 0 && basePrice > 0 && monthlyAmount > 0) {
+            const calculated = basePrice - (monthlyAmount * regularRows.length);
+            prepayment = calculated > 0 ? calculated : 0;
+        }
+
+        // === BUILD MONTH PAYMENTS MAP ===
+        // Map schedule rows to month label → amount
+        const monthPayments: Record<string, number> = {};
+        for (const row of regularRows) {
+            if (row.monthName) {
+                monthPayments[row.monthName] = row.amount;
             }
         }
 
         // If no schedule found but we have regular monthly payments, generate standard schedule
         if (Object.keys(monthPayments).length === 0 && monthlyAmount > 0) {
-            for (let i = 1; i <= 12; i++) {
-                monthPayments[i.toString()] = monthlyAmount;
+            const defaultMonths = ["Сентябрь", "Октябрь", "Ноябрь", "Декабрь", "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь"];
+            for (const m of defaultMonths) {
+                monthPayments[m] = monthlyAmount;
             }
         }
 

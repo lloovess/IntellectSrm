@@ -7,8 +7,15 @@ type ClassData = {
     id: string;
     name: string;
     branch_id: string;
+    academic_year_id: string;
     academic_year: string;
     capacity: number;
+    status: string;
+};
+
+type AcademicYearData = {
+    id: string;
+    name: string;
     status: string;
 };
 
@@ -20,21 +27,22 @@ type BranchData = {
 type Props = {
     initialClasses: ClassData[];
     branches: BranchData[];
+    academicYears: AcademicYearData[];
 };
 
-export function ClassesManager({ initialClasses, branches }: Props) {
+export function ClassesManager({ initialClasses, branches, academicYears }: Props) {
     const [classesList, setClassesList] = useState<ClassData[]>(initialClasses);
 
     // Create form state
     const [newName, setNewName] = useState("");
     const [newBranchId, setNewBranchId] = useState(branches.length > 0 ? branches[0].id : "");
-    const [newAcademicYear, setNewAcademicYear] = useState("2024-2025");
+    const [newAcademicYearId, setNewAcademicYearId] = useState(academicYears.length > 0 ? academicYears[0].id : "");
     const [newCapacity, setNewCapacity] = useState<number>(20);
 
     // Edit form state
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editName, setEditName] = useState("");
-    const [editAcademicYear, setEditAcademicYear] = useState("");
+    const [editAcademicYearId, setEditAcademicYearId] = useState("");
     const [editCapacity, setEditCapacity] = useState<number>(20);
 
     // Status state
@@ -51,12 +59,20 @@ export function ClassesManager({ initialClasses, branches }: Props) {
             setError("Пожалуйста, выберите филиал");
             return;
         }
+        if (!newAcademicYearId) {
+            setError("Пожалуйста, выберите учебный год");
+            return;
+        }
+        
+        const selectedYear = academicYears.find(y => y.id === newAcademicYearId)?.name || "";
+        
         resetMessages();
         setSaving(true);
         const result = await createClassAction({
             name: newName,
             branchId: newBranchId,
-            academicYear: newAcademicYear,
+            academicYearId: newAcademicYearId,
+            academicYear: selectedYear,
             capacity: newCapacity
         });
         setSaving(false);
@@ -68,7 +84,8 @@ export function ClassesManager({ initialClasses, branches }: Props) {
             id: classData?.id || "",
             name: newName.trim(),
             branch_id: newBranchId,
-            academic_year: newAcademicYear.trim(),
+            academic_year_id: newAcademicYearId,
+            academic_year: selectedYear,
             capacity: newCapacity,
             status: "active"
         };
@@ -82,7 +99,7 @@ export function ClassesManager({ initialClasses, branches }: Props) {
     const startEdit = (c: ClassData) => {
         setEditingId(c.id);
         setEditName(c.name);
-        setEditAcademicYear(c.academic_year);
+        setEditAcademicYearId(c.academic_year_id);
         setEditCapacity(c.capacity);
         resetMessages();
     };
@@ -90,11 +107,12 @@ export function ClassesManager({ initialClasses, branches }: Props) {
     const handleSaveEdit = async (id: string, originalBranchId: string) => {
         resetMessages();
         setSaving(true);
-        const result = await updateClassAction(id, { name: editName, academicYear: editAcademicYear, capacity: editCapacity });
+        const selectedYear = academicYears.find(y => y.id === editAcademicYearId)?.name || "";
+        const result = await updateClassAction(id, { name: editName, academicYearId: editAcademicYearId, academicYear: selectedYear, capacity: editCapacity });
         setSaving(false);
         if (!result.ok) { setError(result.message); return; }
         setClassesList((prev) =>
-            prev.map((c) => c.id === id ? { ...c, name: editName.trim(), academic_year: editAcademicYear.trim(), capacity: editCapacity } : c)
+            prev.map((c) => c.id === id ? { ...c, name: editName.trim(), academic_year_id: editAcademicYearId, academic_year: selectedYear, capacity: editCapacity } : c)
                 .sort((a, b) => a.name.localeCompare(b.name, "ru"))
         );
         setEditingId(null);
@@ -161,13 +179,15 @@ export function ClassesManager({ initialClasses, branches }: Props) {
 
                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 space-y-1.5">
                         <span>Учебный год</span>
-                        <input
-                            value={newAcademicYear}
-                            onChange={(e) => setNewAcademicYear(e.target.value)}
+                        <select
+                            value={newAcademicYearId}
+                            onChange={(e) => setNewAcademicYearId(e.target.value)}
                             className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#207fdf]/50"
-                            placeholder="YYYY-YYYY"
                             required
-                        />
+                        >
+                            {academicYears.length === 0 && <option value="" disabled>Нет доступных годов</option>}
+                            {academicYears.map(ay => <option key={ay.id} value={ay.id}>{ay.name}</option>)}
+                        </select>
                     </label>
 
                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 space-y-1.5">
@@ -186,7 +206,7 @@ export function ClassesManager({ initialClasses, branches }: Props) {
                 <div className="flex items-center justify-end pt-2">
                     <button
                         type="submit"
-                        disabled={saving || branches.length === 0}
+                        disabled={saving || branches.length === 0 || academicYears.length === 0}
                         className="rounded-lg bg-[#207fdf] px-6 py-2 text-sm font-semibold text-white hover:bg-[#1a6bc4] disabled:opacity-50"
                     >
                         {saving ? "..." : "Создать класс"}
@@ -223,12 +243,14 @@ export function ClassesManager({ initialClasses, branches }: Props) {
                                                     className="rounded-lg border border-[#207fdf] bg-white dark:bg-slate-800 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#207fdf]/50"
                                                     placeholder="Имя"
                                                 />
-                                                <input
-                                                    value={editAcademicYear}
-                                                    onChange={(e) => setEditAcademicYear(e.target.value)}
+                                                <select
+                                                    value={editAcademicYearId}
+                                                    onChange={(e) => setEditAcademicYearId(e.target.value)}
                                                     className="rounded-lg border border-[#207fdf] bg-white dark:bg-slate-800 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#207fdf]/50"
-                                                    placeholder="Год"
-                                                />
+                                                    required
+                                                >
+                                                    {academicYears.map(ay => <option key={ay.id} value={ay.id}>{ay.name}</option>)}
+                                                </select>
                                                 <input
                                                     type="number"
                                                     value={editCapacity}

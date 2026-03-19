@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireAuth } from "@/lib/auth/session";
+import { cn } from "@/lib/utils";
 import { contractService } from "@/lib/services/contract.service";
 
 import { ContractHeaderCard } from "./_components/contract-header-card";
@@ -13,28 +14,38 @@ import { ContractViewer } from "./_components/contract-viewer";
 
 interface Props {
     params: Promise<{ id: string }>;
-    searchParams: Promise<{ action?: string }>;
+    searchParams: Promise<{ action?: string; contractId?: string }>;
 }
 
-export default async function ContractPage({ params, searchParams }: Props) {
-    const { id } = await params;
-    const { action } = await searchParams;
-    const { role } = await requireAuth();
+export default async function ContractPage(props: Props) {
+    const searchParams = await props.searchParams;
+    const params = await props.params;
 
-    const data = await contractService.getContractPage(id, role);
+    const { id } = params;
+    const { action } = searchParams; // action is still needed for autoOpen
+    const selectedContractId = searchParams.contractId;
+
+    const { role } = await requireAuth(); 
+
+    const data = await contractService.getContractPage(id, role, selectedContractId);
     if (!data) notFound();
 
-    const { student, contract, enrollmentId, paymentItems, stats, canWrite } = data;
+    const { student, contract, enrollmentId, paymentItems, stats, canWrite, availablePeriods } = data; // Added availablePeriods
 
     // Build current contract info for renewal wizard
     const currentContractInfo = contract
         ? {
-            contractNumber: contract.contractNumber,
-            grade: null as string | null,
-            academicYear: null as string | null,
+            contractNumber: contract.contractNumber || "",
+            grade: data.grade,
+            academicYear: null,
             totalPaid: stats.totalPaid,
             totalExpected: stats.totalExpected,
-            paymentItems: paymentItems,
+            paymentItems: paymentItems.map((p) => ({
+                status: p.status,
+                amountExpected: p.amountExpected,
+                amountPaid: p.amountPaid,
+                dueDate: String(p.dueDate),
+            })),
         }
         : null;
 
@@ -90,6 +101,7 @@ export default async function ContractPage({ params, searchParams }: Props) {
                         <RenewalWizardDialog
                             studentId={id}
                             studentName={student.fullName}
+                            branchId={student.branchId || undefined}
                             currentContract={currentContractInfo}
                             autoOpen={action === "renew"}
                         />
@@ -108,6 +120,32 @@ export default async function ContractPage({ params, searchParams }: Props) {
                     )}
                 </div>
             </div>
+
+            {/* Academic Year Tabs (Available Periods) */}
+            {availablePeriods.length > 0 && ( // Changed from data.availablePeriods to availablePeriods
+                <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
+                    {availablePeriods.map((period) => {
+                        const isSelected = selectedContractId 
+                            ? period.contractId === selectedContractId
+                            : period.contractId === contract?.id;
+                        
+                        return (
+                            <Link
+                                key={period.contractId}
+                                href={`/students/${id}/contract?contractId=${period.contractId}`} // Changed to contractId
+                                className={cn( // Using cn utility
+                                    "px-4 py-2 border-b-2 text-sm font-medium transition-colors whitespace-nowrap",
+                                    isSelected
+                                        ? "border-primary text-primary"
+                                        : "border-transparent text-muted-foreground hover:text-foreground hover:border-muted"
+                                )}
+                            >
+                                {period.academicYear} ({period.grade}) {period.contractNumber && period.contractNumber !== "Б/Н" ? `- #${period.contractNumber}` : ""}
+                            </Link>
+                        );
+                    })}
+                </div>
+            )}
 
             {contract && pdfData ? (
                 <>

@@ -62,7 +62,7 @@ export function AcademicYearDialog({
             name: data?.name || "",
             startDate: data?.startDate || new Date(),
             endDate: data?.endDate || new Date(),
-            status: data?.status || "active",
+            status: (data?.status as "active" | "archived") || "active",
         },
     });
 

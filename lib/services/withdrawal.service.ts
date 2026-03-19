@@ -6,7 +6,7 @@ export const withdrawalService = {
 
     async getPage() {
         const { role } = await requireAuth();
-        if (!["admin", "finance_manager", "accountant"].includes(role)) {
+        if (!["admin", "finance_manager", "accountant", "assistant"].includes(role)) {
             throw new Error("Нет доступа к отчислениям");
         }
         const list = await withdrawalRepository.getList();
@@ -22,10 +22,9 @@ export const withdrawalService = {
         enrollmentId: string;
         reason: string;
         effectiveDate: string;
-        settlementType: string;
     }) {
         const user = await requireAuth();
-        if (!["admin", "finance_manager"].includes(user.role)) {
+        if (!["admin", "finance_manager", "accountant", "assistant"].includes(user.role)) {
             throw new Error("Нет прав на создание заявки об отчислении");
         }
 
@@ -34,6 +33,7 @@ export const withdrawalService = {
 
         const id = await withdrawalRepository.createWithdrawal({
             ...data,
+            settlementType: settlement.settlementAmount > 0 ? "debt" : settlement.settlementAmount < 0 ? "refund" : "zero",
             settlementAmount: settlement.settlementAmount,
         });
 

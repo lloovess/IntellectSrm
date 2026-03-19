@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 export const createClassSchema = z.object({
-    branchId: z.string().uuid("Invalid branch ID"),
-    academicYearId: z.string().uuid("Invalid academic year ID"),
+    branchId: z.string().regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/i, "Invalid branch ID"),
+    academicYearId: z.string().regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/i, "Invalid academic year ID"),
     name: z
         .string()
         .min(1, "Class name is required")
@@ -19,8 +19,8 @@ export const createClassSchema = z.object({
 export const updateClassSchema = createClassSchema.partial();
 
 export const bulkCreateClassesSchema = z.object({
-    branchId: z.string().uuid("Invalid branch ID"),
-    academicYearId: z.string().uuid("Invalid academic year ID"),
+    branchId: z.string().regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/i, "Invalid branch ID"),
+    academicYearId: z.string().regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/i, "Invalid academic year ID"),
     academicYear: z.string().min(1, "Academic year text is required"),
     classes: z.array(
         z.object({
@@ -35,7 +35,7 @@ export const bulkCreateClassesSchema = z.object({
 });
 
 export const deleteClassSchema = z.object({
-    id: z.string().uuid("Invalid class ID"),
+    id: z.string().regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/i, "Invalid class ID"),
 });
 
 export type CreateClassInput = z.infer<typeof createClassSchema>;

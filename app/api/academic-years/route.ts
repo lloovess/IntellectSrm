@@ -6,13 +6,8 @@ import { createAcademicYearSchema } from "@/lib/validators/academic-year.schema"
 
 export async function GET() {
     try {
-        const { role } = await requireAuth();
-        if (!checkPermission(role, "settings.manage")) {
-            return NextResponse.json(
-                { error: "Forbidden" },
-                { status: 403 }
-            );
-        }
+        // Academic years are reference data — readable by any authenticated user
+        await requireAuth();
 
         const academicYears =
             await AcademicYearService.getAllAcademicYears();

@@ -57,6 +57,8 @@ export const PERMISSIONS: Record<Role, readonly PermissionKey[]> = {
         "import.read",
         "import.write",
         "financial_audit.read",
+        "withdrawals.read",
+        "withdrawals.write",
     ],
     call_center: [
         "students.read",

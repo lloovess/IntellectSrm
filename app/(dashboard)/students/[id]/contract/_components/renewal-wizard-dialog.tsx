@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useMemo } from "react";
+import { useState, useTransition, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { KZ_ACADEMIC_MONTHS } from "@/lib/validators/contract.schema";
 import { renewContractAction } from "@/lib/actions/renewal.actions";
@@ -10,6 +10,7 @@ import { renewContractAction } from "@/lib/actions/renewal.actions";
 interface RenewalWizardProps {
     studentId: string;
     studentName: string;
+    branchId?: string;
     /** Current active contract info for the summary step */
     currentContract: {
         contractNumber: string;
@@ -144,6 +145,7 @@ const INPUT_CLS =
 export function RenewalWizardDialog({
     studentId,
     studentName,
+    branchId,
     currentContract,
     autoOpen = false,
     onSuccess,
@@ -155,13 +157,64 @@ export function RenewalWizardDialog({
     const [error, setError] = useState<string | null>(null);
 
     // Step 2 — New enrollment
-    const nextYear = new Date().getFullYear();
-    const [newAcademicYear, setNewAcademicYear] = useState(`${nextYear}-${nextYear + 1}`);
-    const [newGrade, setNewGrade] = useState(
-        currentContract?.grade
-            ? String(parseInt(currentContract.grade) + 1)
-            : ""
-    );
+    // We use actual relationships
+    const [academicYearId, setAcademicYearId] = useState("");
+    const [classId, setClassId] = useState("");
+    
+    // Types from DB
+    type AcademicYear = { id: string; name: string; status: string };
+    type Class = { id: string; name: string; capacity: number; currentEnrollment: number; status: string };
+
+    const [academicYears, setAcademicYears] = useState<AcademicYear[]>([]);
+    const [classes, setClasses] = useState<Class[]>([]);
+    const [selectedAcademicYearName, setSelectedAcademicYearName] = useState("");
+    const [selectedClassName, setSelectedClassName] = useState("");
+
+    // Load academic years on mount
+    useEffect(() => {
+        const fetchAcademicYears = async () => {
+            try {
+                const response = await fetch("/api/academic-years");
+                const data = await response.json();
+                setAcademicYears(data.data || []);
+            } catch (error) {
+                console.error("Failed to load academic years:", error);
+            }
+        };
+        fetchAcademicYears();
+    }, []);
+
+    // Load classes when academic year or branch changes
+    useEffect(() => {
+        const fetchClasses = async () => {
+            if (!academicYearId || !branchId) {
+                setClasses([]);
+                return;
+            }
+            try {
+                const url = new URL("/api/classes", window.location.origin);
+                url.searchParams.append("branchId", branchId);
+                url.searchParams.append("academicYearId", academicYearId);
+                const response = await fetch(url.toString());
+                const data = await response.json();
+                setClasses(data.data || []);
+            } catch (error) {
+                console.error("Failed to load classes:", error);
+            }
+        };
+        fetchClasses();
+    }, [academicYearId, branchId]);
+
+    // Keep names in sync for preview
+    useEffect(() => {
+        const ay = academicYears.find(y => y.id === academicYearId);
+        setSelectedAcademicYearName(ay?.name || "");
+    }, [academicYearId, academicYears]);
+
+    useEffect(() => {
+        const cls = classes.find(c => c.id === classId);
+        setSelectedClassName(cls?.name || "");
+    }, [classId, classes]);
 
     // Step 3 — Contract params
     const [contractNumber, setContractNumber] = useState("");
@@ -169,6 +222,7 @@ export function RenewalWizardDialog({
     const [discountPercent, setDiscountPercent] = useState(0);
     const [prepayPercent, setPrepayPercent] = useState(0);
     const [months, setMonths] = useState(9);
+    const nextYear = new Date().getFullYear();
     const [startDate, setStartDate] = useState(`${nextYear}-09-01`);
     const [paymentDueDay, setPaymentDueDay] = useState(1);
 
@@ -218,8 +272,7 @@ export function RenewalWizardDialog({
         startTransition(async () => {
             const result = await renewContractAction({
                 studentId,
-                newAcademicYear,
-                newGrade,
+                classId,
                 basePrice,
                 discountPercent,
                 prepayPercent,
@@ -351,26 +404,42 @@ export function RenewalWizardDialog({
                     {step === 2 && (
                         <div className="space-y-4">
                             <FieldGroup label="Новый учебный год *">
-                                <input
-                                    type="text"
-                                    value={newAcademicYear}
-                                    onChange={(e) => setNewAcademicYear(e.target.value)}
-                                    placeholder="2026-2027"
+                                <select
+                                    value={academicYearId}
+                                    onChange={(e) => {
+                                        setAcademicYearId(e.target.value);
+                                        setClassId(""); // Reset class when year changes
+                                    }}
                                     required
-                                    className={INPUT_CLS}
-                                />
-                                <p className="mt-1 text-xs text-slate-400">Формат: 2026-2027</p>
+                                    className={`${INPUT_CLS} ${!academicYearId ? "text-slate-400" : ""}`}
+                                >
+                                    <option value="" disabled>-- Выберите учебный год --</option>
+                                    {academicYears.map((ay) => (
+                                        <option key={ay.id} value={ay.id}>
+                                            {ay.name} {ay.status === "archived" ? "(Архив)" : ""}
+                                        </option>
+                                    ))}
+                                </select>
                             </FieldGroup>
 
                             <FieldGroup label="Новый класс/группа *">
-                                <input
-                                    type="text"
-                                    value={newGrade}
-                                    onChange={(e) => setNewGrade(e.target.value)}
-                                    placeholder="7А, 8, Prep"
+                                <select
+                                    value={classId}
+                                    onChange={(e) => setClassId(e.target.value)}
                                     required
-                                    className={INPUT_CLS}
-                                />
+                                    disabled={!academicYearId || classes.length === 0}
+                                    className={`${INPUT_CLS} ${!classId ? "text-slate-400" : ""}`}
+                                >
+                                    <option value="" disabled>-- Выберите класс --</option>
+                                    {classes.map((c) => {
+                                        const isFull = c.currentEnrollment >= c.capacity;
+                                        return (
+                                            <option key={c.id} value={c.id} disabled={isFull}>
+                                                {c.name} ({c.currentEnrollment}/{c.capacity} мест){isFull ? " - Полный" : ""}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
                                 <p className="mt-1 text-xs text-slate-400">
                                     {currentContract?.grade
                                         ? `Текущий класс: ${currentContract.grade}`
@@ -557,8 +626,8 @@ export function RenewalWizardDialog({
                                     {[
                                         { label: "Ученик", value: studentName },
                                         { label: "Новый договор №", value: contractNumber },
-                                        { label: "Учебный год", value: newAcademicYear },
-                                        { label: "Класс", value: newGrade },
+                                        { label: "Учебный год", value: selectedAcademicYearName },
+                                        { label: "Класс", value: selectedClassName },
                                         { label: "Базовая цена", value: fmt(basePrice) },
                                         ...(discountPercent > 0
                                             ? [{ label: "Скидка", value: `${discountPercent}%` }]
@@ -599,8 +668,8 @@ export function RenewalWizardDialog({
                             type="button"
                             onClick={() => {
                                 // Simple validation per step
-                                if (step === 2 && (!newAcademicYear.trim() || !newGrade.trim())) {
-                                    setError("Введите учебный год и класс");
+                                if (step === 2 && (!academicYearId || !classId)) {
+                                    setError("Выберите учебный год и класс");
                                     return;
                                 }
                                 if (step === 3 && (!contractNumber.trim() || basePrice <= 0)) {

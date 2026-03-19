@@ -23,6 +23,7 @@ export interface ContractPageData {
         fullName: string;
         phone: string | null;
         status: string;
+        branchId: string | null;
     };
     guardians: {
         id: string;
@@ -49,16 +50,22 @@ export interface ContractPageData {
         lastEntryAt: string | null;
         lastReason: string | null;
     };
+    availablePeriods: {
+        enrollmentId: string;
+        academicYear: string | null;
+        grade: string | null;
+        contractId: string;
+        contractNumber: string;
+        status: string;
+    }[];
     canWrite: boolean;
     canRecordPayment: boolean;
 }
 
 export interface RenewContractInput {
     studentId: string;
-    /** New academic year, e.g. "2026-2027" */
-    newAcademicYear: string;
-    /** New grade/class, e.g. "6" */
-    newGrade: string;
+    /** New class ID */
+    classId: string;
     /** New contract base price */
     basePrice: number;
     discountPercent?: number;
@@ -228,8 +235,7 @@ export class ContractService {
         const admin = await createAdminClient();
         const {
             studentId,
-            newAcademicYear,
-            newGrade,
+            classId,
             basePrice,
             discountPercent = 0,
             prepayPercent = 0,
@@ -275,7 +281,7 @@ export class ContractService {
                 .from("contracts")
                 .select("id")
                 .eq("enrollment_id", oldEnrollmentId)
-                .in("status", ["active", "pending_active"])
+                .in("status", ["active"])
                 .limit(1);
 
             if (contractErr) throw new Error(contractErr.message);
@@ -285,15 +291,27 @@ export class ContractService {
             // if the renewal happens mid-year, allowing the student to finish the current year.
         }
 
+        // 2b. Fetch the new class details
+        const { data: newClass, error: newClassErr } = await admin
+            .from("classes")
+            .select("name, academic_year, branch_id")
+            .eq("id", classId)
+            .single();
+
+        if (newClassErr || !newClass) {
+            throw new Error("Класс не найден или произошла ошибка при получении класса");
+        }
+
         // 3. Create new enrollment
         const { data: newEnroll, error: newEnrollErr } = await admin
             .from("enrollments")
             .insert({
                 student_id: studentId,
-                branch_id: branchId,
-                grade: newGrade,
-                academic_year: newAcademicYear,
-                status: "pending_active",
+                branch_id: newClass.branch_id,
+                class_id: classId,
+                grade: newClass.name,
+                academic_year: newClass.academic_year,
+                status: "active",
             })
             .select("id")
             .single();
@@ -328,7 +346,7 @@ export class ContractService {
             prepaymentAmount,
             paymentMode,
             paymentDueDay,
-            status: "pending_active",
+            status: "active",
             previousContractId: oldContractId,
             paymentItems: planItems.map((p) => ({
                 label: p.label,
@@ -343,13 +361,28 @@ export class ContractService {
     /**
      * Полные данные для страницы /students/[id]/contract.
      */
-    async getContractPage(studentId: string, role: Role): Promise<ContractPageData | null> {
+    async getContractPage(studentId: string, role: Role, contractId?: string): Promise<ContractPageData | null> {
         if (!checkPermission(role, "contracts.read")) return null;
 
         const profile = await studentRepository.getById(studentId);
         if (!profile) return null;
 
-        const { contract, paymentItems } = await contractRepository.getByStudentId(studentId);
+        const { contract, paymentItems } = await contractRepository.getByStudentId(studentId, contractId);
+
+        // Fetch all contracts to build the periods tab UI
+        const allContracts = await contractRepository.getAllByStudentId(studentId);
+        const availablePeriods = allContracts.map(c => {
+            const enrollment = profile.enrollmentHistory.find(e => e.id === c.enrollmentId);
+            return {
+                enrollmentId: c.enrollmentId,
+                academicYear: enrollment?.academicYear ?? "Не указан",
+                grade: enrollment?.grade ?? "Не указан",
+                contractId: c.id,
+                contractNumber: c.contractNumber || "Б/Н",
+                status: c.status,
+                startDate: c.startedAt,
+            };
+        }).sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
 
         const totalExpectedFromItems = paymentItems.reduce((s: number, p: PaymentItemDetail) => s + p.amountExpected, 0);
         const totalExpected = contract ? contract.totalAmount : totalExpectedFromItems;
@@ -370,6 +403,7 @@ export class ContractService {
                 fullName: profile.fullName,
                 phone: profile.phone,
                 status: profile.status,
+                branchId: profile.enrollment?.branchId ?? null,
             },
             guardians: profile.guardians.map((g) => ({
                 id: g.id,
@@ -385,6 +419,7 @@ export class ContractService {
             paymentItems,
             stats: { totalPaid, totalExpected, totalRemaining, percentPaid, overdueCount, nextPayment },
             advance,
+            availablePeriods,
             canWrite: checkPermission(role, "contracts.write"),
             canRecordPayment: checkPermission(role, "payments.write"),
         };

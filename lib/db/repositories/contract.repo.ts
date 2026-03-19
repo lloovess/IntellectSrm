@@ -55,7 +55,7 @@ export class ContractRepository extends BaseRepository<typeof contracts, Contrac
         super(contracts);
     }
 
-    async getByStudentId(studentId: string): Promise<{
+    async getByStudentId(studentId: string, targetContractId?: string): Promise<{
         contract: ContractDetail | null;
         paymentItems: PaymentItemDetail[];
     }> {
@@ -68,20 +68,24 @@ export class ContractRepository extends BaseRepository<typeof contracts, Contrac
         if (studentEnrollments.length === 0) return { contract: null, paymentItems: [] };
         const enrollmentIds = studentEnrollments.map(e => e.id);
 
-        // 2. Get active contract linked to one of the enrollments
+        // 2. Get contract linked to the enrollment(s) or the specific contract requested
+        const condition = targetContractId
+            ? eq(contracts.id, targetContractId)
+            : and(inArray(contracts.enrollmentId, enrollmentIds), eq(contracts.status, "active"));
+
         const [contractData] = await db
             .select()
             .from(contracts)
-            .where(
-                and(
-                    inArray(contracts.enrollmentId, enrollmentIds),
-                    eq(contracts.status, "active")
-                )
-            )
+            .where(condition)
             .orderBy(desc(contracts.createdAt))
             .limit(1);
 
         if (!contractData) return { contract: null, paymentItems: [] };
+        
+        // Security check: ensure the requested contract actually belongs to one of the student's enrollments
+        if (targetContractId && !enrollmentIds.includes(contractData.enrollmentId)) {
+             return { contract: null, paymentItems: [] };
+        }
 
         const basePrice = parseFloat(contractData.basePrice);
         const discountAmount = parseFloat(contractData.discountAmount);

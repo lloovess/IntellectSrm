@@ -8,7 +8,6 @@ const createSchema = z.object({
     enrollmentId: z.string().uuid("Выберите ученика"),
     reason: z.string().min(3, "Укажите причину отчисления"),
     effectiveDate: z.string().min(1, "Укажите дату отчисления"),
-    settlementType: z.string().default("prorated"),
 });
 
 export async function createWithdrawalAction(prev: unknown, formData: FormData) {
@@ -16,7 +15,6 @@ export async function createWithdrawalAction(prev: unknown, formData: FormData) 
         enrollmentId: formData.get("enrollmentId") as string,
         reason: formData.get("reason") as string,
         effectiveDate: formData.get("effectiveDate") as string,
-        settlementType: "prorated",
     };
 
     const parsed = createSchema.safeParse(raw);

@@ -1,4 +1,4 @@
-import { ClassRepository } from "@/lib/db/repositories/class.repo";
+import { classRepository } from "@/lib/db/repositories/class.repo";
 import { AcademicYearRepository } from "@/lib/db/repositories/academic-year.repo";
 import {
     CreateClassInput,
@@ -11,7 +11,7 @@ export class ClassManagementService {
      * Get all active classes
      */
     static async getAllClasses() {
-        return ClassRepository.findAllActive();
+        return classRepository.findAllActive();
     }
 
     /**
@@ -21,7 +21,7 @@ export class ClassManagementService {
         branchId: string,
         academicYearId: string
     ) {
-        return ClassRepository.findByBranchAndYear(branchId, academicYearId);
+        return classRepository.findByBranchAndYear(branchId, academicYearId);
     }
 
     /**
@@ -31,7 +31,7 @@ export class ClassManagementService {
         branchId: string,
         academicYearId: string
     ) {
-        return ClassRepository.findByBranchAndYearWithAvailability(
+        return classRepository.findByBranchAndYearWithAvailability(
             branchId,
             academicYearId
         );
@@ -41,7 +41,7 @@ export class ClassManagementService {
      * Get class by ID
      */
     static async getClassById(id: string) {
-        const classData = await ClassRepository.findByIdWithCapacity(id);
+        const classData = await classRepository.findByIdWithCapacity(id);
         if (!classData) {
             throw new Error("Class not found");
         }
@@ -52,14 +52,14 @@ export class ClassManagementService {
      * Check if class has available capacity
      */
     static async checkCapacity(classId: string) {
-        return ClassRepository.hasAvailableCapacity(classId);
+        return classRepository.hasAvailableCapacity(classId);
     }
 
     /**
      * Get available seats in a class
      */
     static async getAvailableSeats(classId: string) {
-        return ClassRepository.getAvailableSeats(classId);
+        return classRepository.getAvailableSeats(classId);
     }
 
     /**
@@ -74,7 +74,7 @@ export class ClassManagementService {
             throw new Error("Academic year not found");
         }
 
-        const classData = await ClassRepository.create({
+        const classData = await classRepository.create({
             branchId: data.branchId,
             academicYearId: data.academicYearId,
             name: data.name,
@@ -103,7 +103,7 @@ export class ClassManagementService {
             }
         }
 
-        return ClassRepository.update(id, data);
+        return classRepository.update(id, data);
     }
 
     /**
@@ -122,7 +122,7 @@ export class ClassManagementService {
 
         for (const classData of data.classes) {
             try {
-                const newClass = await ClassRepository.create({
+                const newClass = await classRepository.create({
                     branchId: data.branchId,
                     academicYearId: data.academicYearId,
                     name: classData.name,
@@ -157,14 +157,14 @@ export class ClassManagementService {
             );
         }
 
-        await ClassRepository.delete(id);
+        await classRepository.delete(id);
     }
 
     /**
      * Get classes by academic year
      */
     static async getClassesByAcademicYear(academicYearId: string) {
-        return ClassRepository.findByAcademicYearId(academicYearId);
+        return classRepository.findByAcademicYearId(academicYearId);
     }
 
     /**
@@ -174,7 +174,7 @@ export class ClassManagementService {
         // Verify class exists
         await this.getClassById(id);
 
-        return ClassRepository.update(id, { status: "archived" });
+        return classRepository.update(id, { status: "archived" });
     }
 
     /**
